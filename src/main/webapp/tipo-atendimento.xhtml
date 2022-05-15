@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Cadastro de Dentista</title>
+</h:head>
+
+<ui:composition template="template.xhtml">
+	<ui:define name="conteudo">
+
+		<h:body>
+			<h:form>
+				<p:growl id="growl" showDetail="true" />
+				<center>
+					<p:panel header="Cadastro Tipo de atendimento">
+
+						<div class="p-grid ui-fluid ">
+							<div class="p-col-12 p-md-4">
+								<div class="ui-inputgroup">
+									<div class="ui-inputgroup-addon">
+										<i class="pi pi-info"></i>
+									</div>
+									<p:inputText placeholder="Nome" a:autofocus="true"
+										value="#{tipoAtendimentoController.entity.nome}" />
+
+									<p:commandButton icon="pi pi-search"
+										styleClass="ui-button-warning"
+										actionListener="#{tipoAtendimentoController.abrirTipoListing}">
+										<p:ajax event="dialogReturn"
+											listener="#{tipoAtendimentoController.obterTipoListing}"
+											update="@form" />
+									</p:commandButton>
+
+
+								</div>
+							</div>
+							<br></br>
+
+							
+							<div class="p-col-12 p-md-4">
+								<div class="ui-inputgroup">
+									<div class="ui-inputgroup-addon">
+										<i class="pi pi-money-bill"> </i>
+
+									</div>
+									<p:inputNumber placeholder="Preço"
+										value="#{tipoAtendimentoController.entity.valor}"
+										symbol=" BRL" symbolPosition="s" decimalSeparator="."
+										thousandSeparator="," />
+
+								</div>
+							</div>
+
+							<br></br>
+							
+							<p:outputLabel value="Descrição: " style="font-weight: bold;" />
+							<p:inputTextarea rows="5" cols="30" counter="display"
+								value="#{tipoAtendimentoController.entity.descricao}"
+								maxlength="100"
+								placeholder="Informe aqui a descrição do tipo de atendimento"
+								counterTemplate="{0} caracteres restantes." autoResize="false" />
+							<h:outputText value="descrição" id="display" class="p-d-block" />
+
+						</div>
+
+						<f:facet name="footer">
+							<center>
+								<p:commandButton value="Incluir" icon="pi pi-check"
+									styleClass="rounded-button ui-button-raised ui-button-success"
+									style="margin-left:5px;margin-right:5px;"
+									actionListener="#{tipoAtendimentoController.incluir}"
+									update="@form" process="@form"
+									disabled="#{tipoAtendimentoController.entity.id != null}" />
+
+								<p:commandButton value="Alterar" icon="pi pi-pencil"
+									styleClass="rounded-button ui-button-raised ui-button-warning"
+									style="margin-left:5px;margin-right:5px;"
+									actionListener="#{tipoAtendimentoController.alterar}"
+									update="@form" process="@form"
+									disabled="#{tipoAtendimentoController.entity.id == null}" />
+
+								<p:commandButton value="Excluir" icon="pi pi-trash"
+									styleClass="rounded-button ui-button-raised ui-button-danger"
+									style="margin-left:5px;margin-right:5px;"
+									actionListener="#{tipoAtendimentoController.excluir}"
+									process="@this" update="@form"
+									disabled="#{tipoAtendimentoController.entity.id == null}">
+									<p:confirm header="Confirmação"
+										message="Deseja realmente excluir?"
+										icon="pi pi-exclamation-triangle" />
+								</p:commandButton>
+
+								<p:commandButton value="Limpar" icon="pi pi-times"
+									styleClass="rounded-button ui-button-danger ui-button-raised"
+									style="margin-left:5px;margin-right:5px;"
+									actionListener="#{tipoAtendimentoController.limpar}"
+									update="@form" process="@this" />
+
+							</center>
+						</f:facet>
+
+
+
+
+					</p:panel>
+				</center>
+			</h:form>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				responsive="true" width="350">
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no ui-button-flat" />
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" />
+			</p:confirmDialog>
+
+		</h:body>
+
+	</ui:define>
+</ui:composition>
+
+
+</html>

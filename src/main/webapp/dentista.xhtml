@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Cadastro de Dentista</title>
+</h:head>
+
+<ui:composition template="template.xhtml">
+	<ui:define name="conteudo">
+
+		<h:body>
+			<h:form>
+				<p:growl id="growl" showDetail="true" />
+				<center>
+					<p:panel header="Cadastro de Dentista" style="font-weight: bold;">
+						<div class="p-grid ui-fluid">
+							<h:panelGrid>
+								<p:outputLabel value="Nome: " />
+								<h:panelGroup>
+									<div class="p-col-12 p-md-4">
+										<div class="ui-inputgroup">
+											<p:inputText value="#{dentistaController.entity.nome}" 
+											a:autofocus="true"/>
+											<p:commandButton icon="pi pi-search"
+												styleClass="ui-button-warning"
+												actionListener="#{dentistaController.abrirDentistaListing}">
+												<p:ajax event="dialogReturn"
+													listener="#{dentistaController.obterDentistaListing}"
+													update="@form" />
+											</p:commandButton>
+										</div>
+									</div>
+								</h:panelGroup>
+
+						
+
+								<p:outputLabel value="Email: "/>
+								<p:inputText value="#{dentistaController.entity.email}" />
+
+								<p:outputLabel value="Telefone: " />
+								<p:inputMask value="#{dentistaController.entity.telefone}"
+									mask="(99) 99999-9999" validateMask="true" />
+
+								<p:outputLabel value="Salário: " />
+								<p:inputNumber id="valor"
+									value="#{dentistaController.entity.salario}" symbol=" BRL"
+									symbolPosition="s" decimalSeparator="." thousandSeparator="," />
+							</h:panelGrid>
+						</div>
+						<f:facet name="footer">
+							<center>
+								<p:commandButton value="Incluir" icon="pi pi-check"
+									styleClass="rounded-button ui-button-raised ui-button-success"
+									style="margin-left:5px;margin-right:5px;"
+									actionListener="#{dentistaController.incluir}" update="@form"
+									process="@form"
+									disabled="#{dentistaController.entity.id != null}" />
+
+								<p:commandButton value="Alterar" icon="pi pi-pencil"
+									styleClass="rounded-button ui-button-warning"
+									style="margin-left:5px;margin-right:5px;"
+									actionListener="#{dentistaController.alterar}" update="@form"
+									process="@form"
+									disabled="#{dentistaController.entity.id == null}" />
+
+								<p:commandButton value="Excluir" icon="pi pi-trash"
+									styleClass="rounded-button ui-button-danger"
+									style="margin-left:5px;margin-right:5px;"
+									actionListener="#{dentistaController.excluir}" process="@this"
+									update="@form"
+									disabled="#{dentistaController.entity.id == null}">
+									<p:confirm header="Confirmação"
+										message="Deseja realmente excluir?"
+										icon="pi pi-exclamation-triangle" />
+								</p:commandButton>
+
+								<p:commandButton value="Limpar" icon="pi pi-times"
+									styleClass="rounded-button ui-button-raised ui-button-danger"
+									style="margin-left:5px;margin-right:5px;"
+									actionListener="#{dentistaController.limpar}" update="@form"
+									process="@this" />
+
+							</center>
+						</f:facet>
+					</p:panel>
+				</center>
+			</h:form>
+
+			
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				responsive="true" width="350">
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no ui-button-flat" />
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" />
+			</p:confirmDialog>
+		</h:body>
+
+	</ui:define>
+</ui:composition>
+
+
+</html>

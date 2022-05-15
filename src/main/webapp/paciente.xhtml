@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+		crossorigin="anonymous" />
+
+</h:head>
+<title>Cadastro de paciente</title>
+
+
+<ui:composition template="template.xhtml">
+	<ui:define name="conteudo">
+
+		<h:body>
+
+
+			<style type="text/css">
+.label {
+	width: 20%;
+	padding: 4px;
+}
+
+.value {
+	width: 80%;
+	padding: 4px;
+}
+
+.grid {
+	width: 100%;
+}
+
+.error {
+	color: red;
+}
+
+.outputLabel {
+	font-weight: bold;
+}
+
+.grid {
+	width: 33%;
+	padding: 4px;
+}
+</style>
+
+			<h:form id="form">
+
+				<p:growl id="growl" />
+
+
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:commandButton value="cadastrar paciente" icon="pi pi-plus"
+							styleClass="ui-button-success"
+							onclick="PF('dlg-paciente').show()" />
+
+					</p:toolbarGroup>
+				</p:toolbar>
+
+				<p:dialog header="Detalhes de paciente" showEffect="fade" width="50%" height="350px"
+					modal="true" widgetVar="dlg-paciente" responsive="true">
+
+					<p:outputPanel id="manage-paciente-content" class="ui-fluid">
+						<p:outputPanel rendered="#{not empty pacienteController.entity}">
+
+
+
+							<p:wizard flowListener="#{pacienteController.onFlowProcess}"
+								nextLabel="Avançar" backLabel="Voltar">
+								<p:tab id="personal" title="Pessoal">
+									<p:panel header="Informações pessoais">
+										<p:growl />
+										<h:panelGrid columns="2" columnClasses="label, value">
+											<p:outputLabel for="nome">Nome</p:outputLabel>
+											<p:inputText id="nome"
+												value="#{pacienteController.entity.pessoaFisica.nome}" />
+
+											<p:outputLabel for="sus">Cartão Sus</p:outputLabel>
+											<p:inputMask id="sus" mask="999 9999 9999 9999"
+												validateMask="true"
+												value="#{pacienteController.entity.cartaoSus}" />
+
+											<p:outputLabel for="cpf">Cpf</p:outputLabel>
+											<p:inputMask id="cpf" mask="999.999.999-99"
+												validateMask="true"
+												value="#{pacienteController.entity.pessoaFisica.cpf}" />
+
+											<p:outputLabel>Sexo</p:outputLabel>
+											<p:selectOneMenu
+												value="#{pacienteController.entity.pessoaFisica.sexo}">
+												<f:selectItem itemLabel="Selecione um sexo..." />
+												<f:selectItems value="#{pacienteController.listaSexo}"
+													var="sex" itemValue="#{sex}" itemLabel="#{sex.label}" />
+											</p:selectOneMenu>
+
+										</h:panelGrid>
+									</p:panel>
+								</p:tab>
+
+								<p:tab id="address" title="Endereço">
+									<p:panel header="Informações de endereço">
+
+										<p:growl />
+										<h:panelGrid columns="2" columnClasses="label, value">
+											<h:outputText value="Rua: " />
+											<p:inputText
+												value="#{pacienteController.entity.pessoaFisica.endereco.rua}" />
+
+											<h:outputText value="Número: " />
+											<p:inputText
+												value="#{pacienteController.entity.pessoaFisica.endereco.numero}" />
+
+											<h:outputText value="Bairro: " />
+											<p:inputText
+												value="#{pacienteController.entity.pessoaFisica.endereco.bairro}" />
+
+											<h:outputText value="Complemento: " />
+											<p:inputText
+												value="#{pacienteController.entity.pessoaFisica.endereco.complemento}" />
+
+											<h:outputText value="Cep: " />
+											<p:inputMask mask="99999-999" validateMask="true"
+												value="#{pacienteController.entity.pessoaFisica.endereco.cep}" />
+
+											<h:outputText value="Cidade: " />
+											<p:inputText
+												value="#{pacienteController.entity.pessoaFisica.endereco.cidade.nome}" />
+
+											<h:outputText value="Estado: " />
+											<h:panelGroup>
+												<div class="p-col-12 p-md-4">
+													<div class="ui-inputgroup">
+														<p:inputText
+															value="#{pacienteController.entity.pessoaFisica.endereco.cidade.estado.nome}" />
+														<p:commandButton icon="pi pi-search"
+															styleClass="ui-button-warning"
+															actionListener="#{pacienteController.abrirEstadoListing}">
+															<p:ajax event="dialogReturn"
+																listener="#{pacienteController.obterEstadoListing}"
+																update="@form" />
+														</p:commandButton>
+													</div>
+												</div>
+											</h:panelGroup>
+
+
+										</h:panelGrid>
+									</p:panel>
+								</p:tab>
+
+								<p:tab id="contact" title="Contato">
+									<p:panel header="Informações de contato">
+										
+										<h:panelGrid columns="2" columnClasses="label, value">
+											<h:outputText value="Email: " />
+											<p:inputText
+												value="#{pacienteController.entity.pessoaFisica.email}"
+												required="true" label="Email" />
+
+											<h:outputText value="Telefone: " />
+											<p:inputMask id="telefone" mask="(99) 99999-9999"
+												validateMask="true"
+												value="#{pacienteController.entity.pessoaFisica.telefone}" />
+
+										</h:panelGrid>
+									</p:panel>
+								</p:tab>
+
+
+								<p:tab id="confirm" title="Confirmação">
+									<p:panel header="Confirmação">
+										<h:panelGrid id="confirmation" columns="3"
+											columnClasses="grid,grid,grid">
+											<h:panelGrid columns="2" columnClasses="label, value">
+												<h:outputText value="Nome: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.nome}"
+													styleClass="outputLabel" />
+
+												<h:outputText value="Cartão Sus: " />
+												<h:outputText value="#{pacienteController.entity.cartaoSus}"
+													styleClass="outputLabel" />
+
+												<h:outputText value="Cpf: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.cpf}"
+													styleClass="outputLabel" />
+
+												<h:outputText value="Sexo: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.sexo}"
+													styleClass="outputLabel" />
+											</h:panelGrid>
+
+
+											<h:panelGrid columns="2" columnClasses="label, value">
+												<h:outputText value="Rua: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.endereco.rua}"
+													styleClass="outputLabel" />
+
+												<h:outputText value="Número: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.endereco.numero}"
+													styleClass="outputLabel" />
+
+												<h:outputText value="Bairro: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.endereco.bairro}"
+													styleClass="outputLabel" />
+
+												<h:outputText value="Complemento: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.endereco.complemento}"
+													styleClass="outputLabel" />
+
+												<h:outputText value="Cep: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.endereco.cep}"
+													styleClass="outputLabel" />
+
+												<h:outputText value="Cidade: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.endereco.cidade.nome}"
+													styleClass="outputLabel" />
+													
+													<h:outputText value="Estado: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.endereco.cidade.estado.nome}"
+													styleClass="outputLabel" />
+
+
+											</h:panelGrid>
+
+
+											<h:panelGrid columns="2" columnClasses="label, value">
+												<h:outputText value="Email: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.email}"
+													styleClass="outputLabel" />
+
+												<h:outputText value="Telefone: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.telefone}"
+													styleClass="outputLabel" />
+
+											</h:panelGrid>
+
+										</h:panelGrid>
+
+										<p:commandButton value="Salvar" icon="pi pi-check"
+											style="margin-left:5px;margin-right:5px;"
+											styleClass="rounded-button ui-button-raised"
+											actionListener="#{pacienteController.incluir}" update="@form"
+											process="@form" />
+
+										<p:commandButton value="Cancelar" icon="pi pi-times"
+											styleClass="rounded-button ui-button-raised ui-button-danger"
+											style="margin-left:5px;margin-right:5px;"
+											actionListener="#{pacienteController.limpar}" update="@form"
+											process="@this" />
+
+
+									</p:panel>
+								</p:tab>
+							</p:wizard>
+
+
+						</p:outputPanel>
+					</p:outputPanel>
+
+
+				</p:dialog>
+
+				<h:panelGrid id="panelDataTable">
+					<p:dataTable id="dt-pacientes" widgetVar="dtPacientes"
+						reflow="true" styleClass="pacientes-table" rowKey="#{obj.id}"
+						value="#{pacienteController.listaPaciente}" paginator="true"
+						rows="3" rowSelectMode="add" paginatorPosition="bottom" var="obj">
+
+						<f:facet name="header">
+							<div class="pacientes-table-header">
+								<span style="font-weight: bold">PACIENTES</span> <span
+									class="filter-container ui-input-icon-left">
+
+									<div class="p-col-12 p-md-4">
+										<div class="ui-inputgroup">
+											<p:inputText id="itNomePesquisa"
+												value="#{pacienteController.nomePesquisa}"
+												placeholder="Informe um nome" />
+											<p:commandButton icon="pi pi-search"
+												styleClass="ui-button-warning"
+												actionListener="#{pacienteController.pesquisar}"
+												process="@this itNomePesquisa" update="dt-pacientes" />
+										</div>
+									</div>
+								</span>
+
+							</div>
+						</f:facet>
+
+
+						<p:column headerText="Nome" sortBy="#{obj.pessoaFisica.nome}">
+							<p:outputLabel value="#{obj.pessoaFisica.nome}" />
+						</p:column>
+						<p:column headerText="E-mail" sortBy="#{obj.pessoaFisica.email}">
+							<h:outputText value="#{obj.pessoaFisica.email}" />
+
+						</p:column>
+						<p:column headerText="Telefone"
+							sortBy="#{obj.pessoaFisica.telefone}">
+							<p:outputLabel value="#{obj.pessoaFisica.telefone}" />
+						</p:column>
+
+						<p:column headerText="CPF">
+							<p:outputLabel value="#{obj.pessoaFisica.cpf}" />
+						</p:column>
+
+						<p:column headerText="Cartão Sus">
+							<p:outputLabel value="#{obj.cartaoSus}" />
+						</p:column>
+
+						<p:column headerText="Sexo"
+							sortBy="#{obj.pessoaFisica.sexo.label}">
+							<p:outputLabel value="#{obj.pessoaFisica.sexo.label}" />
+						</p:column>
+
+						<p:column exportable="false">
+							<p:commandButton
+								actionListener="#{pacienteController.editar(obj)}"
+								icon="pi pi-pencil" update=":form:manage-paciente-content"
+								oncomplete="PF('dlg-paciente').show()"
+								styleClass="edit-button rounded-button ui-button-success"
+								process="@this">
+
+
+							</p:commandButton>
+							<p:commandButton class="ui-button-danger rounded-button"
+								icon="pi pi-trash" process="@this" update="@form"
+								actionListener="#{pacienteController.excluir(obj)}">
+
+								<p:confirm header="Confirmação"
+									message="Deseja realmente excluir?"
+									icon="pi pi-exclamation-triangle" />
+
+							</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+				</h:panelGrid>
+
+
+			</h:form>
+
+			<p:confirmDialog global="true" showEffect="fade" width="300">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no ui-button-secondary"
+					icon="pi pi-times" />
+			</p:confirmDialog>
+
+		</h:body>
+	</ui:define>
+</ui:composition>
+
+
+
+</html>
+

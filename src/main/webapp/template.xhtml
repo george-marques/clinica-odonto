@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" name="viewport"
+		content="width=device-width, initial-scale=1"
+		http-equiv="X-UA-Conpatible" />
+
+
+	<h:outputStylesheet library="css" name="template.css" />
+
+	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</h:head>
+
+
+<div class="wrapper">
+	<div class="sidebar">
+		<h2>Home</h2>
+		<ul>
+			<li><a href="/Clinica/faces/dentista.xhtml"><i class="fas fa-user-plus"></i>Dentista</a></li>
+			<li><a href="/Clinica/faces/paciente.xhtml"><i class="fas fa-user-plus"></i>Paciente</a></li>
+			<li><a href="/Clinica/faces/tipo-atendimento.xhtml"><i class="fas fa-plus"></i>Tipo Atendimento</a></li>
+			<li><a href="/Clinica/faces/produto.xhtml"><i class="fas fa-box"></i>Produto</a></li>
+			<li><a href="#"><i class="fas fa-file"></i>Relatórios</a></li>
+			
+			 <p:divider>
+   
+    </p:divider>
+		
+				<li><a href="#"><i class="fas fa-sign-out"></i>Sair</a></li>
+			
+		</ul>
+		
+		
+		
+	</div>
+	<div class="main_content">
+
+		<div class="box content">
+
+			<ui:insert name="conteudo">
+				
+			</ui:insert>
+		</div>
+	</div>
+
+
+</div>
+
+
+
+ <footer>
+	<div class="box footer" style="text-align: center;">© 2022
+		Copyright: Todos os direitos reservados.</div>
+</footer> 
+
+
+</html>
