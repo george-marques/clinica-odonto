@@ -1,14 +1,37 @@
 package br.unitins.clinica.repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import br.unitins.clinica.application.RepositoryException;
-import br.unitins.clinica.model.TipoUsuario;
 import br.unitins.clinica.model.Usuario;
 
 public class UsuarioRepository extends Repository<Usuario> {
 	
-	public Usuario verificarUsuario(TipoUsuario tipo, String senha) throws RepositoryException{
+
+	public Usuario validarLogin(String login, String senha) throws RepositoryException {
+		try { 
+			EntityManager em = getEntityManager();
+			//JPQL ou SQL
+			Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.login = :login AND u.senha = :senha");
+			query.setParameter("login", login);
+			query.setParameter("senha", senha);
+			
+			return  (Usuario) query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			// mandando pro console o exception gerado
+			e.printStackTrace();
+			// repassando a excecao para quem vai executar o metodo
+			throw new RepositoryException("Problema ao pesquisar usuários.");
+		}
+		
+	}
+	
+	
+	public Usuario findByEmail(String email) throws RepositoryException {
 		try { 
 			StringBuffer jpql = new StringBuffer();
 			jpql.append("SELECT ");
@@ -16,19 +39,20 @@ public class UsuarioRepository extends Repository<Usuario> {
 			jpql.append("FROM ");
 			jpql.append("  Usuario u ");
 			jpql.append("WHERE ");
-			jpql.append(" u.tipoUsuario = :tipo ");
-			jpql.append(" AND u.senha = :senha");
+			jpql.append("  u.pessoaFisica.email = :email ");
 			
 			Query query = getEntityManager().createQuery(jpql.toString());
-			query.setParameter("tipoUsuario", tipo);
-			query.setParameter("senha", senha);
+			query.setParameter("email", email);
 			
-			
-			return (Usuario) query.getResultList();
+			return (Usuario) query.getSingleResult();
+		} catch (NoResultException e) {
+			System.out.println(e.getMessage());
+			return null;
+	
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RepositoryException("Erro ao executar o verificarUsuario.");
-		}
+			throw new RepositoryException("Erro ao executar o findByEmail.");
+		}		
 	}
 
 }

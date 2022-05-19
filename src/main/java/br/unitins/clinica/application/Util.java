@@ -22,7 +22,7 @@ public class Util {
 	}
 	
 	public static String hash(Usuario usuario) {
-		return hash(usuario.getTipoUsuario() + usuario.getSenha());
+		return hash(usuario.getLogin() + usuario.getSenha());
 	}
 	
 	private static String hash(String valor) {

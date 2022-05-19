@@ -2,21 +2,29 @@ package br.unitins.clinica.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Usuario extends DefaultEntity implements Serializable {
 
 	private static final long serialVersionUID = -1801040627866967810L;
-	private TipoUsuario tipoUsuario;
+	private String login;
 	private String senha;
 
-	public TipoUsuario getTipoUsuario() {
-		return tipoUsuario;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(unique = true)
+	private PessoaFisica pessoaFisica;
+
+	public String getLogin() {
+		return login;
 	}
 
-	public void setTipoUsuario(TipoUsuario tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public String getSenha() {
@@ -25,6 +33,14 @@ public class Usuario extends DefaultEntity implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public PessoaFisica getPessoaFisica() {
+		return pessoaFisica;
+	}
+
+	public void setPessoaFisica(PessoaFisica pessoaFisica) {
+		this.pessoaFisica = pessoaFisica;
 	}
 
 }

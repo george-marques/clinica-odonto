@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" name="viewport"
+		content="width=device-width, initial-scale=1"
+		http-equiv="X-UA-Conpatible" />
+	<title>Esqueceu senha</title>
+</h:head>
+
+
+
+<h:body>
+	<h:form>
+
+		<h:messages infoStyle="color:green" errorStyle="color:red" />
+
+		<center>
+			<p:panel header="Redefinir senha" style="width:700px; padding:100px">
+				<h:panelGrid>
+					<div class="p-grid ui-fluid">
+						<h3>Informe o seu email para enviarmos o seu código de
+							redefinição de senha.</h3>
+						<p:inputText value="#{esqueceuSenhaController.email}"
+							style="width:100%;" placeholder="Informe aqui seu email" />
+
+					</div>
+				</h:panelGrid>
+				<f:facet name="footer">
+					<center>
+						<p:commandButton value="Enviar" icon="pi pi-check"
+							actionListener="#{esqueceuSenhaController.enviarEmail}"
+							style="margin-left:260px; width:200px !important; margin-top:5px;"
+							styleClass="rounded-button ui-button-raised" />
+
+					</center>
+				</f:facet>
+			</p:panel>
+		</center>
+
+	</h:form>
+</h:body>
+
+
+
+</html>

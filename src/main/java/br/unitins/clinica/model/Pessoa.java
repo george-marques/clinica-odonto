@@ -1,23 +1,25 @@
 package br.unitins.clinica.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotBlank;
+
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Pessoa extends DefaultEntity {
 
-	@NotBlank(message = "O nome deve ser informado")
+	
 	private String nome;
-	@NotBlank(message = "O telefone deve ser informado")
+	
 	private String telefone;
-	@NotBlank(message = "O email deve ser informado")
+	
+	@Column(unique = true)
 	private String email;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

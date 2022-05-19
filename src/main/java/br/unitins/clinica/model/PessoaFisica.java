@@ -3,12 +3,11 @@ package br.unitins.clinica.model;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 public class PessoaFisica extends Pessoa {
 
-	@NotBlank(message = "O CPF deve ser informado")
+	
 	private String cpf;
 
 	

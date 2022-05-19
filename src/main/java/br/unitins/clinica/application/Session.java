@@ -19,7 +19,7 @@ private static Session session = null;
 	
 	private ExternalContext getExternalContext() {
 		if (FacesContext.getCurrentInstance() == null) 
-			throw new RuntimeException("Ei, se liga, tu nao tah usando servidor web. Nao funciona o FacesContext.");
+			throw new RuntimeException("Nao funciona o FacesContext.");
 		return FacesContext.getCurrentInstance().getExternalContext();
 	}
 	

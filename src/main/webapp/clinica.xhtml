@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+	<title>Cadastro de paciente</title>
+
+</h:head>
+
+
+
+<ui:composition template="template.xhtml">
+	<ui:define name="conteudo">
+
+		<h:body>
+
+			<h:form id="form">
+				<div class="container p-5">
+					<p:growl id="growl" />
+
+					<p:toolbar>
+						<p:toolbarGroup>
+							<p:commandButton value="cadastrar clinica" icon="pi pi-plus"
+								styleClass="ui-button-success" 
+								onclick="PF('dlg-clinica').show()" 
+								 disabled=""/>
+
+						</p:toolbarGroup>
+					</p:toolbar>
+
+
+					<p:dialog header="Detalhes de Clinica" showEffect="fade"
+						modal="true" widgetVar="dlg-clinica" responsive="true">
+
+						<p:outputPanel id="manage-clinica-content" class="ui-fluid">
+							<p:outputPanel rendered="#{not empty clinicaController.entity}">
+
+								<div class="p-field">
+									<p:outputLabel for="name">Nome</p:outputLabel>
+									<p:inputText id="name"
+										requiredMessage="O nome da clinica deve ser informado."
+										value="#{clinicaController.entity.pessoaJuridica.nome}"
+										required="true" />
+								</div>
+
+
+								<div class="p-formgrid p-grid">
+									<div class="p-field p-col">
+										<p:outputLabel for="cnpj">CNPJ</p:outputLabel>
+										<p:inputText id="cnpj"
+											value="#{clinicaController.entity.pessoaJuridica.cnpj}" />
+									</div>
+									<div class="p-field p-col">
+										<p:outputLabel for="inscricao">Inscrição estadual</p:outputLabel>
+										<p:inputText id="inscricao"
+											value="#{clinicaController.entity.pessoaJuridica.inscricaoEstadual}" />
+									</div>
+
+									<div class="p-field p-col">
+										<p:outputLabel for="telefone">Telefone</p:outputLabel>
+										<p:inputText id="telefone"
+											value="#{clinicaController.entity.pessoaJuridica.telefone}" />
+									</div>
+									
+									<div class="p-field p-col">
+										<p:outputLabel for="email">E-mail</p:outputLabel>
+										<p:inputText id="email"
+											value="#{clinicaController.entity.pessoaJuridica.email}" />
+									</div>
+
+								</div>
+							</p:outputPanel>
+						</p:outputPanel>
+
+						<f:facet name="footer">
+
+							<p:commandButton value="Salvar" icon="pi pi-check"
+								style="margin-left:5px;margin-right:5px;"
+								styleClass="rounded-button ui-button-raised"
+								actionListener="#{clinicaController.incluir}" update="@form"
+								process="@form" 
+								disabled="#{clinicaController.entity.id != null}" />
+
+							<p:commandButton value="Cancelar" icon="pi pi-times"
+								styleClass="rounded-button ui-button-raised ui-button-danger"
+								style="margin-left:5px;margin-right:5px;"
+								actionListener="#{clinicaController.limpar}" update="@form"
+								process="@this" />
+
+
+
+
+						</f:facet>
+					</p:dialog>
+
+
+					<h:panelGrid id="panelDataTable">
+						<p:dataTable id="dt-clinica" widgetVar="dtClinica" reflow="true"
+							styleClass="clinica-table" rowKey="#{obj.id}"
+							value="#{clinicaController.listaClinica}" paginator="true"
+							rows="1" rowSelectMode="add" paginatorPosition="bottom" var="obj">
+
+
+							<p:column headerText="Nome">
+								<p:outputLabel value="#{obj.pessoaJuridica.nome}" />
+							</p:column>
+							<p:column headerText="CNPJ">
+								<h:outputText value="#{obj.pessoaJuridica.cnpj}" />
+
+							</p:column>
+							<p:column headerText="Inscrição estadual">
+								<p:outputLabel value="#{obj.pessoaJuridica.inscricaoEstadual}" />
+							</p:column>
+
+							<p:column headerText="Telefone">
+								<p:outputLabel value="#{obj.pessoaJuridica.telefone}" />
+							</p:column>
+
+							<p:column exportable="false">
+								<p:commandButton
+									actionListener="#{clinicaController.editar(obj)}"
+									icon="pi pi-pencil" update=":form:manage-clinica-content"
+									oncomplete="PF('dlg-clinica').show()"
+									styleClass="edit-button rounded-button ui-button-success"
+									process="@this">
+
+
+								</p:commandButton>
+								<p:commandButton class="ui-button-danger rounded-button"
+									icon="pi pi-trash" process="@this" update="@form"
+									actionListener="#{clinicaController.excluir(obj)}">
+
+									<p:confirm header="Confirmação"
+										message="Deseja realmente excluir?"
+										icon="pi pi-exclamation-triangle" />
+
+								</p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+					</h:panelGrid>
+				</div>
+			</h:form>
+
+			<p:confirmDialog global="true" showEffect="fade" width="300">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no ui-button-secondary"
+					icon="pi pi-times" />
+			</p:confirmDialog>
+
+		</h:body>
+	</ui:define>
+</ui:composition>
+
+
+
+</html>

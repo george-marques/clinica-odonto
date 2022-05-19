@@ -50,28 +50,28 @@
 						<div class="form-outline mb-4">
 
 							<label class="form-label" for="usuario">Usuário</label>
-							<p:selectOneMenu value="#{loginController.entity.tipoUsuario}"
+							<p:inputText value="#{loginController.usuario.login}"
 								styleClass="form-control form-control-lg"
-								unselectable="true">
-								<f:selectItem itemLabel="Selecione seu tipo de usuário" />
-								<f:selectItems value="#{loginController.listaTipoUsuario}"
-									var="obj" itemValue="#{obj}" itemLabel="#{obj.label}" />
-
-							</p:selectOneMenu>
+								a:placeholder="Informe seu login" />
 						</div>
 
 						<div class="form-outline mb-3">
 							<label class="form-label" for="pasw">Senha</label>
-							<p:password value="#{loginController.entity.senha}" id="pasw"
+							<p:password value="#{loginController.usuario.senha}" id="pasw"
 								styleClass="form-control form-control-lg"
 								a:placeholder="Informe sua senha" />
 						</div>
+
+						<p:commandLink tabindex="3" style="margin-bottom:0;"
+							styleClass="wdi-red" value="Esqueceu a senha?"
+							action="esqueceusenha.xhtml?faces-redirect=true" />
 
 						<div class="text-center text-lg-start mt-4 pt-2">
 							<p:commandButton value="Entrar"
 								style="padding-left: 2.5rem; padding-right: 2.5rem;"
 								styleClass="btn btn-primary btn-lg"
-								actionListener="#{loginController.entrar}">
+								actionListener="#{loginController.entrar}" update="@form"
+								process="@form">
 							</p:commandButton>
 
 
