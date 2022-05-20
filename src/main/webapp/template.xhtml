@@ -18,7 +18,11 @@
 
 <div class="wrapper">
 	<div class="sidebar">
-		<h2>Home</h2>
+		<div>
+			<p:graphicImage height="90px" width="130px"
+				style="margin-left:10px;margin-right:5px; margin-bottom:-35px; margin-top:-45px; height:auto;"
+				value="./resources/images/logo.png" />
+		</div>
 		<ul>
 			<li><a href="/Clinica/faces/clinica.xhtml"><i
 					class="fas fa-building"></i>Clinica</a></li>
@@ -41,11 +45,16 @@
 			</p:divider>
 
 			<h:form rendered="#{templateController.usuarioLogado != null}">
-				<li><a href="#"><i class="fas fa-user"></i>Perfil</a></li>
-			
-				<li> <h:commandLink
-						value=" (Sair)" action="#{templateController.encerrarSessao}"
-						style="color:white" /></li>
+				<li><a href="/Clinica/faces/perfil-usuario.xhtml"><i
+						class="fas fa-user"></i>Perfil</a></li>
+
+				<li><a><i class="fas fa-sign-out-alt"></i> <p:commandLink
+							value="Sair" action="#{templateController.encerrarSessao}"
+							style="color:#bdb8d7; font-family: 'Josefin Sans', sans-serif; margin-top: -17px;
+    margin-left: 25px;" />
+				</a></li>
+
+
 			</h:form>
 		</ul>
 

@@ -22,12 +22,12 @@ public class Repository<T extends DefaultEntity> {
 		setEntityManager(JPAUtil.getEntityManager());
 	}
 
-	public void save(T entity) throws RepositoryException, VersionException {
+	public T save(T entity) throws RepositoryException, VersionException{
 		try {
 			getEntityManager().getTransaction().begin();
-			getEntityManager().merge(entity);
+			entity = getEntityManager().merge(entity);
 			getEntityManager().getTransaction().commit();
-
+			return entity;
 		} catch (OptimisticLockException e) {
 			// excecao do @version
 			System.out.println("Problema com o controle de concorrencia.");
@@ -37,7 +37,7 @@ public class Repository<T extends DefaultEntity> {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			throw new VersionException("As informações estão antigas, dê um refresh.");
+			throw new VersionException("As informações estão antigas, dê um refresh.");			
 		} catch (Exception e) {
 			System.out.println("Problema ao executar o save.");
 			e.printStackTrace();
@@ -51,6 +51,25 @@ public class Repository<T extends DefaultEntity> {
 
 	}
 
+	public void save(T... entitys) throws RepositoryException {
+		try {
+			getEntityManager().getTransaction().begin();
+			for (T entity : entitys) {
+				getEntityManager().merge(entity);
+			}
+			getEntityManager().getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println("Problema ao executar o save.");
+			e.printStackTrace();
+			try {
+				getEntityManager().getTransaction().rollback();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			throw new RepositoryException("Problema ao salvar.");
+		}
+	}
+
 	public void remove(T entity) throws RepositoryException {
 		try {
 			getEntityManager().getTransaction().begin();
@@ -58,15 +77,39 @@ public class Repository<T extends DefaultEntity> {
 			getEntityManager().remove(obj);
 			getEntityManager().getTransaction().commit();
 		} catch (Exception e) {
-			System.out.println("Problema ao executar o remove.");
+			System.out.println("Problema ao executar o save.");
 			e.printStackTrace();
 			try {
 				getEntityManager().getTransaction().rollback();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			throw new RepositoryException("Problema ao remover.");
+			throw new RepositoryException("Problema ao salvar.");
 		}
+	}
+
+	public T findById(int id) throws RepositoryException {
+		try {
+			// obtendo o tipo da classe de forma generica (a classe deve ser publica)
+			final ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
+			Class<T> tClass = (Class<T>) (type).getActualTypeArguments()[0];
+			
+			T t = (T) getEntityManager().find(tClass, id);
+			
+			return t;
+		} catch (Exception e) {
+			System.out.println("Erro ao executar o mÃ©todo de find.");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao buscar os dados");
+		}
+	}
+
+	protected EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	private void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -87,30 +130,4 @@ public class Repository<T extends DefaultEntity> {
 		return consulta;
 
 	}
-
-	@SuppressWarnings("unchecked")
-	public T findById(int id) throws RepositoryException {
-		try {
-			// obtendo o tipo da classe de forma generica (a classe deve ser publica)
-			final ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
-			Class<T> tClass = (Class<T>) (type).getActualTypeArguments()[0];
-
-			T t = (T) getEntityManager().find(tClass, id);
-
-			return t;
-		} catch (Exception e) {
-			System.out.println("Erro ao executar o método de find.");
-			e.printStackTrace();
-			throw new RepositoryException("Erro ao buscar os dados");
-		}
-	}
-
-	protected EntityManager getEntityManager() {
-		return entityManager;
-	}
-
-	private void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
 }

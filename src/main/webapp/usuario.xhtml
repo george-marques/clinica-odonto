@@ -6,20 +6,41 @@
 <h:head>
 	<title>Cadastro de Usuário</title>
 </h:head>
+
+
+<style>
+.ui-fluid .ui-inputtext {
+	width: 300px;
+}
+</style>
+
 <h:body>
 	<h:form>
 		<p:growl id="growl" showDetail="true" />
 		<center>
-			<p:panel header="Cadastro de Usuário" style="width:500px;">
+			<p:panel header="Cadastro de Usuário"
+				style="width:600px; font-weight: bold;">
 				<div class="p-grid ui-fluid">
+
+					<div align="right" style="float: right; position: relative;">
+						<img class="img-responsive"
+							style="max-width: 80px !important; max-height: 80px !important;"
+							src="img-usuario?nome=#{usuarioController.entity.id}.png" />
+					</div>
+
+
 					<h:panelGrid columns="2">
-						<p:outputLabel value="Tipo Usuário " />
+						<p:outputLabel value="Login" />
 						<p:inputText value="#{usuarioController.entity.login}" />
 
-						
+						<p:outputLabel value="E-mail " />
+						<p:inputText
+							value="#{usuarioController.entity.pessoaFisica.email}" />
 
-						<p:outputLabel value="Senha: " />
+						<p:outputLabel value="Senha " />
 						<p:password value="#{usuarioController.entity.senha}" />
+
+						
 					</h:panelGrid>
 				</div>
 
@@ -27,7 +48,8 @@
 					<center>
 						<p:commandButton value="Incluir"
 							style="margin-left:10px;margin-right:10px;"
-							actionListener="#{usuarioController.incluir}" update="@form" />
+							actionListener="#{usuarioController.incluir}" update="@form"
+							process="@form" />
 
 
 					</center>

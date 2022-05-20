@@ -8,7 +8,6 @@ import javax.inject.Named;
 
 import br.unitins.clinica.model.Clinica;
 import br.unitins.clinica.model.PessoaJuridica;
-import br.unitins.clinica.model.Produto;
 import br.unitins.clinica.repository.ClinicaRepository;
 
 @Named

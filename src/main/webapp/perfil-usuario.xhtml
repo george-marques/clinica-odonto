@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" name="viewport"
+		content="width=device-width, initial-scale=1"
+		http-equiv="X-UA-Conpatible" />
+	<title>Esqueceu senha</title>
+</h:head>
+
+
+<ui:composition template="template.xhtml">
+	<ui:define name="conteudo">
+
+		<style>
+.ui-inputfield {
+	width: 400px;
+}
+</style>
+
+		<h:body>
+			<h:form>
+				<center>
+					<p:panel header="Informações do perfil"
+						style="width:900px; padding:10px; font-weight: bold;">
+
+
+						<div align="right" style="float: right; position: relative;">
+							<img class="img-responsive"
+								style="max-width: 200px !important; max-height: 200px !important;"
+								src="img-usuario?nome=#{perfilUsuarioController.entity.id}.png" />
+						</div>
+
+						<h:panelGrid>
+							<div class="p-grid ui-fluid">
+								<p:outputLabel value="Login" />
+								<p:inputText value="#{perfilUsuarioController.entity.login}"
+									style="width:100%;" placeholder="Informe aqui seu Login" />
+								<p:outputLabel value="E-mail" />
+								<p:inputText disabled="true"
+									value="#{perfilUsuarioController.entity.pessoaFisica.email}"
+									style="width:100%;" placeholder="Informe aqui seu email" />
+
+								<p:outputLabel value="Senha" />
+								<p:password value="#{perfilUsuarioController.entity.senha}"
+									placeholder="Informe sua senha" />
+
+								<p:outputLabel value="Foto do perfil " />
+								<h:form enctype="multipart/form-data">
+									<p:fileUpload id="fileUpload"
+										listener="#{perfilUsuarioController.upload}" mode="advanced"
+										update="fileUpload @form" label="Selecione foto de perfil"
+										global="false">
+									</p:fileUpload>
+
+									<p:growl id="messages" showDetail="true" />
+								</h:form>
+
+							</div>
+						</h:panelGrid>
+						<f:facet name="footer">
+							<center>
+								<p:commandButton value="Alterar informações" icon="pi pi-check"
+								styleClass="rounded-button ui-button-raised ui-button-success"
+									style="margin-left:400px;margin-right:10px;"
+									actionListener="#{perfilUsuarioController.alterar}"
+									update="@form" process="@form" />
+
+							</center>
+						</f:facet>
+					</p:panel>
+				</center>
+
+			</h:form>
+		</h:body>
+
+	</ui:define>
+</ui:composition>
+
+</html>

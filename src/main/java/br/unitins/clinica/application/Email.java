@@ -19,11 +19,7 @@ public class Email {
 	private String emailDestino;
 	private String mensagem;
 
-	public static void main(String[] args) {
-		Email email = new Email("janiojunior@gmail.com", "Teste 2", "Novo teste");
-		System.out.println(email.enviar());
-	}
-
+	
 	public Email(String emailDestino, String assunto, String mensagem) {
 		this.emailDestino = emailDestino;
 		this.assunto = assunto;

@@ -23,9 +23,23 @@ public abstract class Controller<T extends DefaultEntity> {
 	public void incluir() {
 		try {
 			limparRelacionamentosNaoObrigatorios();
-			getRepository().save(getEntity());
+			setEntity(getRepository().save(getEntity()));
 			Util.addInfoMessage("Inclusão realizada com sucesso.");
 			limpar();
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			Util.addErrorMessage(e.getMessage());
+		} catch (VersionException e) {
+			e.printStackTrace();
+			Util.addErrorMessage(e.getMessage());
+		}
+	}
+	
+	public void salvarSemLimpar() {
+		try {
+			limparRelacionamentosNaoObrigatorios();
+			setEntity(getRepository().save(getEntity()));
+			Util.addInfoMessage("Salvo com sucesso.");
 		} catch (RepositoryException e) {
 			e.printStackTrace();
 			Util.addErrorMessage(e.getMessage());
@@ -42,7 +56,7 @@ public abstract class Controller<T extends DefaultEntity> {
 	public void alterar() {
 		try {
 			limparRelacionamentosNaoObrigatorios();
-			getRepository().save(getEntity());
+			setEntity(getRepository().save(getEntity()));
 			Util.addInfoMessage("Alteração realizada com sucesso.");
 			limpar();
 		} catch (RepositoryException e) {

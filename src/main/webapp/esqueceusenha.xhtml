@@ -17,10 +17,10 @@
 <h:body>
 	<h:form>
 
-		<h:messages infoStyle="color:green" errorStyle="color:red" />
 
 		<center>
 			<p:panel header="Redefinir senha" style="width:700px; padding:100px">
+				<p:messages infoStyle="color:green" errorStyle="color:red" />
 				<h:panelGrid>
 					<div class="p-grid ui-fluid">
 						<h3>Informe o seu email para enviarmos o seu código de
@@ -35,7 +35,9 @@
 						<p:commandButton value="Enviar" icon="pi pi-check"
 							actionListener="#{esqueceuSenhaController.enviarEmail}"
 							style="margin-left:260px; width:200px !important; margin-top:5px;"
-							styleClass="rounded-button ui-button-raised" />
+							styleClass="rounded-button ui-button-raised" 
+							update="@form"
+							process="@form"/>
 
 					</center>
 				</f:facet>
@@ -44,7 +46,5 @@
 
 	</h:form>
 </h:body>
-
-
 
 </html>

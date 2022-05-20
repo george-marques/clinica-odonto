@@ -30,9 +30,8 @@
 				<div
 					class="row d-flex justify-content-center align-items-center h-100">
 					<div>
-						<img
-							src="https://www.imagensempng.com.br/wp-content/uploads/2021/09/05-12.png"
-							class="img-fluid" alt="Sample image" />
+						<p:graphicImage height="200px" width="200px"
+           		value="./resources/images/odonto.png"/>
 					</div>
 
 					<div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
@@ -51,7 +50,7 @@
 
 							<label class="form-label" for="usuario">Usuário</label>
 							<p:inputText value="#{loginController.usuario.login}"
-								styleClass="form-control form-control-lg"
+								a:autofocus="true" styleClass="form-control form-control-lg"
 								a:placeholder="Informe seu login" />
 						</div>
 
@@ -65,11 +64,16 @@
 						<p:commandLink tabindex="3" style="margin-bottom:0;"
 							styleClass="wdi-red" value="Esqueceu a senha?"
 							action="esqueceusenha.xhtml?faces-redirect=true" />
+							
+							<p:commandLink tabindex="3" style="margin-bottom:0; margin-left:25px;margin-right:10px;"
+							styleClass="wdi-red" value="Cadastrar"
+							action="usuario.xhtml?faces-redirect=true" />
 
 						<div class="text-center text-lg-start mt-4 pt-2">
 							<p:commandButton value="Entrar"
-								style="padding-left: 2.5rem; padding-right: 2.5rem;"
+								style="padding-left: 2.5rem; padding-right: 2.5rem; margin-left:265px;margin-right:10px;"
 								styleClass="btn btn-primary btn-lg"
+								
 								actionListener="#{loginController.entrar}" update="@form"
 								process="@form">
 							</p:commandButton>
