@@ -12,37 +12,191 @@
 	<title>Esqueceu senha</title>
 </h:head>
 
+<style>
+.ui-fluid .ui-inputtext {
+	width: 300px;
+}
+
+.wrapper .sidebar {
+	background: white;
+}
+
+footer {
+	background-color: #443ea2;
+	padding: 0px;
+	color: white;
+	height: 3rem;
+	position: absolute;
+	bottom: 0px;
+	left: 0; right : 0;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	right: 0;
+}
+
+body .ui-menu.ui-menubar {
+	background-color: #443ea2;
+	margin-top: -9px;
+	margin-left: -15px;
+	margin-right: -8px;
+}
+</style>
+
 
 
 <h:body>
 	<h:form>
+		<p:growl id="growl" />
+		<p:menubar>
+			<f:facet name="options">
+				<div class="ui-input-icon-left p-mr-2">
+					<i class="pi pi-fw pi-user" />
+					<p:inputText placeholder="Login"
+						value="#{loginController.usuario.login}" required="true"
+						requiredMessage="Informe o login" />
+
+					<i class="pi pi-fw pi-lock" />
+					<p:password value="#{loginController.usuario.senha}"
+						required="true" requiredMessage="Informe a senha"
+						placeholder="Senha" toggleMask="true" />
+
+				</div>
+				<p:commandButton value="Entrar" icon="pi pi-fw pi-sign-in"
+					styleClass="ui-button-info" style="margin-left:10px;">
+					<f:ajax listener="#{loginController.entrar}" execute="@form"
+						render="@form:growl" />
+				</p:commandButton>
+
+				<p:commandLink tabindex="3"
+					style="margin-bottom:0; margin-left:10px; color:white;"
+					styleClass="wdi-red" value="Esqueceu a senha?"
+					action="esqueceusenha.xhtml?faces-redirect=true" process="@this"
+					update="@this" />
+			</f:facet>
+		</p:menubar>
+
+	</h:form>
+
+	<h:form id="formPrincipal">
+		<p:wizard
+			style="background-color:#F8F9FA;border-radius: 10px; width:60%; heigth:90%;  margin-left: auto;
+    margin-right: auto; margin-top: 5%; padding: 20px 20px 20px 20px;border:#A0BDC5 solid 1px "
+			nextLabel="Avançar" backLabel="Voltar">
+
+			<p:tab id="codigo" title="Código">
+				<h:messages id="mensagemCodigo" style="color:#555F5E;margin:8px;" />
+				<p:panel header="Código de Verificação">
 
 
-		<center>
-			<p:panel header="Redefinir senha" style="width:700px; padding:100px">
-				<p:messages infoStyle="color:green" errorStyle="color:red" />
-				<h:panelGrid>
-					<div class="p-grid ui-fluid">
-						<h3>Informe o seu email para enviarmos o seu código de
-							redefinição de senha.</h3>
-						<p:inputText value="#{esqueceuSenhaController.email}"
-							style="width:100%;" placeholder="Informe aqui seu email" />
+					<div class="ui-fluid">
+
+
+						<div class="p-field" style="padding: 0px 0px 15px 0px;">
+							<label for="firstname">Email</label>
+							<p:inputText required="true" requiredMessage="Informe o email"
+								type="text" value="#{esqueceuSenhaController.email}" />
+						</div>
 
 					</div>
-				</h:panelGrid>
-				<f:facet name="footer">
-					<center>
-						<p:commandButton value="Enviar" icon="pi pi-check"
-							actionListener="#{esqueceuSenhaController.enviarEmail}"
-							style="margin-left:260px; width:200px !important; margin-top:5px;"
-							styleClass="rounded-button ui-button-raised" 
-							update="@form"
-							process="@form"/>
+					<div class="card" style="padding: 0px 0px 15px 0px;">
 
-					</center>
-				</f:facet>
-			</p:panel>
-		</center>
+						<p:commandButton update="@form mensagemCodigo "
+							value="Enviar Código" icon="pi pi-check" title="Enviar Código"
+							action="#{esqueceuSenhaController.enviarEmail}"
+							styleClass="ui-button-outlined ui-button-success"
+							process="codigo">
+
+						</p:commandButton>
+
+
+					</div>
+				</p:panel>
+			</p:tab>
+
+			<p:tab id="validar" title="Validação">
+				<h:messages id="mensagemValidar" style="color:#555F5E;margin:8px;" />
+				<p:panel header="Validar Código">
+
+
+					<div class="ui-fluid">
+
+
+						<div class="p-field" style="padding: 0px 0px 15px 0px;">
+							<label for="firstname">Código</label>
+							<p:inputText type="text" required="true"
+								requiredMessage="Informe o código"
+								value="#{alterarSenhaController.codigo}" />
+						</div>
+
+
+
+
+
+					</div>
+					<div class="card" style="padding: 0px 0px 15px 0px;">
+
+						<p:commandButton update="@form mensagemValidar "
+							value="Validar Código" icon="pi pi-check" title="Validar Código"
+							action="#{alterarSenhaController.validarCodigo}"
+							styleClass="ui-button-outlined ui-button-success"
+							process="validar">
+
+						</p:commandButton>
+
+
+
+
+					</div>
+				</p:panel>
+			</p:tab>
+
+			<p:tab id="alterar" title="Alteração">
+				<h:messages id="mensagemAlterar" style="color:#555F5E;margin:2px;" />
+				<p:panel header="Alterar Senha">
+
+
+					<div class="ui-fluid">
+
+
+						<div class="p-field" style="padding: 0px 0px 0px 0px;">
+							<label for="firstname">Nova Senha</label>
+
+							<p:password value="#{alterarSenhaController.senha}"
+								toggleMask="true" redisplay="true" required="true"
+								requiredMessage="Informe a senha" />
+						</div>
+
+						<div class="p-field" style="padding: 0px 0px 0px 0px;">
+							<label for="firstname">Confirmar Senha</label>
+
+							<p:password value="#{alterarSenhaController.confirmarSenha}"
+								toggleMask="true" redisplay="true" required="true"
+								requiredMessage="Confirme a senha" />
+						</div>
+
+					</div>
+					<div class="card" style="padding: 0px 0px 10px 0px;">
+
+						<p:commandButton update="@form mensagemAlterar " value="Confirmar"
+							icon="pi pi-check" title="Confirmar"
+							action="#{alterarSenhaController.redefinirSenha}"
+						style="margin-left:5px;margin-right:10px;  width:500px !important; margin-top:5px;"
+												styleClass="rounded-button ui-button-raised ui-button-success"
+							process="alterar">
+
+						</p:commandButton>
+
+					</div>
+				</p:panel>
+			</p:tab>
+
+		</p:wizard>
+		<footer>
+			<div class="box footer" style="text-align: center;">© 2022
+				Copyright: Todos os direitos reservados.</div>
+		</footer>
 
 	</h:form>
 </h:body>

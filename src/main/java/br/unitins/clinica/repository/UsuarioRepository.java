@@ -54,5 +54,30 @@ public class UsuarioRepository extends Repository<Usuario> {
 			throw new RepositoryException("Erro ao executar o findByEmail.");
 		}		
 	}
+	
+	
+	public String findBySenha(String senha) throws RepositoryException {
+		try { 
+			StringBuffer jpql = new StringBuffer();
+			jpql.append("SELECT ");
+			jpql.append("  u.senha ");
+			jpql.append("FROM ");
+			jpql.append("  Usuario u ");
+			jpql.append("WHERE ");
+			jpql.append("  u.senha = :senha ");
+			
+			Query query = getEntityManager().createQuery(jpql.toString());
+			query.setParameter("senha", senha);
+			
+			return (String) query.getSingleResult();
+		} catch (NoResultException e) {
+			System.out.println(e.getMessage());
+			return null;
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao executar o findBySenha.");
+		}		
+	}
 
 }

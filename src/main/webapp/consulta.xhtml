@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<title>Schedule Example</title>
+</h:head>
+<h:body>
+
+
+	<h:form>
+		<p:growl id="messages" showDetail="true" />
+
+		<p:schedule id="schedule" value="#{consultaController.eventModel}"
+			widgetVar="myschedule">
+
+			<p:ajax event="eventSelect"
+				listener="#{consultaController.selecionaEvento}" update="eventDetails"
+				oncomplete="PF('eventDialog').show();" />
+				
+				   
+
+		</p:schedule>
+
+
+		<p:dialog widgetVar="eventDialog" header="Detalhes do Agendamento"
+			showEffect="fade" hideEffect="fade">
+
+			<h:panelGrid id="eventDetails" columns="2" cellpadding="7">
+				<p:outputLabel for="title" value="Titulo" styleClass="p-text-bold" />
+				<p:inputText id="title" value="#{consultaController.entity.titulo}"
+					required="true" />
+
+				<p:outputLabel for="from" value="Inicio" styleClass="p-text-bold" />
+				<p:datePicker id="from"
+					value="#{consultaController.entity.dataInicio}"
+					pattern="dd/MM/yyyy" showTime="true" appendTo="@(body)" />
+
+				<p:outputLabel for="to" value="Fim" styleClass="p-text-bold" />
+				<p:datePicker id="to" value="#{consultaController.entity.dataFim}"
+					pattern="dd/MM/yyyy" showTime="true" appendTo="@(body)" />
+
+				<p:outputLabel for="status" value="Status" styleClass="p-text-bold" />
+				<p:selectBooleanCheckbox id="status" value="#{consultaController.entity.status}" />
+
+				<p:outputLabel for="description" value="Descrição"
+					styleClass="p-text-bold" />
+				<p:inputText id="description"
+					value="#{consultaController.entity.descricao}" required="true" />
+
+
+			</h:panelGrid>
+
+		
+		</p:dialog>
+
+
+	</h:form>
+
+</h:body>
+
+</html>

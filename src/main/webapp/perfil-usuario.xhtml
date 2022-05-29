@@ -13,8 +13,7 @@
 </h:head>
 
 
-<ui:composition template="template.xhtml">
-	<ui:define name="conteudo">
+
 
 		<style>
 .ui-inputfield {
@@ -46,8 +45,17 @@
 									style="width:100%;" placeholder="Informe aqui seu email" />
 
 								<p:outputLabel value="Senha" />
-								<p:password value="#{perfilUsuarioController.entity.senha}"
-									placeholder="Informe sua senha" />
+								<p:password value="#{perfilUsuarioController.senhaAtual}"
+									placeholder="Informe sua senha atual" toggleMask="true"/>
+								
+								<p:outputLabel value="Senha" />
+								<p:password value="#{perfilUsuarioController.senha}"
+									placeholder="Informe sua senha" toggleMask="true"/>
+
+								<p:outputLabel value="Confirmar senha" />
+								<p:password value="#{perfilUsuarioController.confirmarSenha}"
+									placeholder="Informe sua senha" toggleMask="true"/>
+
 
 								<p:outputLabel value="Foto do perfil " />
 								<h:form enctype="multipart/form-data">
@@ -65,20 +73,34 @@
 						<f:facet name="footer">
 							<center>
 								<p:commandButton value="Alterar informações" icon="pi pi-check"
-								styleClass="rounded-button ui-button-raised ui-button-success"
+									styleClass="rounded-button ui-button-raised ui-button-success"
 									style="margin-left:400px;margin-right:10px;"
-									actionListener="#{perfilUsuarioController.alterar}"
-									update="@form" process="@form" />
+									actionListener="#{perfilUsuarioController.alterarUsuario}"
+									update="@form" process="@form">
+
+									<p:confirm type="popup" header="Confirmation"
+										message="Lembre-se de revisar os dados."
+										icon="pi pi-info-circle" />
+
+								</p:commandButton>
 
 							</center>
 						</f:facet>
 					</p:panel>
 				</center>
 
+
+				<p:confirmPopup global="true">
+					<p:commandButton value="Confirmar" type="button"
+						styleClass="ui-confirm-popup-yes" />
+					<p:commandButton value="Revisar" type="button"
+						styleClass="ui-confirm-popup-no ui-button-flat" />
+
+				</p:confirmPopup>
+
 			</h:form>
 		</h:body>
 
-	</ui:define>
-</ui:composition>
+	
 
 </html>

@@ -2,71 +2,139 @@
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<title>Cadastro de Usuário</title>
 </h:head>
-
 
 <style>
 .ui-fluid .ui-inputtext {
 	width: 300px;
 }
+
+.wrapper .sidebar {
+	background: white;
+}
+
+footer {
+	background-color: #443ea2;
+	padding: 0px;
+	color: white;
+	height: 3rem;
+	position: absolute;
+	bottom: 0px;
+	left: 0;
+	right: 0;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+body .ui-menu.ui-menubar {
+	background-color: #443ea2;
+	margin-top: -9px;
+	margin-left: -15px;
+	margin-right: -8px;
+}
 </style>
 
 <h:body>
 	<h:form>
-		<p:growl id="growl" showDetail="true" />
-		<center>
-			<p:panel header="Cadastro de Usuário"
-				style="width:600px; font-weight: bold;">
-				<div class="p-grid ui-fluid">
+		<p:growl id="growl" />
 
-					<div align="right" style="float: right; position: relative;">
-						<img class="img-responsive"
-							style="max-width: 80px !important; max-height: 80px !important;"
-							src="img-usuario?nome=#{usuarioController.entity.id}.png" />
+		<p:menubar>
+			<f:facet name="options">
+				<div class="ui-input-icon-left p-mr-2">
+					<i class="pi pi-fw pi-user" />
+					<p:inputText placeholder="Login" required="true"
+						requiredMessage="Informe o login"
+						value="#{loginController.usuario.login}" />
+
+					<i class="pi pi-fw pi-lock" />
+					<p:password value="#{loginController.usuario.senha}"
+						required="true" requiredMessage="Informe a senha"
+						placeholder="Senha" toggleMask="true" />
+
+				</div>
+				<p:commandButton value="Entrar" icon="pi pi-fw pi-sign-in"
+					styleClass="ui-button-info" style="margin-left:10px;">
+					<f:ajax listener="#{loginController.entrar}" execute="@form"
+						render="@form:growl" />
+				</p:commandButton>
+
+				<p:commandLink tabindex="3"
+					style="margin-bottom:0; margin-left:10px; color:white;"
+					styleClass="wdi-red" value="Esqueceu a senha?"
+					action="esqueceusenha.xhtml?faces-redirect=true" process="@this"
+					update="@this" />
+			</f:facet>
+		</p:menubar>
+
+		</h:form>
+		
+		<h:form id="formPrincipal">
+				<p:growl id="growl1" />
+			<center>
+				<p:panel header="CADASTRE-SE"
+					style="width:600px; font-weight: bold; margin-left:50px; margin-top:70px;">
+					<div class="p-grid ui-fluid">
+
+						<div align="right" style="float: right; position: relative;">
+							<img class="img-responsive"
+								style="max-width: 80px !important; max-height: 80px !important;"
+								src="img-usuario?nome=#{usuarioController.entity.id}.png" />
+						</div>
+
+
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Login" />
+							<p:inputText value="#{usuarioController.entity.login}"
+								required="true" requiredMessage="Não informou login" />
+
+							<p:outputLabel value="E-mail " />
+							<p:inputText
+								value="#{usuarioController.entity.pessoaFisica.email}"
+								required="true" requiredMessage="Não informou email" />
+
+							<p:outputLabel value="Senha " />
+							<p:password value="#{usuarioController.entity.senha}"
+								required="true" requiredMessage="Não informou senha" />
+
+
+						</h:panelGrid>
 					</div>
 
+					<f:facet name="footer">
+						<center>
 
-					<h:panelGrid columns="2">
-						<p:outputLabel value="Login" />
-						<p:inputText value="#{usuarioController.entity.login}" />
-
-						<p:outputLabel value="E-mail " />
-						<p:inputText
-							value="#{usuarioController.entity.pessoaFisica.email}" />
-
-						<p:outputLabel value="Senha " />
-						<p:password value="#{usuarioController.entity.senha}" />
-
-						
-					</h:panelGrid>
-				</div>
-
-				<f:facet name="footer">
-					<center>
-						<p:commandButton value="Incluir"
-							style="margin-left:10px;margin-right:10px;"
-							actionListener="#{usuarioController.incluir}" update="@form"
-							process="@form" />
+							<h:panelGrid columns="2">
 
 
-					</center>
-				</f:facet>
-			</p:panel>
+								<p:commandButton value="Cadastrar" icon="pi pi-check"
+									style="margin-left:5px;margin-right:5px;  width:200px !important; margin-top:5px;"
+									styleClass="rounded-button ui-button-raised ui-button-success"
+									actionListener="#{usuarioController.incluir}" update="@form:growl1"
+									process=":formPrincipal" />
 
-		</center>
-	</h:form>
+
+							</h:panelGrid>
 
 
 
-	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
-		responsive="true" width="350">
-		<p:commandButton value="Não" type="button"
-			styleClass="ui-confirmdialog-no ui-button-flat" />
-		<p:commandButton value="Sim" type="button"
-			styleClass="ui-confirmdialog-yes" />
-	</p:confirmDialog>
+						</center>
+					</f:facet>
+				</p:panel>
+
+			</center>
+			<footer>
+				<div class="box footer" style="text-align: center;">© 2022
+					Copyright: Todos os direitos reservados.</div>
+			</footer>
+
+		</h:form>
 </h:body>
+
+
 </html>

@@ -15,7 +15,7 @@ public class Usuario extends DefaultEntity implements Serializable {
 	private String login;
 	private String senha;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(unique = true)
 	private PessoaFisica pessoaFisica;
 

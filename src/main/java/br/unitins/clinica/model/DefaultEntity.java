@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Version;
 
 @MappedSuperclass
@@ -21,6 +23,16 @@ public class DefaultEntity {
 	private LocalDateTime dataCadastro;
 
 	private LocalDateTime dataAlteracao;
+
+	@PrePersist
+	private void gerarDataCadastro() {
+		dataCadastro = LocalDateTime.now();
+	}
+
+	@PreUpdate
+	private void gerarDataAlteracao() {
+		dataAlteracao = LocalDateTime.now();
+	}
 
 	public Integer getId() {
 		return id;

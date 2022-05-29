@@ -19,15 +19,15 @@ import br.unitins.clinica.repository.UsuarioRepository;
 
 @Named
 @ViewScoped
-public class EsqueceuSenhaController implements Serializable{
+public class EsqueceuSenhaController extends Controller<EsqueceuSenha> implements Serializable {
 
 	private static final long serialVersionUID = -8210073220145769614L;
-	
-private String email;
-	
+
+	private String email;
+
 
 	public void enviarEmail() {
-		
+
 		// 1 - Buscar o usuario
 		UsuarioRepository repo = new UsuarioRepository();
 		Usuario usuario = null;
@@ -46,7 +46,7 @@ private String email;
 		Random r = new Random();
 		String codigo = new DecimalFormat("T-000000").format(r.nextInt(1000000));
 		System.out.println(codigo);
-		
+
 		// 3 - EsqueceuSenha
 		EsqueceuSenha esqueceu = new EsqueceuSenha();
 		esqueceu.setUsuario(usuario);
@@ -63,24 +63,32 @@ private String email;
 			Util.addErrorMessage("Problema ao gerar o código, tente novamente.");
 			e.printStackTrace();
 		}
-		
+
 		// 4 - enviar email
-		Email email = new Email(usuario.getPessoaFisica().getEmail(), 
-				"Esqueceu a senha", 
-				"Segue o código de recuperar a senha: "+codigo);
+		Email email = new Email(usuario.getPessoaFisica().getEmail(), "Esqueceu a senha",
+				"Segue o código de recuperar a senha: " + codigo);
 		if (!email.enviar()) {
 			Util.addErrorMessage("Problema ao enviar o email.");
 		} else
 			Util.addInfoMessage("Código enviado para seu email.");
-		
+
 	}
 
+	
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+
+	@Override
+	public EsqueceuSenha getEntity() {
+		if (entity == null)
+			entity = new EsqueceuSenha();
+		return entity;
 	}
 
 }
