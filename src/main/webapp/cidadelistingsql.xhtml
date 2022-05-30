@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Listagem de Cidade</title>
+</h:head>
+<h:body>
+	<h:form>
+
+
+		<p:toolbar>
+			<p:toolbarGroup>
+				<p:commandButton value="Cadastrar Cidade" icon="pi pi-plus"
+					styleClass="ui-button-success" onclick="PF('dlg-cidade').show()" />
+
+			</p:toolbarGroup>
+		</p:toolbar>
+
+		<p:dialog header="Detalhes de Cidade" showEffect="fade" modal="true"
+			widgetVar="dlg-cidade" responsive="true">
+
+			<p:outputPanel id="manage-cidade-content" class="ui-fluid">
+				<p:outputPanel rendered="#{not empty cidadeController.entity}">
+
+					<div class="p-field">
+						<p:outputLabel value="Nome " />
+						<p:inputText value="#{cidadeController.entity.nome}" />
+					</div>
+
+					<div class="p-field">
+						<p:outputLabel value="Estado " />
+						<p:inputText value="#{cidadeController.entity.estado.nome}" />
+
+					</div>
+					
+					<div class="p-field">
+						<p:outputLabel value="Sigla " />
+						<p:inputText value="#{cidadeController.entity.estado.sigla}" />
+
+					</div>
+
+
+				</p:outputPanel>
+			</p:outputPanel>
+
+			<f:facet name="footer">
+				<p:commandButton value="Salvar" icon="pi pi-check"
+					styleClass="rounded-button ui-button-raised"
+					actionListener="#{cidadeController.incluir}" update="@form"
+					process="@form" />
+
+				<p:commandButton value="Cancelar" icon="pi pi-times"
+					styleClass="rounded-button ui-button-raised ui-button-danger"
+					style="margin-left:5px;margin-right:5px;"
+					actionListener="#{cidadeController.limpar}" update="@form"
+					process="@this" />
+			</f:facet>
+		</p:dialog>
+
+
+		<p:panel header="Pesquisa de Cidade">
+			<div class="p-grid ui-fluid">
+				<div class="p-col-12 p-md-4">
+					<div class="ui-inputgroup">
+						<p:inputText id="itNomePesquisa"
+							value="#{cidadeListingSQL.filtro}"
+							placeholder="Informe um nome ..." />
+						<p:commandButton value="Pesquisar"
+							actionListener="#{cidadeListingSQL.pesquisar}"
+							process="@this itNomePesquisa" update="dataTable" />
+					</div>
+				</div>
+			</div>
+			<p:dataTable id="dataTable" value="#{cidadeListingSQL.list}"
+				var="vetor">
+				<p:column headerText="Nome">
+					<p:outputLabel value="#{vetor[1]}" />
+				</p:column>
+
+				<p:column headerText="Estado">
+					<p:outputLabel value="#{vetor[2]}" />
+				</p:column>
+
+				<p:column headerText="Ação">
+					<p:commandButton value="Selecionar"
+						actionListener="#{cidadeListingSQL.select(vetor[0])}"
+						process="@this" update="@form" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

@@ -3,6 +3,7 @@ package br.unitins.clinica.model;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -12,6 +13,8 @@ import javax.persistence.OneToOne;
 public class Usuario extends DefaultEntity implements Serializable {
 
 	private static final long serialVersionUID = -1801040627866967810L;
+	
+	@Column(unique = true)
 	private String login;
 	private String senha;
 

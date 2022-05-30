@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
@@ -12,10 +13,10 @@ import javax.validation.constraints.NotBlank;
 public class Cidade extends DefaultEntity implements Serializable {
 
 	private static final long serialVersionUID = 6461454015944838277L;
-	@NotBlank(message = "A cidade deve ser informada")
+
 	private String nome;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_estado")
 	private Estado estado;
 

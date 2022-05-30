@@ -7,15 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Endereco extends DefaultEntity implements Serializable {
 
 	private static final long serialVersionUID = 4935228166471927242L;
+	@NotBlank(message = "Informe a rua")
 	private String rua;
+	@NotBlank(message = "Informe o número")
 	private String numero;
+	@NotBlank(message = "Informe o bairro")
 	private String bairro;
 	private String complemento;
+	@NotBlank(message = "Informe o cep")
 	private String cep;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

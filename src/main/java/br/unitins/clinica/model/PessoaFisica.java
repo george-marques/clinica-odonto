@@ -4,13 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+
 @Entity
 public class PessoaFisica extends Pessoa {
 
-	
 	private String cpf;
 
-	
 	@Enumerated(EnumType.STRING)
 	private Sexo sexo;
 

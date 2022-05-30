@@ -5,6 +5,7 @@ import javax.inject.Named;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 
+import br.unitins.clinica.controller.listing.CidadeListingSQL;
 import br.unitins.clinica.controller.listing.EstadoListing;
 import br.unitins.clinica.application.RepositoryException;
 import br.unitins.clinica.model.Cidade;
@@ -56,6 +57,16 @@ public class PacienteController extends Controller<Paciente> implements Serializ
 			getEntity().getPessoaFisica().getEndereco().getCidade().setEstado(null);
 	}
 	
+	
+	public void abrirCidadeListingSQL() {
+		CidadeListingSQL listing = new CidadeListingSQL();
+		listing.open();
+	}
+	
+	public void obterCidadeListingSQL(SelectEvent<Cidade> event) {
+		getEntity().getPessoaFisica().getEndereco().setCidade(event.getObject());
+	}
+	
 	public void abrirEstadoListing() {
 		EstadoListing listing = new EstadoListing();
 		listing.open();
@@ -64,6 +75,7 @@ public class PacienteController extends Controller<Paciente> implements Serializ
 	public void obterEstadoListing(SelectEvent<Estado> event) {
 		getEntity().getPessoaFisica().getEndereco().getCidade().setEstado(event.getObject());
 	}
+	
 
 	public void editar(Paciente paciente) {
 		setEntity(paciente);

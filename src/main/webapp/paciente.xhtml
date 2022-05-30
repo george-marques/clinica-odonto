@@ -65,7 +65,7 @@
 				</p:toolbar>
 
 				<p:dialog header="Detalhes de paciente" showEffect="fade"
-					width="50%" height="350px" modal="true" widgetVar="dlg-paciente"
+					width="55%" height="350px" modal="true" widgetVar="dlg-paciente"
 					responsive="true" class="modal">
 
 					<p:outputPanel id="manage-paciente-content" class="ui-fluid">
@@ -87,12 +87,12 @@
 												value="#{pacienteController.entity.cartaoSus}" />
 
 											<p:outputLabel for="cpf">Cpf</p:outputLabel>
-											<p:inputMask id="cpf" mask="999.999.999-99"
+											<p:inputMask id="cpf" mask="999.999.999-99" required="true"
 												validateMask="true"
 												value="#{pacienteController.entity.pessoaFisica.cpf}" />
 
 											<p:outputLabel>Sexo</p:outputLabel>
-											<p:selectOneMenu
+											<p:selectOneMenu required="true"
 												value="#{pacienteController.entity.pessoaFisica.sexo}">
 												<f:selectItem itemLabel="Selecione um sexo..." />
 												<f:selectItems value="#{pacienteController.listaSexo}"
@@ -128,26 +128,45 @@
 											<p:inputMask mask="99999-999" validateMask="true"
 												value="#{pacienteController.entity.pessoaFisica.endereco.cep}" />
 
-											<h:outputText value="Cidade: " />
-											<p:inputText
-												value="#{pacienteController.entity.pessoaFisica.endereco.cidade.nome}" />
-
-											<h:outputText value="Estado: " />
-											<h:panelGroup id="panel">
+											<p:outputLabel value="Nome: " />
+											<h:panelGroup id="panelCidade">
 												<div class="p-col-12 p-md-4">
 													<div class="ui-inputgroup">
 														<p:inputText
-															value="#{pacienteController.entity.pessoaFisica.endereco.cidade.estado.nome}" />
+															value="#{pacienteController.entity.pessoaFisica.endereco.cidade.nome}" />
+														<p:commandButton icon="pi pi-search"
+															styleClass="ui-button-warning"
+															actionListener="#{pacienteController.abrirCidadeListingSQL}">
+															<p:ajax event="dialogReturn"
+																listener="#{pacienteController.obterCidadeListingSQL}"
+																update="@form:panelCidade" />
+														</p:commandButton>
+													</div>
+												</div>
+											</h:panelGroup>
+
+											<p:outputLabel value="Estado:" />
+											<h:panelGroup id="panelEstado">
+												<div class="p-col-12 p-md-4">
+													<div class="ui-inputgroup">
+														<p:autoComplete
+															value="#{pacienteController.entity.pessoaFisica.endereco.cidade.estado}"
+															var="estado" itemLabel="#{estado.nome}"
+															itemValue="#{estado}"
+															completeMethod="#{cidadeController.completeEstado}"
+															forceSelection="true" maxResults="3"
+															moreText="... mais resultados" />
 														<p:commandButton icon="pi pi-search"
 															styleClass="ui-button-warning"
 															actionListener="#{pacienteController.abrirEstadoListing}">
 															<p:ajax event="dialogReturn"
 																listener="#{pacienteController.obterEstadoListing}"
-																update="@form:panel"/>
+																update="@form:panelEstado" />
 														</p:commandButton>
 													</div>
 												</div>
 											</h:panelGroup>
+
 
 
 										</h:panelGrid>
@@ -164,7 +183,7 @@
 												required="true" label="Email" />
 
 											<h:outputText value="Telefone: " />
-											<p:inputMask id="telefone" mask="(99) 99999-9999"
+											<p:inputMask id="telefone" mask="(99) 99999-9999" required="true"
 												validateMask="true"
 												value="#{pacienteController.entity.pessoaFisica.telefone}" />
 
@@ -178,11 +197,12 @@
 										<h:panelGrid id="confirmation" columns="3"
 											columnClasses="grid,grid,grid">
 											<h:panelGrid columns="2" columnClasses="label, value">
-												<h:outputText value="Nome: "  />
+												
+												
+												<h:outputText value="Nome: " />
 												<h:outputText
 													value="#{pacienteController.entity.pessoaFisica.nome}"
-													styleClass="outputLabel" 
-													a:autofocus="true"/>
+													styleClass="outputLabel" a:autofocus="true" />
 
 												<h:outputText value="Cartão Sus: " />
 												<h:outputText value="#{pacienteController.entity.cartaoSus}"
@@ -254,20 +274,22 @@
 											</h:panelGrid>
 
 										</h:panelGrid>
-										<h:panelGrid columns="2">
-											<p:commandButton value="Salvar" icon="pi pi-check"
-												style="margin-left:5px;margin-right:5px;  width:200px !important; margin-top:5px;"
-												styleClass="rounded-button ui-button-raised"
-												actionListener="#{pacienteController.incluir}"
-												update="@form" process="@form" />
+										<center>
+											<h:panelGrid columns="2">
+												<p:commandButton value="Salvar" icon="pi pi-check"
+													style="margin-left:5px;margin-right:5px;  width:200px !important; margin-top:5px;"
+													styleClass="rounded-button ui-button-raised"
+													actionListener="#{pacienteController.incluir}"
+													update="@form" process="@form" />
 
-											<p:commandButton value="Cancelar" icon="pi pi-times"
-												styleClass="rounded-button ui-button-raised ui-button-danger"
-												style="margin-left:5px;margin-right:5px; width:500px !important;margin-top:5px;"
-												actionListener="#{pacienteController.limpar}" update="@form"
-												process="@this" />
+												<p:commandButton value="Cancelar" icon="pi pi-times"
+													styleClass="rounded-button ui-button-raised ui-button-danger"
+													style="margin-left:5px;margin-right:5px; width:200px !important;margin-top:5px;"
+													actionListener="#{pacienteController.limpar}"
+													update="@form" process="@this" />
 
-										</h:panelGrid>
+											</h:panelGrid>
+										</center>
 									</p:panel>
 								</p:tab>
 							</p:wizard>
@@ -333,6 +355,8 @@
 						</p:column>
 
 						<p:column exportable="false">
+						
+					
 							<p:commandButton
 								actionListener="#{pacienteController.editar(obj)}"
 								icon="pi pi-pencil" update=":form:manage-paciente-content"
