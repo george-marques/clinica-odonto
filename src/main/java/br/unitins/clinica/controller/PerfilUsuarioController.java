@@ -31,18 +31,19 @@ public class PerfilUsuarioController extends Controller<Usuario> implements Seri
 		super(new UsuarioRepository());
 	}
 
-	public String alterarUsuario() {
+	public void excluirConta() {
+		excluir();
+		Util.redirect("login.xhtml");
+	}
+
+	public void alterarUsuario() {
 		UsuarioRepository ur = new UsuarioRepository();
-		String senhaAux = null;
 		
-		setSenhaAtual(Util.hash(getEntity()));
-		try {
-			senhaAux = ur.findBySenha(Util.hash(getEntity()));
-		} catch (RepositoryException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		if (getSenhaAtual() == senhaAux && getConfirmarSenha().equals(getSenha())) {
+		System.out.println("Senha no banco: " + getEntity().getSenha());
+		setSenhaAtual(Util.hash(getEntity().getLogin() + getSenhaAtual()));
+		System.out.println("senha informada " + getSenhaAtual());
+
+		if (getEntity().getSenha().equals(getSenhaAtual()) && getConfirmarSenha().equals(getSenha())) {
 			try {
 
 				if (!getSenha().isEmpty()) {
@@ -62,43 +63,27 @@ public class PerfilUsuarioController extends Controller<Usuario> implements Seri
 					// salvando a imagem
 					if (!Util.saveImageUsuario(getFotoInputStream(), "png", getEntity().getId())) {
 						Util.addErrorMessage("Erro ao salvar. Não foi possível salvar a imagem do usuário.");
-						return null;
+						return;
 					}
 				}
 
 				Util.addInfoMessage("Alteração realizada com sucesso.");
 			} catch (RepositoryException e) {
 				Util.addErrorMessage("Problema ao salvar, tente novamente ou entre em contato com a TI.");
-				return null;
+				return;
 			}
 		} else {
 
 			Util.addErrorMessage("Verifique a confirmação de senha e tente novamente.");
-			return null;
+			return;
 		}
 
 		limpar();
 		setSenha("");
 		setConfirmarSenha("");
-		return "login.xhtml?faces-redirect=true";
+		
 	}
 
-//	@Override
-//	public void alterar() {
-//		getEntity().setSenha(Util.hash(getEntity()));
-//
-//		super.salvarSemLimpar();
-//
-//		// caso exista uma imagem
-//		if (getFotoInputStream() != null) {
-//			// salvando a imagem
-//			if (!Util.saveImageUsuario(getFotoInputStream(), "png", getEntity().getId())) {
-//				Util.addErrorMessage("Erro ao salvar. Não foi possível salvar a imagem do usuário.");
-//				return;
-//			}
-//		}
-//		limpar();
-//	}
 
 	public void upload(FileUploadEvent event) {
 		UploadedFile uploadFile = event.getFile();

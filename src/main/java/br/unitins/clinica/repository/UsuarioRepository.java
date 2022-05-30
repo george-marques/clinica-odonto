@@ -56,7 +56,7 @@ public class UsuarioRepository extends Repository<Usuario> {
 	}
 	
 	
-	public String findBySenha(String senha) throws RepositoryException {
+	public Usuario findBySenha(String senha) throws RepositoryException {
 		try { 
 			StringBuffer jpql = new StringBuffer();
 			jpql.append("SELECT ");
@@ -69,7 +69,7 @@ public class UsuarioRepository extends Repository<Usuario> {
 			Query query = getEntityManager().createQuery(jpql.toString());
 			query.setParameter("senha", senha);
 			
-			return (String) query.getSingleResult();
+			return (Usuario) query.getSingleResult();
 		} catch (NoResultException e) {
 			System.out.println(e.getMessage());
 			return null;
@@ -78,6 +78,27 @@ public class UsuarioRepository extends Repository<Usuario> {
 			e.printStackTrace();
 			throw new RepositoryException("Erro ao executar o findBySenha.");
 		}		
+	}
+	
+	
+	public String validarSenha(String login, String senha) throws RepositoryException {
+		try { 
+			EntityManager em = getEntityManager();
+			//JPQL ou SQL
+			Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.login = :login AND u.senha = :senha");
+			query.setParameter("login", login);
+			query.setParameter("senha", senha);
+			
+			return  (String) query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			// mandando pro console o exception gerado
+			e.printStackTrace();
+			// repassando a excecao para quem vai executar o metodo
+			throw new RepositoryException("Problema ao validar senha.");
+		}
+		
 	}
 
 }
