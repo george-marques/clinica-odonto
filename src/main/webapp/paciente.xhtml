@@ -99,6 +99,7 @@
 													var="sex" itemValue="#{sex}" itemLabel="#{sex.label}" />
 											</p:selectOneMenu>
 
+
 										</h:panelGrid>
 									</p:panel>
 								</p:tab>
@@ -128,7 +129,7 @@
 											<p:inputMask mask="99999-999" validateMask="true"
 												value="#{pacienteController.entity.pessoaFisica.endereco.cep}" />
 
-											<p:outputLabel value="Nome: " />
+											<p:outputLabel value="Cidade: " />
 											<h:panelGroup id="panelCidade">
 												<div class="p-col-12 p-md-4">
 													<div class="ui-inputgroup">
@@ -183,8 +184,8 @@
 												required="true" label="Email" />
 
 											<h:outputText value="Telefone: " />
-											<p:inputMask id="telefone" mask="(99) 99999-9999" required="true"
-												validateMask="true"
+											<p:inputMask id="telefone" mask="(99) 99999-9999"
+												required="true" validateMask="true"
 												value="#{pacienteController.entity.pessoaFisica.telefone}" />
 
 										</h:panelGrid>
@@ -197,8 +198,8 @@
 										<h:panelGrid id="confirmation" columns="3"
 											columnClasses="grid,grid,grid">
 											<h:panelGrid columns="2" columnClasses="label, value">
-												
-												
+
+
 												<h:outputText value="Nome: " />
 												<h:outputText
 													value="#{pacienteController.entity.pessoaFisica.nome}"
@@ -355,8 +356,8 @@
 						</p:column>
 
 						<p:column exportable="false">
-						
-					
+
+
 							<p:commandButton
 								actionListener="#{pacienteController.editar(obj)}"
 								icon="pi pi-pencil" update=":form:manage-paciente-content"

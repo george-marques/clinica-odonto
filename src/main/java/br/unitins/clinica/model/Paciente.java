@@ -7,13 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Paciente extends DefaultEntity implements Serializable {
 
 	private static final long serialVersionUID = 6972123597625533140L;
-	@NotBlank(message = "O cartão SUS deve ser informado")
+	
 	private String cartaoSus;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

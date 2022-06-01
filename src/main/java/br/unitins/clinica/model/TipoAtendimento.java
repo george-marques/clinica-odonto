@@ -3,8 +3,6 @@ package br.unitins.clinica.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
-
 
 @Entity
 public class TipoAtendimento extends DefaultEntity implements Serializable {

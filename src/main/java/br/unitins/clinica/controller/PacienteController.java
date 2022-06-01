@@ -50,32 +50,30 @@ public class PacienteController extends Controller<Paciente> implements Serializ
 		}
 		return entity;
 	}
-	
+
 	@Override
 	protected void limparRelacionamentosNaoObrigatorios() {
 		if (getEntity().getPessoaFisica().getEndereco().getCidade().getEstado().getId() == null)
 			getEntity().getPessoaFisica().getEndereco().getCidade().setEstado(null);
 	}
-	
-	
+
 	public void abrirCidadeListingSQL() {
 		CidadeListingSQL listing = new CidadeListingSQL();
 		listing.open();
 	}
-	
+
 	public void obterCidadeListingSQL(SelectEvent<Cidade> event) {
 		getEntity().getPessoaFisica().getEndereco().setCidade(event.getObject());
 	}
-	
+
 	public void abrirEstadoListing() {
 		EstadoListing listing = new EstadoListing();
 		listing.open();
 	}
-	
+
 	public void obterEstadoListing(SelectEvent<Estado> event) {
 		getEntity().getPessoaFisica().getEndereco().getCidade().setEstado(event.getObject());
 	}
-	
 
 	public void editar(Paciente paciente) {
 		setEntity(paciente);

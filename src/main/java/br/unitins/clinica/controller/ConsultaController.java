@@ -1,94 +1,80 @@
 package br.unitins.clinica.controller;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.ScheduleEvent;
-import org.primefaces.model.ScheduleModel;
 
+import br.unitins.clinica.application.RepositoryException;
+import br.unitins.clinica.controller.listing.DentistaListing;
+import br.unitins.clinica.controller.listing.EstadoListing;
+import br.unitins.clinica.controller.listing.PacienteListing;
+import br.unitins.clinica.controller.listing.TipoAtendimentoListing;
 import br.unitins.clinica.model.Consulta;
+import br.unitins.clinica.model.Dentista;
+import br.unitins.clinica.model.Estado;
+import br.unitins.clinica.model.Paciente;
+import br.unitins.clinica.model.PessoaFisica;
+import br.unitins.clinica.model.TipoAtendimento;
 import br.unitins.clinica.repository.ConsultaRepository;
+import br.unitins.clinica.repository.EstadoRepository;
+import br.unitins.clinica.repository.TipoAtendimentoRepository;
 
 @Named
 @ViewScoped
 public class ConsultaController extends Controller<Consulta> implements Serializable {
 
 	private static final long serialVersionUID = -127684213819441346L;
-	private ScheduleModel eventModel;
-	private List<Consulta> listaConsulta;
-	private ConsultaRepository cr;
-	
+
 	public ConsultaController() {
 		super(new ConsultaRepository());
 	}
 
-	@SuppressWarnings("rawtypes")
-	@PostConstruct
-	public void init() {
-		cr = new ConsultaRepository();
-		entity = new Consulta();
-		eventModel = new DefaultScheduleModel();
+	public void abrirDentistaListing() {
+		DentistaListing listing = new DentistaListing();
+		listing.open();
+	}
 
-		listaConsulta = cr.listarTodos(entity);
+	public void obterDentistaListing(SelectEvent<Dentista> event) {
+		getEntity().setDentista(event.getObject());
+	}
 
-		for (Consulta c : listaConsulta) {
-			DefaultScheduleEvent evt = new DefaultScheduleEvent();
+	public void abrirPacienteListing() {
+		PacienteListing listing = new PacienteListing();
+		listing.open();
+	}
 
-			evt.setTitle(c.getTitulo());
-			evt.setStartDate(c.getDataInicio());
-			evt.setEndDate(c.getDataFim());
-			evt.setDescription(c.getDescricao());
-			evt.setAllDay(true);
-			evt.setEditable(true);
+	public void obterPacienteListing(SelectEvent<Paciente> event) {
+		getEntity().setPaciente(event.getObject());
 
-			eventModel.addEvent(evt);
+	}
 
+	public List<TipoAtendimento> completeTipoAtendimento(String filtro) {
+		TipoAtendimentoRepository repo = new TipoAtendimentoRepository();
+		try {
+			return repo.findByNome(filtro);
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			return new ArrayList<TipoAtendimento>();
 		}
-
-	}
-
-	@SuppressWarnings("rawtypes")
-	public void selecionaEvento(SelectEvent selectEvent) {
-
-		ScheduleEvent event = (ScheduleEvent) selectEvent.getObject();
-
-		for (Consulta ev: listaConsulta) {
-			if (ev.getId() == event.getData()) {
-				entity = ev;
-				break;
-			}
-		}
-	}
-
-	public ScheduleModel getEventModel() {
-		return eventModel;
-	}
-
-	public void setEventModel(ScheduleModel eventModel) {
-		this.eventModel = eventModel;
-	}
-
-	public List<Consulta> getListaConsulta() {
-		return listaConsulta;
-	}
-
-	public void setListaConsulta(List<Consulta> listaConsulta) {
-		this.listaConsulta = listaConsulta;
 	}
 
 	@Override
 	public Consulta getEntity() {
 		if (entity == null) {
 			entity = new Consulta();
+			entity.setDentista(new Dentista());
+			entity.setPaciente(new Paciente());
+			entity.getPaciente().setPessoaFisica(new PessoaFisica());
+			entity.setListaTipoAtendimento(new ArrayList<TipoAtendimento>());
+
 		}
-		
+
 		return entity;
 	}
 

@@ -22,7 +22,7 @@ public class TemplateController implements Serializable {
 			usuarioLogado = (Usuario) Session.getInstance().get("usuarioLogado");
 		return usuarioLogado;
 	}
-
+	
 	public void setUsuarioLogado(Usuario usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
 	}
