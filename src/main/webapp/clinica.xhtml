@@ -24,10 +24,12 @@
 
 					<p:toolbar>
 						<p:toolbarGroup>
+
 							<p:commandButton value="cadastrar clinica" icon="pi pi-plus"
-								styleClass="ui-button-success" 
-								onclick="PF('dlg-clinica').show()" 
-								 />
+								styleClass="ui-button-success"
+								onclick="PF('dlg-clinica').show()" />
+
+
 
 						</p:toolbarGroup>
 					</p:toolbar>
@@ -65,7 +67,7 @@
 										<p:inputText id="telefone"
 											value="#{clinicaController.entity.pessoaJuridica.telefone}" />
 									</div>
-									
+
 									<div class="p-field p-col">
 										<p:outputLabel for="email">E-mail</p:outputLabel>
 										<p:inputText id="email"
@@ -82,7 +84,7 @@
 								style="margin-left:5px;margin-right:5px;"
 								styleClass="rounded-button ui-button-raised"
 								actionListener="#{clinicaController.incluir}" update="@form"
-								process="@form" 
+								process="@form"
 								disabled="#{clinicaController.entity.id != null}" />
 
 							<p:commandButton value="Cancelar" icon="pi pi-times"

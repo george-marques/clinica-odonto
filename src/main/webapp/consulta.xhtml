@@ -9,106 +9,300 @@
 	<title>Agendamento</title>
 </h:head>
 
-<h:body>
-	<h:form>
-		<p:growl id="growl" showDetail="true" />
-		<center>
-			<p:panel header="Agendamento" style="font-weight: bold;">
-				<div class="p-grid ui-fluid">
-					<h:panelGrid>
+<ui:composition template="template.xhtml">
+	<ui:define name="conteudo">
 
-						<p:outputLabel value="Data Lançamento:" />
-						<p:datePicker value="#{consultaController.entity.dataLancamento}">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-						</p:datePicker>
+		<h:body>
+			<style type="text/css">
+.ui-fluid .ui-inputtext {
+	width: 400px;
+}
 
+.ui-inputgroup>.ui-inputtext:not(:last-child) {
+	width: 365px;
+}
 
-						<p:outputLabel value="Dentista " />
-						<h:panelGroup>
-							<div class="p-col-12 p-md-4">
-								<div class="ui-inputgroup">
-									<p:inputText value="#{consultaController.entity.dentista.nome}" />
-									<p:commandButton icon="pi pi-id-card"
-										styleClass="ui-button-success"
-										actionListener="#{consultaController.abrirDentistaListing}">
-										<p:ajax event="dialogReturn"
-											listener="#{consultaController.obterDentistaListing}"
-											update="@form" />
-									</p:commandButton>
-								</div>
-							</div>
-						</h:panelGroup>
+.ui-button {
+	width: 40%;
+}
+}
+</style>
+
+			<h:form>
+				<p:growl id="growl" />
 
 
-						<p:outputLabel value="Paciente " />
-						<h:panelGroup>
-							<div class="p-col-12 p-md-4">
-								<div class="ui-inputgroup">
-									<p:inputText
-										value="#{consultaController.entity.paciente.pessoaFisica.nome}" />
+				<p:dialog header="Detalhes de venda" showEffect="fade" width="55%"
+					height="350px" modal="true" widgetVar="dlg-venda" responsive="true"
+					class="modal">
 
-									<p:commandButton icon="pi pi-users"
-										styleClass="ui-button-warning"
-										actionListener="#{consultaController.abrirPacienteListing}">
-										<p:ajax event="dialogReturn"
-											listener="#{consultaController.obterPacienteListing}"
-											update="@form" />
-									</p:commandButton>
-								</div>
-							</div>
-						</h:panelGroup>
+					<p:outputPanel id="manage-venda-content" class="ui-fluid">
+						<p:outputPanel rendered="#{not empty vendaController.entity}">
 
-						<p:outputLabel value="Cartão Sus " />
-						<p:inputText
-							value="#{consultaController.entity.paciente.cartaoSus}" />
+							<p:wizard nextLabel="Avançar" backLabel="Voltar">
+
+								<p:tab id="venda" title="Venda">
 
 
-						<p:outputLabel value="Telefone " />
-						<p:inputText
-							value="#{consultaController.entity.paciente.pessoaFisica.telefone}" />
+									<p:panel header="Produtos a venda">
+										<div class="ui-fluid">
 
-						<p:outputLabel value="Sexo " />
-						<p:inputText
-							value="#{consultaController.entity.paciente.pessoaFisica.sexo}" />
+											<h:panelGrid id="panelDataTable">
+												<h:messages id="mensagemVenda"
+													style="color:green;margin:8px;" />
+												<p:dataTable id="dt-produtos" widgetVar="dtProdutos"
+													reflow="true" styleClass="produtos-table"
+													rowKey="#{produto.id}"
+													value="#{vendaController.listaProduto}" paginator="true"
+													rows="3" rowSelectMode="add" paginatorPosition="bottom"
+													var="produto">
 
-						<p:outputLabel value="Serviço" />
-						<p:autoComplete multiple="true"
-							value="#{consultaController.entity.listaTipoAtendimento}"
-							var="tipo" itemLabel="#{tipo.nome}"
-							itemValue="#{listaTipoAtendimento}"
-							completeMethod="#{consultaController.completeTipoAtendimento}"
-							forceSelection="true" maxResults="3" dropdown="true"
-							moreText="... mais resultados" />
-
-
-						<p:outputLabel for="time" value="Data agendamento" />
-						<p:datePicker id="time"
-							value="#{consultaController.entity.dataAgendamento}"
-							showTime="true" showIcon="true">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-						</p:datePicker>
+													<f:facet name="header">
+														<div class="produtos-table-header">
+															<span style="font-weight: bold">PRODUTOS</span> <span
+																class="filter-container ui-input-icon-left">
 
 
-					</h:panelGrid>
-				</div>
+																<div class="ui-inputgroup">
+																	<p:inputText id="idFiltro"
+																		value="#{vendaController.filtro}"
+																		placeholder="Informe o nome" />
+																	<p:commandButton icon="pi pi-search"
+																		styleClass="ui-button-warning"
+																		actionListener="#{vendaController.pesquisar}"
+																		process="@this idFiltro" update="dt-produtos" />
+																</div>
 
 
-			</p:panel>
-		</center>
-	</h:form>
+															</span>
+
+														</div>
+													</f:facet>
+
+
+													<p:column headerText="Nome" sortBy="#{produto.descricao}">
+														<p:outputLabel value="#{produto.descricao}" />
+													</p:column>
+
+
+													<p:column headerText="Estoque" sortBy="#{produto.estoque}">
+														<p:outputLabel value="#{produto.estoque}" />
+
+
+													</p:column>
+
+													<p:column headerText="Valor" sortBy="#{produto.valor}">
+														<p:outputLabel value="#{produto.valor}">
+
+															<f:convertNumber currencySymbol="R$" type="currency" />
+
+														</p:outputLabel>
+													</p:column>
+
+
+													<p:column exportable="false">
+														<p:commandButton value="Comprar"
+															actionListener="#{vendaController.comprar(produto)}"
+															icon="pi pi-shopping-cart" process="@this"
+															update="@form:panelDataTable:growl"
+															styleClass="edit-button rounded-button ui-button-success">
+
+
+														</p:commandButton>
+
+													</p:column>
+												</p:dataTable>
+											</h:panelGrid>
+
+										</div>
+									</p:panel>
+								</p:tab>
+
+								<p:tab id="confirmar" title="Confirmar venda">
+									<p:panel id="dataTableCarrinho" header="Carrinho">
+										<p:growl id="growl1" />
+
+
+										<div class="ui-fluid">
+											<p:dataTable class="table table-striped table-hover"
+												value="#{carrinhoController.listaItemVenda}" var="obj">
+												<p:column>
+													<f:facet name="header">Nome</f:facet>
+													<h:outputLabel value="#{obj.produto.descricao}" />
+												</p:column>
+
+												<p:column>
+													<f:facet name="header">Quantidade</f:facet>
+													<p:outputLabel value="#{obj.quantidade}">
+
+													</p:outputLabel>
+												</p:column>
+
+												<p:column>
+													<f:facet name="header">Preço</f:facet>
+													<p:outputLabel value="#{obj.valor}">
+														<f:convertNumber currencySymbol="R$" type="currency" />
+													</p:outputLabel>
+												</p:column>
+
+
+												<p:column>
+													<f:facet name="header">Ação</f:facet>
+													<p:commandButton class="ui-button-danger rounded-button"
+														icon="pi pi-trash" process="@this"
+														update="@form:dataTableCarrinho"
+														actionListener="#{carrinhoController.remover(obj)}" />
+
+												</p:column>
+											</p:dataTable>
+
+											<p:commandButton value="Finalizar Venda" icon="pi pi-check"
+												style="margin-left:230px;margin-right:5px;  width:200px !important; margin-top:5px;"
+												class="ui-button-success rounded-button" update="@form"
+												process="@form"
+												actionListener="#{carrinhoController.finalizar}" />
+											
+
+										</div>
+											<p:outputLabel value="Valor total: R$#{carrinhoController.valorTotal} " style="font-weight: bold;">
+												<f:convertNumber currencySymbol="R$" type="currency" />
+											</p:outputLabel>
+
+									</p:panel>
+								</p:tab>
+							</p:wizard>
+
+
+						</p:outputPanel>
+					</p:outputPanel>
+
+				</p:dialog>
+
+				<center>
+					<p:panel header="Agendamento" style="font-weight: bold;">
+						<div class="p-grid ui-fluid">
+							<h:panelGrid>
+
+								<p:outputLabel value="Data Lançamento:" />
+								<p:datePicker disabled="true"
+									value="#{consultaController.entity.dataLancamento}">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+								</p:datePicker>
+
+
+								<p:outputLabel value="Dentista " />
+								<h:panelGroup>
+									<div class="p-col-12 p-md-4">
+										<div class="ui-inputgroup">
+											<p:inputText disabled="true"
+												value="#{consultaController.entity.dentista.nome}" />
+											<p:commandButton icon="pi pi-id-card"
+												styleClass="ui-button-success"
+												actionListener="#{consultaController.abrirDentistaListing}">
+												<p:ajax event="dialogReturn"
+													listener="#{consultaController.obterDentistaListing}"
+													update="@form" />
+											</p:commandButton>
+										</div>
+									</div>
+								</h:panelGroup>
+
+
+								<p:outputLabel value="Paciente " />
+								<h:panelGroup>
+									<div class="p-col-12 p-md-4">
+										<div class="ui-inputgroup">
+											<p:inputText disabled="true"
+												value="#{consultaController.entity.paciente.pessoaFisica.nome}" />
+
+											<p:commandButton icon="pi pi-users"
+												styleClass="ui-button-warning"
+												actionListener="#{consultaController.abrirPacienteListing}">
+												<p:ajax event="dialogReturn"
+													listener="#{consultaController.obterPacienteListing}"
+													update="@form" />
+											</p:commandButton>
+										</div>
+									</div>
+								</h:panelGroup>
+
+								<p:outputLabel value="Cartão Sus " />
+								<p:inputText disabled="true"
+									value="#{consultaController.entity.paciente.cartaoSus}" />
+
+
+								<p:outputLabel value="Telefone " />
+								<p:inputText disabled="true"
+									value="#{consultaController.entity.paciente.pessoaFisica.telefone}" />
+
+								<p:outputLabel value="Sexo " />
+								<p:inputText disabled="true"
+									value="#{consultaController.entity.paciente.pessoaFisica.sexo}" />
+
+								<p:outputLabel value="Serviço" />
+								<p:autoComplete multiple="true"
+									value="#{consultaController.entity.listaTipoAtendimento}"
+									var="tipo" itemLabel="#{tipo.nome}"
+									itemValue="#{listaTipoAtendimento}"
+									completeMethod="#{consultaController.completeTipoAtendimento}"
+									forceSelection="true" maxResults="3" dropdown="true"
+									moreText="... mais resultados" />
+
+
+								<p:outputLabel value="Data agendamento" />
+								<p:datePicker
+									value="#{consultaController.entity.dataAgendamento}"
+									showTime="true" showIcon="true">
+									<f:convertDateTime type="localDateTime"
+										pattern="dd/MM/yyyy HH:mm" />
+								</p:datePicker>
+
+								<p:commandButton value="Venda" icon="pi pi-shopping-bag"
+									styleClass="ui-button-success" onclick="PF('dlg-venda').show()" />
+
+
+							</h:panelGrid>
+
+
+							<h:panelGrid columns="2">
+								<p:commandButton value="Agendar" icon="pi pi-check"
+									style="margin-left:5px;margin-right:5px;  width:200px !important; margin-top:5px;"
+									styleClass="rounded-button ui-button-success"
+									actionListener="#{consultaController.incluir}" update="@form"
+									process="@form" />
+
+								<p:commandButton value="Cancelar" icon="pi pi-times"
+									styleClass="rounded-button ui-button-raised ui-button-danger"
+									style="margin-left:5px;margin-right:5px; width:200px !important;margin-top:5px;"
+									actionListener="#{consultaController.limpar}" update="@form"
+									process="@this" />
+
+							</h:panelGrid>
+
+
+						</div>
+
+
+					</p:panel>
+				</center>
+			</h:form>
 
 
 
-	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
-		responsive="true" width="350">
-		<p:commandButton value="Não" type="button"
-			styleClass="ui-confirmdialog-no ui-button-flat" />
-		<p:commandButton value="Sim" type="button"
-			styleClass="ui-confirmdialog-yes" />
-	</p:confirmDialog>
-</h:body>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				responsive="true" width="350">
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no ui-button-flat" />
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" />
+			</p:confirmDialog>
+		</h:body>
 
+	</ui:define>
+	<ui:define name="rabo">
 
+	</ui:define>
+</ui:composition>
 
 
 </html>

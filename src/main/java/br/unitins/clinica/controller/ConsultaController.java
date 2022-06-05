@@ -1,7 +1,7 @@
 package br.unitins.clinica.controller;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,17 +12,17 @@ import org.primefaces.event.SelectEvent;
 
 import br.unitins.clinica.application.RepositoryException;
 import br.unitins.clinica.controller.listing.DentistaListing;
-import br.unitins.clinica.controller.listing.EstadoListing;
+
 import br.unitins.clinica.controller.listing.PacienteListing;
-import br.unitins.clinica.controller.listing.TipoAtendimentoListing;
+
 import br.unitins.clinica.model.Consulta;
 import br.unitins.clinica.model.Dentista;
-import br.unitins.clinica.model.Estado;
+
 import br.unitins.clinica.model.Paciente;
 import br.unitins.clinica.model.PessoaFisica;
 import br.unitins.clinica.model.TipoAtendimento;
+import br.unitins.clinica.model.Venda;
 import br.unitins.clinica.repository.ConsultaRepository;
-import br.unitins.clinica.repository.EstadoRepository;
 import br.unitins.clinica.repository.TipoAtendimentoRepository;
 
 @Named
@@ -72,6 +72,7 @@ public class ConsultaController extends Controller<Consulta> implements Serializ
 			entity.setPaciente(new Paciente());
 			entity.getPaciente().setPessoaFisica(new PessoaFisica());
 			entity.setListaTipoAtendimento(new ArrayList<TipoAtendimento>());
+			entity.setVenda(new Venda());
 
 		}
 

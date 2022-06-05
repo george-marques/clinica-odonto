@@ -1,6 +1,7 @@
 package br.unitins.clinica.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -52,6 +53,7 @@ public class ClinicaController extends Controller<Clinica> implements Serializab
 		if (listaClinica == null) {
 			ClinicaRepository pr = new ClinicaRepository();
 			listaClinica = pr.listarTodos(entity);
+				
 		}
 
 		return listaClinica;

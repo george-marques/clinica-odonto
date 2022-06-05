@@ -28,7 +28,7 @@ public class LoginController {
 		}
 		if (usuarioLogado != null) {
 			Session.getInstance().set("usuarioLogado", usuarioLogado);
-			Util.redirect("paciente.xhtml");
+			Util.redirect("consulta.xhtml");
 		}
 		Util.addErrorMessage("Login ou senha inválido.");
 

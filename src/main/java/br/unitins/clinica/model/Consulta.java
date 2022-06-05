@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Consulta extends DefaultEntity implements Serializable {
@@ -21,7 +22,7 @@ public class Consulta extends DefaultEntity implements Serializable {
 
 	private LocalDateTime dataAgendamento;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "consultas", cascade = CascadeType.ALL)
 	private List<TipoAtendimento> listaTipoAtendimento;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -32,8 +33,12 @@ public class Consulta extends DefaultEntity implements Serializable {
 	@JoinColumn(name = "id_dentista")
 	private Dentista dentista;
 
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Venda venda;
+
 	public LocalDate getDataLancamento() {
-		return LocalDate.now();
+		this.dataLancamento = LocalDate.now();
+		return dataLancamento;
 	}
 
 	public void setDataLancamento(LocalDate dataLancamento) {
@@ -70,6 +75,14 @@ public class Consulta extends DefaultEntity implements Serializable {
 
 	public void setDentista(Dentista dentista) {
 		this.dentista = dentista;
+	}
+
+	public Venda getVenda() {
+		return venda;
+	}
+
+	public void setVenda(Venda venda) {
+		this.venda = venda;
 	}
 
 }

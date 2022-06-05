@@ -9,6 +9,7 @@
 		<class>br.unitins.clinica.model.Endereco</class>
 		<class>br.unitins.clinica.model.EsqueceuSenha</class>
 		<class>br.unitins.clinica.model.Estado</class>
+		<class>br.unitins.clinica.model.ItemVenda</class>
 		<class>br.unitins.clinica.model.Paciente</class>
 		<class>br.unitins.clinica.model.Pessoa</class>
 		<class>br.unitins.clinica.model.PessoaFisica</class>
@@ -16,6 +17,7 @@
 		<class>br.unitins.clinica.model.Produto</class>
 		<class>br.unitins.clinica.model.TipoAtendimento</class>
 		<class>br.unitins.clinica.model.Usuario</class>
+		<class>br.unitins.clinica.model.Venda</class>
 		
 		<properties>
 			<!-- DB Driver -->
