@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Registro de Atendimento</title>
+</h:head>
+
+<ui:composition template="template.xhtml">
+	<ui:define name="conteudo">
+
+		<h:body>
+			<h:form>
+				<p:growl id="growl" showDetail="true" />
+
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:commandButton value="Agendamentos" icon="pi pi-users"
+							styleClass="ui-button-warning"
+							actionListener="#{registroAtendimentoController.abrirConsultaListing}">
+							<p:ajax event="dialogReturn"
+								listener="#{registroAtendimentoController.obterConsultaListing}"
+								update="@form" />
+						</p:commandButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+
+
+				<center>
+					<p:panel header="Registro de atendimento"
+						style="font-weight: bold;">
+						<div class="p-grid ui-fluid">
+							<h:panelGrid columns="2">
+							
+							<p:outputLabel value="Data Atual: " />
+								<p:datePicker disabled="true"
+									value="#{registroAtendimentoController.entity.dataRegistro}"
+									showTime="true">
+									<f:convertDateTime type="localDate"
+										pattern="dd/MM/yyyy" />
+								</p:datePicker>
+
+								<p:outputLabel value="Data agendamento: " />
+								<p:datePicker disabled="true"
+									value="#{registroAtendimentoController.entity.consulta.dataAgendamento}"
+									showTime="true">
+									<f:convertDateTime type="localDateTime"
+										pattern="dd/MM/yyyy HH:mm" />
+								</p:datePicker>
+
+								<p:outputLabel value="Paciente: " />
+								<p:inputText disabled="true"
+									value="#{registroAtendimentoController.entity.consulta.paciente.pessoaFisica.nome}" />
+
+								<p:outputLabel value="Cartão Sus: " />
+								<p:inputText disabled="true"
+									value="#{registroAtendimentoController.entity.consulta.paciente.cartaoSus}" />
+
+								<p:outputLabel value="CPF: " />
+								<p:inputText disabled="true"
+									value="#{registroAtendimentoController.entity.consulta.paciente.pessoaFisica.cpf}" />
+
+
+								<p:outputLabel value="Dentista: " />
+								<p:inputText disabled="true"
+									value="#{registroAtendimentoController.entity.consulta.dentista.nome}" />
+
+
+								<p:outputLabel value="Descrição: " style="font-weight: bold;" />
+								<p:inputTextarea rows="5" cols="30" counter="display"
+									value="#{registroAtendimentoController.entity.descricao}"
+									maxlength="100"
+									placeholder="Informe aqui como foi o atendimento"
+									counterTemplate="{0} caracteres restantes." autoResize="false" />
+								<h:outputText value="descrição" id="display" class="p-d-block" />
+
+
+							</h:panelGrid>
+						</div>
+
+						<f:facet name="footer">
+							<center>
+								<p:commandButton value="Incluir" icon="pi pi-check"
+									styleClass="rounded-button ui-button-raised ui-button-success"
+									style="margin-left:5px;margin-right:5px;"
+									actionListener="#{registroAtendimentoController.incluir}"
+									update="@form" process="@form" />
+
+							</center>
+						</f:facet>
+
+					</p:panel>
+				</center>
+			</h:form>
+
+		</h:body>
+
+	</ui:define>
+	<ui:define name="rabo">
+
+	</ui:define>
+</ui:composition>
+
+
+</html>

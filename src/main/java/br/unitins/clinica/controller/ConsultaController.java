@@ -14,7 +14,7 @@ import br.unitins.clinica.application.RepositoryException;
 import br.unitins.clinica.controller.listing.DentistaListing;
 
 import br.unitins.clinica.controller.listing.PacienteListing;
-
+import br.unitins.clinica.controller.listing.VendaListing;
 import br.unitins.clinica.model.Consulta;
 import br.unitins.clinica.model.Dentista;
 
@@ -33,6 +33,7 @@ public class ConsultaController extends Controller<Consulta> implements Serializ
 
 	public ConsultaController() {
 		super(new ConsultaRepository());
+
 	}
 
 	public void abrirDentistaListing() {
@@ -54,6 +55,16 @@ public class ConsultaController extends Controller<Consulta> implements Serializ
 
 	}
 
+	public void abrirVendaListing() {
+		VendaListing listing = new VendaListing();
+		listing.open();
+	}
+
+	public void obterVendaListing(SelectEvent<Venda> event) {
+		getEntity().setVenda(event.getObject());
+
+	}
+
 	public List<TipoAtendimento> completeTipoAtendimento(String filtro) {
 		TipoAtendimentoRepository repo = new TipoAtendimentoRepository();
 		try {
@@ -62,6 +73,21 @@ public class ConsultaController extends Controller<Consulta> implements Serializ
 			e.printStackTrace();
 			return new ArrayList<TipoAtendimento>();
 		}
+	}
+
+	@Override
+	public void incluir() {
+		entity.setAtendido(false);
+
+		if (entity.getVenda().getId() == null) {
+			entity.setVenda(null);
+			return;
+			
+		} else {
+			entity.setVenda(entity.getVenda());
+			super.incluir();
+		}
+
 	}
 
 	@Override

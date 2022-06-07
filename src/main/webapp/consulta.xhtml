@@ -161,12 +161,14 @@
 												class="ui-button-success rounded-button" update="@form"
 												process="@form"
 												actionListener="#{carrinhoController.finalizar}" />
-											
+
 
 										</div>
-											<p:outputLabel value="Valor total: R$#{carrinhoController.valorTotal} " style="font-weight: bold;">
-												<f:convertNumber currencySymbol="R$" type="currency" />
-											</p:outputLabel>
+										<p:outputLabel
+											value="Valor total: R$#{carrinhoController.valorTotal} "
+											style="font-weight: bold;">
+											<f:convertNumber currencySymbol="R$" type="currency" />
+										</p:outputLabel>
 
 									</p:panel>
 								</p:tab>
@@ -256,28 +258,48 @@
 									<f:convertDateTime type="localDateTime"
 										pattern="dd/MM/yyyy HH:mm" />
 								</p:datePicker>
-
+								<p></p>
 								<p:commandButton value="Venda" icon="pi pi-shopping-bag"
 									styleClass="ui-button-success" onclick="PF('dlg-venda').show()" />
 
+								<p:outputLabel value="Código de venda" />
+								<h:panelGroup id="panelCompra">
+									<div class="p-col-12 p-md-4">
+										<div class="ui-inputgroup">
+											<p:inputText disabled="true"
+												value="#{consultaController.entity.venda}" />
+											<p:commandButton icon="pi pi-shopping-bag"
+												styleClass="ui-button-warning"
+												actionListener="#{consultaController.abrirVendaListing}">
+												<p:ajax event="dialogReturn"
+													listener="#{consultaController.obterVendaListing}"
+													update="@form:panelCompra" />
+											</p:commandButton>
+										</div>
+									</div>
+								</h:panelGroup>
+
+
+
 
 							</h:panelGrid>
 
+							<f:facet name="footer">
+								<h:panelGrid columns="2">
+									<p:commandButton value="Agendar" icon="pi pi-check"
+										style="margin-left:350px;margin-right:5px;  width:200px !important; margin-top:5px;"
+										styleClass="rounded-button ui-button-success"
+										actionListener="#{consultaController.incluir}" update="@form"
+										process="@form" />
 
-							<h:panelGrid columns="2">
-								<p:commandButton value="Agendar" icon="pi pi-check"
-									style="margin-left:5px;margin-right:5px;  width:200px !important; margin-top:5px;"
-									styleClass="rounded-button ui-button-success"
-									actionListener="#{consultaController.incluir}" update="@form"
-									process="@form" />
+									<p:commandButton value="Cancelar" icon="pi pi-times"
+										styleClass="rounded-button ui-button-raised ui-button-danger"
+										style="margin-left:5px;margin-right:5px; width:200px !important;margin-top:5px;"
+										actionListener="#{consultaController.limpar}" update="@form"
+										process="@this" />
 
-								<p:commandButton value="Cancelar" icon="pi pi-times"
-									styleClass="rounded-button ui-button-raised ui-button-danger"
-									style="margin-left:5px;margin-right:5px; width:200px !important;margin-top:5px;"
-									actionListener="#{consultaController.limpar}" update="@form"
-									process="@this" />
-
-							</h:panelGrid>
+								</h:panelGrid>
+							</f:facet>
 
 
 						</div>

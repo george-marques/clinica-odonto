@@ -15,6 +15,7 @@
 		<class>br.unitins.clinica.model.PessoaFisica</class>
 		<class>br.unitins.clinica.model.PessoaJuridica</class>
 		<class>br.unitins.clinica.model.Produto</class>
+		<class>br.unitins.clinica.model.RegistroAtendimento</class>
 		<class>br.unitins.clinica.model.TipoAtendimento</class>
 		<class>br.unitins.clinica.model.Usuario</class>
 		<class>br.unitins.clinica.model.Venda</class>

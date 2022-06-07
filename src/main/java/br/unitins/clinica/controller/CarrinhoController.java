@@ -30,7 +30,7 @@ public class CarrinhoController implements Serializable {
 		if (usuarioLogado == null) {
 			Util.addErrorMessage("Faça o Login para concluir a venda.");
 
-			Util.redirect("login.xhtml");
+			return;
 		}
 
 		// verificar se existe algum produto no carrinho (sessao)
