@@ -86,6 +86,12 @@
 												validateMask="true"
 												value="#{pacienteController.entity.cartaoSus}" />
 
+											<p:outputLabel value="Nascimento:" />
+											<p:datePicker 
+												value="#{pacienteController.entity.pessoaFisica.dataNascimento}">
+												<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+											</p:datePicker>
+
 											<p:outputLabel for="cpf">Cpf</p:outputLabel>
 											<p:inputMask id="cpf" mask="999.999.999-99" required="true"
 												validateMask="true"

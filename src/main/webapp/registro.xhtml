@@ -16,31 +16,25 @@
 			<h:form>
 				<p:growl id="growl" showDetail="true" />
 
-				<p:toolbar>
-					<p:toolbarGroup>
-						<p:commandButton value="Agendamentos" icon="pi pi-users"
-							styleClass="ui-button-warning"
-							actionListener="#{registroAtendimentoController.abrirConsultaListing}">
-							<p:ajax event="dialogReturn"
-								listener="#{registroAtendimentoController.obterConsultaListing}"
-								update="@form" />
-						</p:commandButton>
-					</p:toolbarGroup>
-				</p:toolbar>
-
-
 				<center>
-					<p:panel header="Registro de atendimento"
-						style="font-weight: bold;">
+					<p:panel style="font-weight: bold;">
+
+						<f:facet name="header">
+							<div align="center">
+								<h1>Registro de Atendimento</h1>
+							</div>
+
+
+
+						</f:facet>
 						<div class="p-grid ui-fluid">
 							<h:panelGrid columns="2">
-							
-							<p:outputLabel value="Data Atual: " />
+
+								<p:outputLabel value="Data Atual: " />
 								<p:datePicker disabled="true"
 									value="#{registroAtendimentoController.entity.dataRegistro}"
 									showTime="true">
-									<f:convertDateTime type="localDate"
-										pattern="dd/MM/yyyy" />
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 								</p:datePicker>
 
 								<p:outputLabel value="Data agendamento: " />
@@ -83,11 +77,19 @@
 
 						<f:facet name="footer">
 							<center>
-								<p:commandButton value="Incluir" icon="pi pi-check"
+								<p:commandButton value="Atender" icon="pi pi-check"
 									styleClass="rounded-button ui-button-raised ui-button-success"
 									style="margin-left:5px;margin-right:5px;"
 									actionListener="#{registroAtendimentoController.incluir}"
 									update="@form" process="@form" />
+
+								<p:commandButton value="Agendamentos" icon="pi pi-users"
+									styleClass="rounded-button ui-button-raised ui-button-warning"
+									actionListener="#{registroAtendimentoController.abrirConsultaListing}">
+									<p:ajax event="dialogReturn"
+										listener="#{registroAtendimentoController.obterConsultaListing}"
+										update="@form" />
+								</p:commandButton>
 
 							</center>
 						</f:facet>
