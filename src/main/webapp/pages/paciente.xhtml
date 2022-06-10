@@ -86,11 +86,11 @@
 												validateMask="true"
 												value="#{pacienteController.entity.cartaoSus}" />
 
-											<p:outputLabel value="Nascimento:" />
-											<p:datePicker 
-												value="#{pacienteController.entity.pessoaFisica.dataNascimento}">
-												<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-											</p:datePicker>
+											<p:outputLabel for="data-nascimento" value="Data Nascimento" />
+											<p:datePicker id="data-nascimento"
+												value="#{pacienteController.entity.pessoaFisica.dataNascimento}"
+												monthNavigator="true" pattern="dd/MM/yyyy" mask="99/99/9999"
+												showIcon="true" showButtonBar="true" showOnFocus="false" />
 
 											<p:outputLabel for="cpf">Cpf</p:outputLabel>
 											<p:inputMask id="cpf" mask="999.999.999-99" required="true"
@@ -214,6 +214,13 @@
 												<h:outputText value="Cartão Sus: " />
 												<h:outputText value="#{pacienteController.entity.cartaoSus}"
 													styleClass="outputLabel" />
+
+												<h:outputText value="Nascimento: " />
+												<h:outputText
+													value="#{pacienteController.entity.pessoaFisica.dataNascimento}"
+													styleClass="outputLabel">
+													<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+												</h:outputText>
 
 												<h:outputText value="Cpf: " />
 												<h:outputText

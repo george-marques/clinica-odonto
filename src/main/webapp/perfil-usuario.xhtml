@@ -21,91 +21,95 @@
 }
 </style>
 
-<ui:composition template="template.xhtml">
+<ui:composition template="pages/template.xhtml">
 	<ui:define name="conteudo">
 
 		<h:body>
 			<h:form>
-				
-					<p:panel header="Informações do perfil"
-						style="width:900px; padding:10px; font-weight: bold;">
+
+				<p:panel header="Informações do perfil"
+					style="width:900px; padding:10px; font-weight: bold;">
 
 
-						<div align="right" style="float: right; position: relative;">
-							<img class="img-responsive"
-								style="max-width: 200px !important; max-height: 200px !important;"
-								src="img-usuario?nome=#{perfilUsuarioController.entity.id}.png" />
+					<div align="right" style="float: right; position: relative;">
+						<img class="img-responsive"
+							style="max-width: 200px !important; max-height: 200px !important;"
+							src="img-usuario?nome=#{perfilUsuarioController.entity.id}.png" />
+					</div>
+
+					<h:panelGrid>
+						<div class="p-grid ui-fluid">
+							<p:outputLabel value="Login" />
+							<p:inputText value="#{perfilUsuarioController.entity.login}"
+								disabled="true" style="width:100%;"
+								placeholder="Informe aqui seu Login" />
+							<p:outputLabel value="E-mail" />
+							<p:inputText
+								value="#{perfilUsuarioController.entity.pessoaFisica.email}"
+								style="width:100%;" placeholder="Informe aqui seu email" />
+
+							<p:outputLabel value="Sexo" />
+							<p:inputText
+								value="#{perfilUsuarioController.entity.pessoaFisica.sexo.label}"
+								disabled="true" style="width:100%;"
+								placeholder="Informe aqui seu sexo" />
+
+							<p:outputLabel value="Senha" />
+							<p:password value="#{perfilUsuarioController.senhaAtual}"
+								required="true" requiredMessage="Informe sua senha "
+								placeholder="Informe sua senha atual" toggleMask="true" />
+
+							<p:outputLabel value="Senha" />
+							<p:password value="#{perfilUsuarioController.senha}"
+								placeholder="Informe sua nova senha" toggleMask="true" />
+
+							<p:outputLabel value="Confirmar senha" />
+							<p:password value="#{perfilUsuarioController.confirmarSenha}"
+								placeholder="Confirme nova senha" toggleMask="true" />
+
+
+
 						</div>
+					</h:panelGrid>
 
-						<h:panelGrid>
-							<div class="p-grid ui-fluid">
-								<p:outputLabel value="Login" />
-								<p:inputText value="#{perfilUsuarioController.entity.login}"
-									disabled="true" style="width:100%;"
-									placeholder="Informe aqui seu Login" />
-								<p:outputLabel value="E-mail" />
-								<p:inputText
-									value="#{perfilUsuarioController.entity.pessoaFisica.email}"
-									style="width:100%;" placeholder="Informe aqui seu email" />
+					<h:form enctype="multipart/form-data">
+						<p:fileUpload id="fileUpload"
+							listener="#{perfilUsuarioController.upload}" mode="advanced"
+							update="fileUpload @form" label="Selecione foto de perfil"
+							global="false">
+						</p:fileUpload>
 
-								<p:outputLabel value="Senha" />
-								<p:password value="#{perfilUsuarioController.senhaAtual}"
-									required="true" requiredMessage="Informe sua senha "
-									placeholder="Informe sua senha atual" toggleMask="true" />
+						<p:growl id="messages" />
+					</h:form>
+					<f:facet name="footer">
+						<center>
+							<h:panelGrid columns="2">
+								<p:commandButton value="Apagar perfil" icon="pi pi-trash"
+									styleClass="rounded-button ui-button-raised ui-button-danger"
+									actionListener="#{perfilUsuarioController.excluirConta}"
+									update="@form" process="@form">
 
-								<p:outputLabel value="Senha" />
-								<p:password value="#{perfilUsuarioController.senha}"
-									placeholder="Informe sua nova senha" toggleMask="true" />
+									<p:confirm type="popup" header="Confirmation"
+										message="Deseja realmente excluir seu perfil?"
+										icon="pi pi-info-circle" />
 
-								<p:outputLabel value="Confirmar senha" />
-								<p:password value="#{perfilUsuarioController.confirmarSenha}"
-									placeholder="Confirme nova senha" toggleMask="true" />
+								</p:commandButton>
 
+								<p:commandButton value="Alterar informações" icon="pi pi-check"
+									styleClass="rounded-button ui-button-raised ui-button-success"
+									actionListener="#{perfilUsuarioController.alterarUsuario}"
+									update="@form" process="@form">
 
+									<p:confirm type="popup" header="Confirmation"
+										message="Cofirmar mudanças?" icon="pi pi-info-circle" />
 
-							</div>
-						</h:panelGrid>
-								
-								<h:form enctype="multipart/form-data">
-									<p:fileUpload id="fileUpload"
-										listener="#{perfilUsuarioController.upload}" mode="advanced"
-										update="fileUpload @form" label="Selecione foto de perfil"
-										global="false">
-									</p:fileUpload>
+								</p:commandButton>
+							</h:panelGrid>
+						</center>
 
-									<p:growl id="messages" />
-								</h:form>
-						<f:facet name="footer">
-							<center>
-								<h:panelGrid columns="2">
-									<p:commandButton value="Apagar perfil" icon="pi pi-trash"
-										styleClass="rounded-button ui-button-raised ui-button-danger"
-										
-										actionListener="#{perfilUsuarioController.excluirConta}"
-										update="@form" process="@form">
+					</f:facet>
+				</p:panel>
 
-										<p:confirm type="popup" header="Confirmation"
-											message="Deseja realmente excluir seu perfil?"
-											icon="pi pi-info-circle" />
-
-									</p:commandButton>
-
-									<p:commandButton value="Alterar informações" icon="pi pi-check"
-										styleClass="rounded-button ui-button-raised ui-button-success"
-										
-										actionListener="#{perfilUsuarioController.alterarUsuario}"
-										update="@form" process="@form">
-
-										<p:confirm type="popup" header="Confirmation"
-											message="Cofirmar mudanças?" icon="pi pi-info-circle" />
-
-									</p:commandButton>
-								</h:panelGrid>
-							</center>
-
-						</f:facet>
-					</p:panel>
-				
 
 
 				<p:confirmPopup global="true">
@@ -120,8 +124,8 @@
 		</h:body>
 
 	</ui:define>
-<ui:define name="rabo">
-</ui:define>
+	<ui:define name="rabo">
+	</ui:define>
 </ui:composition>
 
 

@@ -72,68 +72,76 @@ body .ui-menu.ui-menubar {
 			</f:facet>
 		</p:menubar>
 
-		</h:form>
-		
-		<h:form id="formPrincipal">
-				<p:growl id="growl1" />
-			<center>
-				<p:panel header="CADASTRE-SE"
-					style="width:600px; font-weight: bold; margin-left:50px; margin-top:70px;">
-					<div class="p-grid ui-fluid">
+	</h:form>
 
-						<div align="right" style="float: right; position: relative;">
-							<img class="img-responsive"
-								style="max-width: 80px !important; max-height: 80px !important;"
-								src="img-usuario?nome=#{usuarioController.entity.id}.png" />
-						</div>
+	<h:form id="formPrincipal">
+		<p:growl id="growl1" />
+		<center>
+			<p:panel header="CADASTRE-SE"
+				style="width:600px; font-weight: bold; margin-left:50px; margin-top:70px;">
+				<div class="p-grid ui-fluid">
 
+					<div align="right" style="float: right; position: relative;">
+						<img class="img-responsive"
+							style="max-width: 80px !important; max-height: 80px !important;"
+							src="img-usuario?nome=#{usuarioController.entity.id}.png" />
+					</div>
+
+
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Login" />
+						<p:inputText value="#{usuarioController.entity.login}"
+							required="true" requiredMessage="Não informou login" />
+
+						<p:outputLabel value="E-mail " />
+						<p:inputText
+							value="#{usuarioController.entity.pessoaFisica.email}"
+							required="true" requiredMessage="Não informou email" />
+
+						<p:outputLabel>Sexo</p:outputLabel>
+						<p:selectOneMenu required="true"
+							value="#{usuarioController.entity.pessoaFisica.sexo}">
+							<f:selectItem itemLabel="Selecione um sexo..." />
+							<f:selectItems value="#{usuarioController.listaSexo}" var="sex"
+								itemValue="#{sex}" itemLabel="#{sex.label}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Senha " />
+						<p:password value="#{usuarioController.entity.senha}"
+							required="true" requiredMessage="Não informou senha" />
+
+
+					</h:panelGrid>
+				</div>
+
+				<f:facet name="footer">
+					<center>
 
 						<h:panelGrid columns="2">
-							<p:outputLabel value="Login" />
-							<p:inputText value="#{usuarioController.entity.login}"
-								required="true" requiredMessage="Não informou login" />
 
-							<p:outputLabel value="E-mail " />
-							<p:inputText
-								value="#{usuarioController.entity.pessoaFisica.email}"
-								required="true" requiredMessage="Não informou email" />
 
-							<p:outputLabel value="Senha " />
-							<p:password value="#{usuarioController.entity.senha}"
-								required="true" requiredMessage="Não informou senha" />
+							<p:commandButton value="Cadastrar" icon="pi pi-check"
+								style="margin-left:5px;margin-right:5px;  width:200px !important; margin-top:5px;"
+								styleClass="rounded-button ui-button-raised ui-button-success"
+								actionListener="#{usuarioController.incluir}"
+								update="@form:growl1" process=":formPrincipal" />
 
 
 						</h:panelGrid>
-					</div>
-
-					<f:facet name="footer">
-						<center>
-
-							<h:panelGrid columns="2">
-
-
-								<p:commandButton value="Cadastrar" icon="pi pi-check"
-									style="margin-left:5px;margin-right:5px;  width:200px !important; margin-top:5px;"
-									styleClass="rounded-button ui-button-raised ui-button-success"
-									actionListener="#{usuarioController.incluir}" update="@form:growl1"
-									process=":formPrincipal" />
-
-
-							</h:panelGrid>
 
 
 
-						</center>
-					</f:facet>
-				</p:panel>
+					</center>
+				</f:facet>
+			</p:panel>
 
-			</center>
-			<footer>
-				<div class="box footer" style="text-align: center;">© 2022
-					Copyright: Todos os direitos reservados.</div>
-			</footer>
+		</center>
+		<footer>
+			<div class="box footer" style="text-align: center;">© 2022
+				Copyright: Todos os direitos reservados.</div>
+		</footer>
 
-		</h:form>
+	</h:form>
 </h:body>
 
 

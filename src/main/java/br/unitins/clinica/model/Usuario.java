@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 public class Usuario extends DefaultEntity implements Serializable {
 
 	private static final long serialVersionUID = -1801040627866967810L;
-	
+
 	@Column(unique = true)
 	private String login;
 	private String senha;
@@ -21,6 +21,8 @@ public class Usuario extends DefaultEntity implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(unique = true)
 	private PessoaFisica pessoaFisica;
+
+	private Perfil perfil;
 
 	public String getLogin() {
 		return login;
@@ -44,6 +46,14 @@ public class Usuario extends DefaultEntity implements Serializable {
 
 	public void setPessoaFisica(PessoaFisica pessoaFisica) {
 		this.pessoaFisica = pessoaFisica;
+	}
+
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
 	}
 
 }

@@ -10,6 +10,7 @@ import org.primefaces.event.SelectEvent;
 import br.unitins.clinica.controller.listing.ConsultaListing;
 import br.unitins.clinica.model.Consulta;
 import br.unitins.clinica.model.RegistroAtendimento;
+import br.unitins.clinica.model.Status;
 import br.unitins.clinica.repository.RegistroAtendimentoRepository;
 
 @Named
@@ -22,6 +23,10 @@ public class RegistroAtendimentoController extends Controller<RegistroAtendiment
 		super(new RegistroAtendimentoRepository());
 	}
 
+	public Status[] getListaStatus() {
+		return Status.values();
+	}
+
 	@Override
 	public RegistroAtendimento getEntity() {
 		if (entity == null) {
@@ -30,6 +35,14 @@ public class RegistroAtendimentoController extends Controller<RegistroAtendiment
 
 		}
 		return entity;
+	}
+	
+	@Override
+	public void incluir() {
+		if(entity.getConsulta().getStatus().getId() == 2) {
+			entity.getConsulta().setStatus(Status.valueOf(1));
+		}
+		super.incluir();
 	}
 
 	public void abrirConsultaListing() {
@@ -41,10 +54,5 @@ public class RegistroAtendimentoController extends Controller<RegistroAtendiment
 		getEntity().setConsulta(event.getObject());
 	}
 
-	@Override
-	public void incluir() {
-		entity.getConsulta().setAtendido(true);
-		super.incluir();
-	}
 
 }

@@ -20,6 +20,7 @@ import br.unitins.clinica.model.Dentista;
 
 import br.unitins.clinica.model.Paciente;
 import br.unitins.clinica.model.PessoaFisica;
+import br.unitins.clinica.model.Status;
 import br.unitins.clinica.model.TipoAtendimento;
 import br.unitins.clinica.model.Venda;
 import br.unitins.clinica.repository.ConsultaRepository;
@@ -75,19 +76,15 @@ public class ConsultaController extends Controller<Consulta> implements Serializ
 		}
 	}
 
+	
 	@Override
 	public void incluir() {
-		entity.setAtendido(false);
-
-		if (entity.getVenda().getId() == null) {
+		if(entity.getVenda().getId() == null) {
 			entity.setVenda(null);
-			return;
-			
-		} else {
-			entity.setVenda(entity.getVenda());
-			super.incluir();
+			entity.setStatus(Status.valueOf(2));
 		}
-
+			super.incluir();
+		
 	}
 
 	@Override

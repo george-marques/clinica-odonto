@@ -36,7 +36,7 @@ public class Consulta extends DefaultEntity implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Venda venda;
 
-	private boolean atendido;
+	private Status status;
 
 	public LocalDate getDataLancamento() {
 		this.dataLancamento = LocalDate.now();
@@ -87,12 +87,12 @@ public class Consulta extends DefaultEntity implements Serializable {
 		this.venda = venda;
 	}
 
-	public boolean isAtendido() {
-		return atendido;
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setAtendido(boolean atendido) {
-		this.atendido = atendido;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 }

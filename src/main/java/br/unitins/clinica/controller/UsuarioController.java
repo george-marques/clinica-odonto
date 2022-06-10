@@ -12,6 +12,7 @@ import org.primefaces.model.file.UploadedFile;
 
 import br.unitins.clinica.application.Util;
 import br.unitins.clinica.model.PessoaFisica;
+import br.unitins.clinica.model.Sexo;
 import br.unitins.clinica.model.Usuario;
 import br.unitins.clinica.repository.UsuarioRepository;
 
@@ -24,6 +25,10 @@ public class UsuarioController extends Controller<Usuario> implements Serializab
 
 	public UsuarioController() {
 		super(new UsuarioRepository());
+	}
+	
+	public Sexo[] getListaSexo() {
+		return Sexo.values();
 	}
 
 	public void upload(FileUploadEvent event) {

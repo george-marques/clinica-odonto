@@ -5,6 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
 <h:head>
 	<title>Agendamento</title>
 </h:head>
@@ -181,7 +182,8 @@
 				</p:dialog>
 
 				<center>
-					<p:panel header="Agendamento" style="font-weight: bold; font-size:25px;">
+					<p:panel header="Agendamento"
+						style="font-weight: bold; font-size:25px;">
 						<div class="p-grid ui-fluid">
 							<h:panelGrid>
 
@@ -231,6 +233,13 @@
 								<p:outputLabel value="Cartão Sus " />
 								<p:inputText disabled="true"
 									value="#{consultaController.entity.paciente.cartaoSus}" />
+
+								<p:outputLabel value="Data de nascimento " />
+								<p:inputText disabled="true"
+									value="#{consultaController.entity.paciente.pessoaFisica.dataNascimento}">
+									<f:convertDateTime type="localDate"
+										pattern="dd/MM/yyyy" />
+								</p:inputText>
 
 
 								<p:outputLabel value="Telefone " />
@@ -290,7 +299,7 @@
 										style="margin-left:350px;margin-right:5px;  width:200px !important; margin-top:5px;"
 										styleClass="rounded-button ui-button-success"
 										actionListener="#{consultaController.incluir}" update="@form"
-										process="@form" />
+										process="@form" disabled="#{consultaController.entity.paciente.id == null }"/>
 
 									<p:commandButton value="Cancelar" icon="pi pi-times"
 										styleClass="rounded-button ui-button-raised ui-button-danger"
