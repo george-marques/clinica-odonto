@@ -9,97 +9,158 @@
 	<title>Registro de Atendimento</title>
 </h:head>
 
-<ui:composition template="template.xhtml">
+<ui:composition template="/template.xhtml">
 	<ui:define name="conteudo">
 
 		<h:body>
 			<h:form>
-				<p:growl id="growl" showDetail="true" />
+				<p:growl id="growl" />
 
+
+				<p:dialog header="Detalhes de Atendimento" showEffect="fade"
+					width="55%" height="350px" modal="true" widgetVar="dlg-atendimento"
+					responsive="true" class="modal">
+
+					<p:outputPanel id="manage-atendimento-content" class="ui-fluid">
+						<p:outputPanel
+							rendered="#{not empty registroAtendimentoController.entity}">
+
+
+							<p:panel header="Informações detalhadas" id="tstando">
+
+								<div class="p-grid ui-fluid">
+									<h:panelGrid columns="2">
+
+										<p:outputLabel value="Data Atual: " />
+										<p:datePicker disabled="true"
+											value="#{registroAtendimentoController.entity.dataRegistro}"
+											showTime="true">
+											<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+										</p:datePicker>
+
+										<p:outputLabel value="Data agendamento: " />
+										<p:datePicker disabled="true"
+											value="#{registroAtendimentoController.entity.consulta.dataAgendamento}"
+											showTime="true">
+											<f:convertDateTime type="localDateTime"
+												pattern="dd/MM/yyyy HH:mm" />
+										</p:datePicker>
+
+										<p:outputLabel value="Paciente: " />
+										<p:inputText disabled="true"
+											value="#{registroAtendimentoController.entity.consulta.paciente.pessoaFisica.nome}" />
+
+										<p:outputLabel value="Cartão Sus: " />
+										<p:inputText disabled="true"
+											value="#{registroAtendimentoController.entity.consulta.paciente.cartaoSus}" />
+
+										<p:outputLabel value="CPF: " />
+										<p:inputText disabled="true"
+											value="#{registroAtendimentoController.entity.consulta.paciente.pessoaFisica.cpf}" />
+
+
+										<p:outputLabel value="Dentista: " />
+										<p:inputText disabled="true"
+											value="#{registroAtendimentoController.entity.consulta.dentista.nome}" />
+
+
+										<p:outputLabel value="Descrição: " style="font-weight: bold;" />
+										<p:inputTextarea rows="5" cols="30" counter="display"
+											value="#{registroAtendimentoController.entity.descricao}"
+											maxlength="100"
+											placeholder="Informe aqui como foi o atendimento"
+											counterTemplate="{0} caracteres restantes."
+											autoResize="false" />
+										<h:outputText value="descrição" id="display" class="p-d-block" />
+
+
+									</h:panelGrid>
+								</div>
+
+								<f:facet name="footer">
+									<center>
+										<p:commandButton value="Atender" icon="pi pi-check"
+											styleClass="rounded-button ui-button-raised ui-button-success"
+											style="margin-left:5px;margin-right:5px;"
+											actionListener="#{registroAtendimentoController.incluir}"
+											update="@form" process="@form" />
+
+
+
+									</center>
+								</f:facet>
+
+
+							</p:panel>
+
+						</p:outputPanel>
+					</p:outputPanel>
+
+
+				</p:dialog>
 				<center>
-					<p:panel style="font-weight: bold;">
-
-						<f:facet name="header">
-							<div align="center">
-								<h1>Registro de Atendimento</h1>
-							</div>
-
-
-
-						</f:facet>
-						<div class="p-grid ui-fluid">
-							<h:panelGrid columns="2">
-
-								<p:outputLabel value="Data Atual: " />
-								<p:datePicker disabled="true"
-									value="#{registroAtendimentoController.entity.dataRegistro}"
-									showTime="true">
-									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-								</p:datePicker>
-
-								<p:outputLabel value="Data agendamento: " />
-								<p:datePicker disabled="true"
-									value="#{registroAtendimentoController.entity.consulta.dataAgendamento}"
-									showTime="true">
-									<f:convertDateTime type="localDateTime"
-										pattern="dd/MM/yyyy HH:mm" />
-								</p:datePicker>
-
-								<p:outputLabel value="Paciente: " />
-								<p:inputText disabled="true"
-									value="#{registroAtendimentoController.entity.consulta.paciente.pessoaFisica.nome}" />
-
-								<p:outputLabel value="Cartão Sus: " />
-								<p:inputText disabled="true"
-									value="#{registroAtendimentoController.entity.consulta.paciente.cartaoSus}" />
-
-								<p:outputLabel value="CPF: " />
-								<p:inputText disabled="true"
-									value="#{registroAtendimentoController.entity.consulta.paciente.pessoaFisica.cpf}" />
-
-								<p:outputLabel value="Status " />
-								<p:inputText disabled="true"
-									value="#{registroAtendimentoController.entity.consulta.status.label}" />
+					<p:panel header="Consultas Agendadas" style="font-size:20px;">
+						<h:panelGrid id="panelDataTable">
+							<p:dataTable id="dt-consultas" widgetVar="dtPacientes"
+								reflow="true" styleClass="consultas-table" rowKey="#{obj.id}"
+								value="#{registroAtendimentoController.listaConsulta}"
+								paginator="true" rows="3" rowSelectMode="add"
+								paginatorPosition="bottom" var="obj">
 
 
-								<p:outputLabel value="Dentista: " />
-								<p:inputText disabled="true"
-									value="#{registroAtendimentoController.entity.consulta.dentista.nome}" />
+								<p:column headerText="Nome" sortBy="#{obj.id}">
+									<p:outputLabel value="#{obj.id}" />
+								</p:column>
+
+								<p:column headerText="Data" sortBy="#{obj.dataAgendamento}">
+									<p:outputLabel value="#{obj.dataAgendamento}">
+										<f:convertDateTime type="localDateTime"
+											pattern="dd/MM/yyyy HH:mm" />
+
+									</p:outputLabel>
+								</p:column>
+
+								<p:column headerText="Paciente">
+									<p:outputLabel value="#{obj.paciente.pessoaFisica.nome}" />
+
+								</p:column>
+
+								<p:column headerText="Cartão SUS">
+									<p:outputLabel value="#{obj.paciente.cartaoSus}" />
+
+								</p:column>
+
+								<p:column headerText="CPF">
+									<p:outputLabel value="#{obj.paciente.pessoaFisica.cpf}" />
+
+								</p:column>
+								
+							
+								<p:column headerText="Dentista">
+									<p:outputLabel value="#{obj.dentista.nome}" />
 
 
-								<p:outputLabel value="Descrição: " style="font-weight: bold;" />
-								<p:inputTextarea rows="5" cols="30" counter="display"
-									value="#{registroAtendimentoController.entity.descricao}"
-									maxlength="100"
-									placeholder="Informe aqui como foi o atendimento"
-									counterTemplate="{0} caracteres restantes." autoResize="false" />
-								<h:outputText value="descrição" id="display" class="p-d-block" />
+								</p:column>
+
+								<p:column headerText="Ação" exportable="false">
+									<p:commandButton value="Atender"
+										actionListener="#{registroAtendimentoController.select(obj.id)}"
+										oncomplete="PF('dlg-atendimento').show()" icon="pi pi-clock"
+										process="@this" update="@form"
+										styleClass="edit-button rounded-button ">
 
 
-							</h:panelGrid>
-						</div>
+									</p:commandButton>
 
-						<f:facet name="footer">
-							<center>
-								<p:commandButton value="Atender" icon="pi pi-check"
-									styleClass="rounded-button ui-button-raised ui-button-success"
-									style="margin-left:5px;margin-right:5px;"
-									actionListener="#{registroAtendimentoController.incluir}"
-									update="@form" process="@form" />
+								</p:column>
 
-								<p:commandButton value="Agendamentos" icon="pi pi-users"
-									styleClass="rounded-button ui-button-raised ui-button-warning"
-									actionListener="#{registroAtendimentoController.abrirConsultaListing}">
-									<p:ajax event="dialogReturn"
-										listener="#{registroAtendimentoController.obterConsultaListing}"
-										update="@form" />
-								</p:commandButton>
 
-							</center>
-						</f:facet>
-
+							</p:dataTable>
+						</h:panelGrid>
 					</p:panel>
+
 				</center>
+
 			</h:form>
 
 		</h:body>

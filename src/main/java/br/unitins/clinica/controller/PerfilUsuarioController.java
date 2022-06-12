@@ -14,6 +14,7 @@ import br.unitins.clinica.application.RepositoryException;
 import br.unitins.clinica.application.Session;
 import br.unitins.clinica.application.Util;
 import br.unitins.clinica.application.VersionException;
+import br.unitins.clinica.model.Sexo;
 import br.unitins.clinica.model.Usuario;
 import br.unitins.clinica.repository.UsuarioRepository;
 
@@ -29,6 +30,10 @@ public class PerfilUsuarioController extends Controller<Usuario> implements Seri
 
 	public PerfilUsuarioController() {
 		super(new UsuarioRepository());
+	}
+	
+	public Sexo[] getListaSexo() {
+		return Sexo.values();
 	}
 
 	public void excluirConta() {

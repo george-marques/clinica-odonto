@@ -8,17 +8,16 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Email;
 
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Pessoa extends DefaultEntity {
 
-	
 	private String nome;
-	
 	private String telefone;
-	
+	@Email(message = "Informe um email válido.")
 	@Column(unique = true)
 	private String email;
 

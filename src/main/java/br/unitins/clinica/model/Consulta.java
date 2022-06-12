@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.FutureOrPresent;
 
 @Entity
 public class Consulta extends DefaultEntity implements Serializable {
@@ -20,9 +21,10 @@ public class Consulta extends DefaultEntity implements Serializable {
 
 	private LocalDate dataLancamento;
 
+	@FutureOrPresent(message = "Informe uma data apartir do dia de hoje!")
 	private LocalDateTime dataAgendamento;
 
-	@ManyToMany(mappedBy = "consultas", cascade = CascadeType.ALL)
+	@ManyToMany
 	private List<TipoAtendimento> listaTipoAtendimento;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -35,6 +37,10 @@ public class Consulta extends DefaultEntity implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Venda venda;
+
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
+	private Usuario usuario;
 
 	private Status status;
 
@@ -93,6 +99,14 @@ public class Consulta extends DefaultEntity implements Serializable {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

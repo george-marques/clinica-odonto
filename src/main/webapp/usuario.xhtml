@@ -98,6 +98,12 @@ body .ui-menu.ui-menubar {
 							value="#{usuarioController.entity.pessoaFisica.email}"
 							required="true" requiredMessage="Não informou email" />
 
+						<p:outputLabel for="data-nascimento" value="Data Nascimento" />
+						<p:datePicker id="data-nascimento"
+							value="#{usuarioController.entity.pessoaFisica.dataNascimento}"
+							monthNavigator="true" pattern="dd/MM/yyyy" mask="99/99/9999"
+							showIcon="true" showButtonBar="true" showOnFocus="false" />
+
 						<p:outputLabel>Sexo</p:outputLabel>
 						<p:selectOneMenu required="true"
 							value="#{usuarioController.entity.pessoaFisica.sexo}">

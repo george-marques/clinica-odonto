@@ -11,6 +11,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
 
 import br.unitins.clinica.application.Util;
+import br.unitins.clinica.model.Perfil;
 import br.unitins.clinica.model.PessoaFisica;
 import br.unitins.clinica.model.Sexo;
 import br.unitins.clinica.model.Usuario;
@@ -26,7 +27,7 @@ public class UsuarioController extends Controller<Usuario> implements Serializab
 	public UsuarioController() {
 		super(new UsuarioRepository());
 	}
-	
+
 	public Sexo[] getListaSexo() {
 		return Sexo.values();
 	}
@@ -55,6 +56,7 @@ public class UsuarioController extends Controller<Usuario> implements Serializab
 	@Override
 	public void incluir() {
 		getEntity().setSenha(Util.hash(getEntity()));
+		getEntity().setPerfil(Perfil.FUNCIONARIO);
 
 		super.salvarSemLimpar();
 

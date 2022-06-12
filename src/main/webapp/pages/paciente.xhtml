@@ -14,7 +14,7 @@
 
 
 
-<ui:composition template="template.xhtml">
+<ui:composition template="/template.xhtml">
 	<ui:define name="conteudo">
 
 		<h:body>
@@ -78,12 +78,12 @@
 										<p:growl />
 										<h:panelGrid columns="2" columnClasses="label, value">
 											<p:outputLabel for="nome">Nome</p:outputLabel>
-											<p:inputText id="nome"
+											<p:inputText id="nome" required="true" requiredMessage="Informe o nome"
 												value="#{pacienteController.entity.pessoaFisica.nome}" />
 
-											<p:outputLabel for="sus">Cartão Sus</p:outputLabel>
+											<p:outputLabel for="sus">Cartão SUS</p:outputLabel>
 											<p:inputMask id="sus" mask="999 9999 9999 9999"
-												validateMask="true"
+												validateMask="true" required="true" requiredMessage="Informe cartão SUS"
 												value="#{pacienteController.entity.cartaoSus}" />
 
 											<p:outputLabel for="data-nascimento" value="Data Nascimento" />
@@ -92,13 +92,13 @@
 												monthNavigator="true" pattern="dd/MM/yyyy" mask="99/99/9999"
 												showIcon="true" showButtonBar="true" showOnFocus="false" />
 
-											<p:outputLabel for="cpf">Cpf</p:outputLabel>
-											<p:inputMask id="cpf" mask="999.999.999-99" required="true"
+											<p:outputLabel for="cpf">CPF</p:outputLabel>
+											<p:inputMask id="cpf" mask="999.999.999-99" required="true" requiredMessage="Informe o CPF"
 												validateMask="true"
 												value="#{pacienteController.entity.pessoaFisica.cpf}" />
 
 											<p:outputLabel>Sexo</p:outputLabel>
-											<p:selectOneMenu required="true"
+											<p:selectOneMenu required="true" requiredMessage="Informe o sexo"
 												value="#{pacienteController.entity.pessoaFisica.sexo}">
 												<f:selectItem itemLabel="Selecione um sexo..." />
 												<f:selectItems value="#{pacienteController.listaSexo}"

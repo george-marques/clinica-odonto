@@ -13,7 +13,7 @@
 
 
 
-<ui:composition template="template.xhtml">
+<ui:composition template="/template.xhtml">
 	<ui:define name="conteudo">
 
 		<h:body>
@@ -26,7 +26,7 @@
 						<p:toolbarGroup>
 
 							<p:commandButton value="cadastrar clinica" icon="pi pi-plus"
-								styleClass="ui-button-success"
+								styleClass="ui-button-success" rendered=""
 								onclick="PF('dlg-clinica').show()" />
 
 

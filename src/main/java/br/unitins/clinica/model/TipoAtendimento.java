@@ -1,13 +1,7 @@
 package br.unitins.clinica.model;
 
 import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 @Entity
 public class TipoAtendimento extends DefaultEntity implements Serializable {
@@ -18,10 +12,6 @@ public class TipoAtendimento extends DefaultEntity implements Serializable {
 
 	private String descricao;
 	private Double valor;
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "Consulta_TipoAtendimento", joinColumns = {
-			@JoinColumn(name = "id_consulta") }, inverseJoinColumns = { @JoinColumn(name = "id_tipoAtendimento") })
-	private List<Consulta> consultas;
 
 	public TipoAtendimento() {
 
@@ -56,14 +46,6 @@ public class TipoAtendimento extends DefaultEntity implements Serializable {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
-	}
-
-	public List<Consulta> getConsultas() {
-		return consultas;
-	}
-
-	public void setConsultas(List<Consulta> consultas) {
-		this.consultas = consultas;
 	}
 
 }

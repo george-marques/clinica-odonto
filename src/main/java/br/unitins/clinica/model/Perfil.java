@@ -32,16 +32,15 @@ public enum Perfil {
 			paginasComPermissao.add("/Clinica/faces/pages/tipo-atendimento.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/tipoatendimentolisting.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/vendalisting.xhtml");
-			paginasComPermissao.add("/Clinica/faces/pages/template.xhtml");
+			
+		
 		} else {
 			paginasComPermissao.add("/Clinica/faces/pages/cidade.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/cidadelistingsql.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/consulta.xhtml");
-			paginasComPermissao.add("/Clinica/faces/pages/clinica.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/consultalisting.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/estado.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/estadolisting.xhtml");
-			paginasComPermissao.add("/Clinica/faces/pages/dentista.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/dentistalisting.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/paciente.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/pacientelisting.xhtml");
@@ -49,7 +48,8 @@ public enum Perfil {
 			paginasComPermissao.add("/Clinica/faces/pages/registro.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/tipoatendimentolisting.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/vendalisting.xhtml");
-			paginasComPermissao.add("/Clinica/faces/pages/template.xhtml");
+			
+			paginasComPermissao.add("/Clinica/faces/pages/relatorioatendimento.xhtml");
 		}
 
 	}

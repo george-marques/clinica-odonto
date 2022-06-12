@@ -14,7 +14,6 @@ public class Paciente extends DefaultEntity implements Serializable {
 	private static final long serialVersionUID = 6972123597625533140L;
 	
 	private String cartaoSus;
-	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(unique = true)
 	private PessoaFisica pessoaFisica;

@@ -21,14 +21,14 @@
 }
 </style>
 
-<ui:composition template="pages/template.xhtml">
+<ui:composition template="/template.xhtml">
 	<ui:define name="conteudo">
 
 		<h:body>
 			<h:form>
 
 				<p:panel header="Informações do perfil"
-					style="width:900px; padding:10px; font-weight: bold;">
+					style="width:900px; padding:10px; font-weight: bold; font-size:20px;">
 
 
 					<div align="right" style="float: right; position: relative;">
@@ -48,11 +48,20 @@
 								value="#{perfilUsuarioController.entity.pessoaFisica.email}"
 								style="width:100%;" placeholder="Informe aqui seu email" />
 
-							<p:outputLabel value="Sexo" />
-							<p:inputText
-								value="#{perfilUsuarioController.entity.pessoaFisica.sexo.label}"
-								disabled="true" style="width:100%;"
-								placeholder="Informe aqui seu sexo" />
+
+
+							<p:outputLabel>Sexo</p:outputLabel>
+							<p:selectOneMenu style="width:100%;"
+								value="#{perfilUsuarioController.entity.pessoaFisica.sexo}">
+								<f:selectItems value="#{perfilUsuarioController.listaSexo}"
+									var="sex" itemValue="#{sex}" itemLabel="#{sex.label}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="data-nascimento" value="Data Nascimento" />
+							<p:datePicker id="data-nascimento"
+								value="#{perfilUsuarioController.entity.pessoaFisica.dataNascimento}"
+								monthNavigator="true" pattern="dd/MM/yyyy" mask="99/99/9999"
+								showIcon="true" showButtonBar="true" showOnFocus="false" />
 
 							<p:outputLabel value="Senha" />
 							<p:password value="#{perfilUsuarioController.senhaAtual}"
@@ -67,9 +76,9 @@
 							<p:password value="#{perfilUsuarioController.confirmarSenha}"
 								placeholder="Confirme nova senha" toggleMask="true" />
 
-
-
 						</div>
+
+
 					</h:panelGrid>
 
 					<h:form enctype="multipart/form-data">
@@ -81,6 +90,7 @@
 
 						<p:growl id="messages" />
 					</h:form>
+
 					<f:facet name="footer">
 						<center>
 							<h:panelGrid columns="2">
@@ -109,7 +119,6 @@
 
 					</f:facet>
 				</p:panel>
-
 
 
 				<p:confirmPopup global="true">
