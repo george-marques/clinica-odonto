@@ -10,7 +10,6 @@ import br.unitins.clinica.application.RepositoryException;
 import br.unitins.clinica.application.Util;
 import br.unitins.clinica.model.Consulta;
 import br.unitins.clinica.model.RegistroAtendimento;
-import br.unitins.clinica.model.Status;
 import br.unitins.clinica.repository.ConsultaRepository;
 import br.unitins.clinica.repository.RegistroAtendimentoRepository;
 
@@ -50,9 +49,6 @@ public class RegistroAtendimentoController extends Controller<RegistroAtendiment
 		listaConsulta = null;
 	}
 
-	public Status[] getListaStatus() {
-		return Status.values();
-	}
 
 	public List<Consulta> getListaConsulta() {
 		if (listaConsulta == null) {

@@ -25,144 +25,143 @@
 		<h:body>
 
 			<h:form id="form">
-				<div class="container p-5">
-					<p:growl id="growl" showDetail="true" />
+				<center>
+					<p:panel header="Cadastro de produto" style="font-size:25px;">
+						<div class="container p-5">
+							<p:growl id="growl" />
 
-					<p:toolbar>
-						<p:toolbarGroup>
-							<p:commandButton value="cadastrar produto" icon="pi pi-plus"
-								styleClass="ui-button-success"
-								onclick="PF('dlg-produto').show()" />
+							<p:toolbar>
+								<p:toolbarGroup>
+									<p:commandButton value="Cadastrar produto" icon="pi pi-box"
+										styleClass="ui-button-success rounded-button ui-button-raised"
+										onclick="PF('dlg-produto').show()" />
 
-						</p:toolbarGroup>
-					</p:toolbar>
+								</p:toolbarGroup>
+							</p:toolbar>
 
-					<p:dialog header="Detalhes de produto" showEffect="fade"
-						modal="true" widgetVar="dlg-produto" responsive="true">
+							<p:dialog header="Detalhes de produto" showEffect="fade"
+								modal="true" widgetVar="dlg-produto" responsive="true">
 
-						<p:outputPanel id="manage-product-content" class="ui-fluid">
-							<p:outputPanel rendered="#{not empty produtoController.entity}">
+								<p:outputPanel id="manage-product-content" class="ui-fluid">
+									<p:outputPanel rendered="#{not empty produtoController.entity}" style="font-weight: bold;">
 
-								<div class="p-field">
-									<p:outputLabel for="description">Descrição</p:outputLabel>
-									<p:inputText id="description"
-										requiredMessage="A descrição deve ser informado."
-										value="#{produtoController.entity.descricao}" required="true" />
-								</div>
-
-
-								<div class="p-formgrid p-grid">
-									<div class="p-field p-col">
-										<p:outputLabel for="valor">Valor</p:outputLabel>
-										<p:inputNumber id="valor" required="true"
-											requiredMessage="O valor deve ser informado."
-											value="#{produtoController.entity.valor}" symbol=" BRL"
-											symbolPosition="s" decimalSeparator="." thousandSeparator="," />
-									</div>
-									<div class="p-field p-col">
-										<p:outputLabel for="estoque">Estoque</p:outputLabel>
-										<p:spinner id="estoque" min="0" 
-											value="#{produtoController.entity.estoque}" />
-									</div>
-								</div>
-							</p:outputPanel>
-						</p:outputPanel>
-
-						<f:facet name="footer">
-						
-						<p:commandButton value="Salvar" icon="pi pi-check"
-												style="margin-left:5px;margin-right:5px;"
-												styleClass="rounded-button ui-button-raised"
-												actionListener="#{produtoController.incluir}"
-												update="@form" process="@form" />
-												
-												<p:commandButton value="Cancelar" icon="pi pi-times"
-								styleClass="rounded-button ui-button-raised ui-button-danger"
-								style="margin-left:5px;margin-right:5px;"
-								actionListener="#{produtoController.limpar}" update="@form"
-								process="@this" />
-						
-						
+										<div class="p-field">
+											<p:outputLabel for="description">Descrição</p:outputLabel>
+											<p:inputText id="description"
+												requiredMessage="A descrição deve ser informado."
+												value="#{produtoController.entity.descricao}"
+												required="true" />
+										</div>
 
 
-						</f:facet>
-					</p:dialog>
-
-
-					<h:panelGrid id="panelDataTable">
-						<p:dataTable id="dt-produtos" widgetVar="dtProdutos" reflow="true"
-							styleClass="products-table" rowKey="#{obj.id}"
-							value="#{produtoController.listaProduto}" paginator="true"
-							rows="3" rowSelectMode="add" paginatorPosition="bottom" var="obj">
-
-							<f:facet name="header">
-								<div class="products-table-header">
-									<span style="font-weight: bold">PRODUTOS</span> <span
-										class="filter-container ui-input-icon-left">
-
-										<div class="p-col-12 p-md-4">
-											<div class="ui-inputgroup">
-												<p:inputText id="itNomePesquisa"
-													value="#{produtoController.nomePesquisa}"
-													placeholder="Informe uma descrição" />
-												<p:commandButton icon="pi pi-search"
-													styleClass="ui-button-warning"
-													actionListener="#{produtoController.pesquisar}"
-													process="@this itNomePesquisa" update="dt-produtos" />
+										<div class="p-formgrid p-grid">
+											<div class="p-field p-col">
+												<p:outputLabel for="valor">Valor</p:outputLabel>
+												<p:inputNumber id="valor" required="true"
+													requiredMessage="O valor deve ser informado."
+													value="#{produtoController.entity.valor}" symbol=" BRL"
+													symbolPosition="s" decimalSeparator="."
+													thousandSeparator="," />
+											</div>
+											<div class="p-field p-col">
+												<p:outputLabel for="estoque">Estoque</p:outputLabel>
+												<p:spinner id="estoque" min="0"
+													value="#{produtoController.entity.estoque}" />
 											</div>
 										</div>
-									</span>
+									</p:outputPanel>
+								</p:outputPanel>
 
-								</div>
-							</f:facet>
+								<f:facet name="footer">
 
+									<p:commandButton value="Salvar" icon="pi pi-check"
+										style="margin-left:5px;margin-right:5px;"
+										styleClass="rounded-button ui-button-raised"
+										actionListener="#{produtoController.incluir}" update="@form"
+										process="@form" />
 
-							<p:column headerText="Descricao" sortBy="#{obj.descricao}">
-								<p:outputLabel value="#{obj.descricao}" />
-							</p:column>
-							
-							<p:column headerText="Valor" sortBy="#{obj.valor}">
-								<h:outputText value="#{obj.valor}">
-									<f:convertNumber currencySymbol="R$" type="currency" />
-								</h:outputText>
-							</p:column>
-							
-							<p:column headerText="Estoque" sortBy="#{obj.estoque}">
-								<p:outputLabel value="#{obj.estoque}" />
-							</p:column>
-							
-							<p:column headerText="Ativo" sortBy="#{obj.ativo}">
-									<p:toggleSwitch value="#{obj.ativo}" disabled="#{templateController.usuarioLogado.perfil.id == 2}">
-										<p:ajax
-											listener="#{produtoController.alterar(obj)}"
-											process="@this" update="@form" />
-									</p:toggleSwitch>
-								</p:column>
-
-							<p:column exportable="false">
-								<p:commandButton
-									actionListener="#{produtoController.editar(obj)}"
-									icon="pi pi-pencil" update=":form:manage-product-content"
-									oncomplete="PF('dlg-produto').show()"
-									styleClass="edit-button rounded-button ui-button-success"
-									process="@this">
+									<p:commandButton value="Cancelar" icon="pi pi-times"
+										styleClass="rounded-button ui-button-raised ui-button-danger"
+										style="margin-left:5px;margin-right:5px;"
+										actionListener="#{produtoController.limpar}" update="@form"
+										process="@this" />
 
 
-								</p:commandButton>
-								<p:commandButton class="ui-button-danger ui-button-raised rounded-button" disabled="#{templateController.usuarioLogado.perfil.id == 2}"
-									icon="pi pi-trash" process="@this" update="@form"
-									actionListener="#{produtoController.excluir(obj)}">
 
-									<p:confirm header="Confirmação"
-										message="Deseja realmente excluir?"
-										icon="pi pi-exclamation-triangle" />
 
-								</p:commandButton>
-							</p:column>
+								</f:facet>
+							</p:dialog>
 
-						</p:dataTable>
-					</h:panelGrid>
-				</div>
+
+							<h:panelGrid id="panelDataTable">
+								<p:dataTable id="dt-produtos" widgetVar="dtProdutos"
+									reflow="true" styleClass="products-table" rowKey="#{obj.id}"
+									value="#{produtoController.listaProduto}" paginator="true"
+									rows="3" rowSelectMode="add" paginatorPosition="bottom"
+									var="obj">
+
+									<f:facet name="header">
+										<div class="products-table-header">
+											<span style="font-weight: bold">PRODUTOS</span> <span
+												class="filter-container ui-input-icon-left">
+
+												<div class="p-col-12 p-md-4">
+													<div class="ui-inputgroup">
+														<p:inputText id="itNomePesquisa"
+															value="#{produtoController.nomePesquisa}"
+															placeholder="Informe uma descrição" />
+														<p:commandButton icon="pi pi-search"
+															styleClass="ui-button-warning ui-button-raised"
+															actionListener="#{produtoController.pesquisar}"
+															process="@this itNomePesquisa" update="dt-produtos" />
+													</div>
+												</div>
+											</span>
+
+										</div>
+									</f:facet>
+
+
+									<p:column headerText="Descricao" sortBy="#{obj.descricao}">
+										<p:outputLabel value="#{obj.descricao}" />
+									</p:column>
+
+									<p:column headerText="Valor" sortBy="#{obj.valor}">
+										<h:outputText value="#{obj.valor}">
+											<f:convertNumber currencySymbol="R$" type="currency" />
+										</h:outputText>
+									</p:column>
+
+									<p:column headerText="Estoque" sortBy="#{obj.estoque}">
+										<p:outputLabel value="#{obj.estoque}" />
+									</p:column>
+
+									<p:column headerText="Ativo" sortBy="#{obj.ativo}">
+										<p:toggleSwitch value="#{obj.ativo}"
+											disabled="#{templateController.usuarioLogado.perfil.id == 2}">
+											<p:ajax listener="#{produtoController.alterar(obj)}"
+												process="@this" update="@form" />
+										</p:toggleSwitch>
+									</p:column>
+
+									<p:column exportable="false" headerText="Ação">
+										<p:commandButton value="Editar"
+											actionListener="#{produtoController.editar(obj)}"
+											icon="pi pi-pencil" update=":form:manage-product-content"
+											oncomplete="PF('dlg-produto').show()"
+											styleClass="edit-button rounded-button ui-button-raised ui-button-success"
+											process="@this">
+
+
+										</p:commandButton>
+
+									</p:column>
+
+								</p:dataTable>
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</center>
 			</h:form>
 
 			<p:confirmDialog global="true" showEffect="fade" width="300">

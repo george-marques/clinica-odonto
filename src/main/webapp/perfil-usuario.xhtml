@@ -91,6 +91,15 @@
 						<p:growl id="messages" />
 					</h:form>
 
+					<br></br>
+
+					<p:commandButton value="Gerenciar usuários" icon="pi pi-users"
+						rendered="#{templateController.usuarioLogado.perfil.id == 1}"
+						styleClass="rounded-button ui-button-raised ui-button-warning"
+						action="pages/gerenciar-usuarios.xhtml?faces-redirect=true"
+						update="@this" process="@this">
+					</p:commandButton>
+
 					<f:facet name="footer">
 						<center>
 							<h:panelGrid columns="2">

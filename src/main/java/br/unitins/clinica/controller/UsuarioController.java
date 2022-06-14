@@ -3,6 +3,7 @@ package br.unitins.clinica.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -10,6 +11,7 @@ import javax.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
 
+import br.unitins.clinica.application.RepositoryException;
 import br.unitins.clinica.application.Util;
 import br.unitins.clinica.model.Perfil;
 import br.unitins.clinica.model.PessoaFisica;
@@ -23,6 +25,8 @@ public class UsuarioController extends Controller<Usuario> implements Serializab
 
 	private static final long serialVersionUID = -4714515783891349751L;
 	private InputStream fotoInputStream = null;
+	private List<Usuario> listaUsuario;
+	private String filtro;
 
 	public UsuarioController() {
 		super(new UsuarioRepository());
@@ -30,6 +34,29 @@ public class UsuarioController extends Controller<Usuario> implements Serializab
 
 	public Sexo[] getListaSexo() {
 		return Sexo.values();
+	}
+
+	public Perfil[] getListaPerfil() {
+		return Perfil.values();
+	}
+
+	public void pesquisar() {
+		UsuarioRepository repo = new UsuarioRepository();
+		try {
+			setListaUsuario(repo.findByLogin(filtro));
+		} catch (RepositoryException e) {
+			setListaUsuario(null);
+		}
+	}
+
+	@Override
+	public void limpar() {
+		setListaUsuario(null);
+		super.limpar();
+	}
+
+	public void editar(Usuario user) {
+		setEntity(user);
 	}
 
 	public void upload(FileUploadEvent event) {
@@ -51,6 +78,10 @@ public class UsuarioController extends Controller<Usuario> implements Serializab
 			Util.addErrorMessage("O tipo da image deve ser png.");
 		}
 
+	}
+
+	public void incluirNovo() {
+		super.incluir();
 	}
 
 	@Override
@@ -104,6 +135,26 @@ public class UsuarioController extends Controller<Usuario> implements Serializab
 
 	public void setFotoInputStream(InputStream fotoInputStream) {
 		this.fotoInputStream = fotoInputStream;
+	}
+
+	public List<Usuario> getListaUsuario() {
+		if (listaUsuario == null) {
+			UsuarioRepository pr = new UsuarioRepository();
+			listaUsuario = pr.listarTodos(entity);
+		}
+		return listaUsuario;
+	}
+
+	public void setListaUsuario(List<Usuario> listaUsuario) {
+		this.listaUsuario = listaUsuario;
+	}
+
+	public String getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
 	}
 
 }

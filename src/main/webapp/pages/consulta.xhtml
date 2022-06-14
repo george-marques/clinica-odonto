@@ -200,7 +200,7 @@
 									</div>
 									<div class="p-field p-col-6 p-md-4">
 										<p:outputLabel value="Data agendamento" />
-										<p:datePicker
+										<p:datePicker required="true" 
 											value="#{consultaController.entity.dataAgendamento}"
 											showTime="true" showIcon="true">
 											<f:convertDateTime type="localDateTime"
@@ -214,7 +214,7 @@
 												<p:inputText disabled="true"
 													value="#{consultaController.entity.dentista.nome}" />
 												<p:commandButton icon="pi pi-id-card"
-													styleClass="ui-button-success"
+													styleClass="ui-button-success ui-button-raised"
 													actionListener="#{consultaController.abrirDentistaListing}">
 													<p:ajax event="dialogReturn"
 														listener="#{consultaController.obterDentistaListing}"
@@ -233,7 +233,7 @@
 													value="#{consultaController.entity.paciente.pessoaFisica.nome}" />
 
 												<p:commandButton icon="pi pi-users"
-													styleClass="ui-button-warning"
+													styleClass="ui-button-warning ui-button-raised"
 													actionListener="#{consultaController.abrirPacienteListing}">
 													<p:ajax event="dialogReturn"
 														listener="#{consultaController.obterPacienteListing}"
@@ -260,12 +260,12 @@
 
 									<p:outputLabel value="Sexo " />
 									<p:inputText disabled="true"
-										value="#{consultaController.entity.paciente.pessoaFisica.sexo}" />
+										value="#{consultaController.entity.paciente.pessoaFisica.sexo.label}" />
 
 
 									<p></p>
 									<p:commandButton value="Venda" icon="pi pi-shopping-bag"
-										styleClass="ui-button-success"
+										styleClass="ui-button-success ui-button-raised"
 										onclick="PF('dlg-venda').show()" />
 
 									<p:outputLabel value="Código de venda" />
@@ -275,7 +275,7 @@
 												<p:inputText disabled="true"
 													value="#{consultaController.entity.venda}" />
 												<p:commandButton icon="pi pi-shopping-bag"
-													styleClass="ui-button-warning"
+													styleClass="ui-button-warning ui-button-raised"
 													actionListener="#{consultaController.abrirVendaListing}">
 													<p:ajax event="dialogReturn"
 														listener="#{consultaController.obterVendaListing}"

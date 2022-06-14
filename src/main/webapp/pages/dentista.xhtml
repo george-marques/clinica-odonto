@@ -68,17 +68,6 @@
 									process="@form"
 									disabled="#{dentistaController.entity.id == null}" />
 
-								<p:commandButton value="Excluir" icon="pi pi-trash"
-									styleClass="rounded-button ui-button-danger"
-									style="margin-left:5px;margin-right:5px;"
-									actionListener="#{dentistaController.excluir}" process="@this"
-									update="@form"
-									disabled="#{dentistaController.entity.id == null}">
-									<p:confirm header="Confirmação"
-										message="Deseja realmente excluir?"
-										icon="pi pi-exclamation-triangle" />
-								</p:commandButton>
-
 								<p:commandButton value="Limpar" icon="pi pi-times"
 									styleClass="rounded-button ui-button-raised ui-button-danger"
 									style="margin-left:5px;margin-right:5px;"

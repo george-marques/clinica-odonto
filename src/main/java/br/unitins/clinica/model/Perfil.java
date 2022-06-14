@@ -32,6 +32,7 @@ public enum Perfil {
 			paginasComPermissao.add("/Clinica/faces/pages/tipo-atendimento.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/tipoatendimentolisting.xhtml");
 			paginasComPermissao.add("/Clinica/faces/pages/vendalisting.xhtml");
+			paginasComPermissao.add("/Clinica/faces/pages/gerenciar-usuarios.xhtml");
 			
 		
 		} else {

@@ -26,7 +26,7 @@ public class LoginController {
 		} catch (RepositoryException e) {
 			e.printStackTrace();
 		}
-		if (usuarioLogado != null) {
+		if (usuarioLogado != null && usuarioLogado.isAtivo()) {
 			Session.getInstance().set("usuarioLogado", usuarioLogado);
 			Util.redirect("pages/consulta.xhtml");
 		}

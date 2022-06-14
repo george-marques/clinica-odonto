@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+	<title>Gerenciar usuários</title>
+
+</h:head>
+
+
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="conteudo">
+
+		<h:body>
+
+			<h:form id="form">
+				<center>
+					<p:panel header="Sistema | Gerenciar usuários"
+						style="font-size:25px;">
+
+						<div class="container p-5">
+							<p:growl id="growl" />
+
+							<p:toolbar>
+								<p:toolbarGroup>
+									<div class="ui-inputgroup">
+										<p:inputText id="itNomePesquisa"
+											value="#{usuarioController.filtro}"
+											placeholder="Informe um login" />
+										<p:commandButton value="Buscar" icon="pi pi-search"
+											styleClass="ui-button-raised ui-button-warning"
+											actionListener="#{usuarioController.pesquisar}"
+											process="@this itNomePesquisa" update="@form" />
+
+									</div>
+								</p:toolbarGroup>
+
+							</p:toolbar>
+
+							<br></br>
+
+
+							<p:dialog header="Detalhes de Usuário" showEffect="fade"
+								modal="true" widgetVar="dlg-usuarios" responsive="true">
+
+								<p:outputPanel id="manage-usuario-content" class="ui-fluid">
+									<p:outputPanel rendered="#{not empty usuarioController.entity}"
+										style="font-weight: bold;">
+
+										<div class="p-field">
+											<p:outputLabel for="name">Login</p:outputLabel>
+											<p:inputText id="name" disabled="true"
+												requiredMessage="O nome da clinica deve ser informado."
+												value="#{usuarioController.entity.login}" />
+										</div>
+
+
+										<div class="p-formgrid p-grid">
+											<div class="p-field p-col">
+												<p:outputLabel for="email">E-mail</p:outputLabel>
+												<p:inputText id="email" disabled="true"
+													value="#{usuarioController.entity.pessoaFisica.email}" />
+											</div>
+											<div class="p-field p-col">
+												<p:outputLabel for="data-nascimento" value="Data Nascimento" />
+												<p:datePicker id="data-nascimento" disabled="true"
+													value="#{usuarioController.entity.pessoaFisica.dataNascimento}"
+													monthNavigator="true" pattern="dd/MM/yyyy"
+													mask="99/99/9999" showButtonBar="true" showOnFocus="false" />
+											</div>
+
+											<div class="p-field p-col">
+												<p:outputLabel>Sexo</p:outputLabel>
+												<p:selectOneMenu disabled="true"
+													value="#{usuarioController.entity.pessoaFisica.sexo}">
+													<f:selectItem itemLabel="Selecione um sexo..." />
+													<f:selectItems value="#{usuarioController.listaSexo}"
+														var="sex" itemValue="#{sex}" itemLabel="#{sex.label}" />
+												</p:selectOneMenu>
+											</div>
+
+											<div class="p-field p-col">
+												<p:outputLabel>Perfil</p:outputLabel>
+												<p:selectOneMenu value="#{usuarioController.entity.perfil}">
+													<f:selectItem itemLabel="Selecione um perfil..." />
+													<f:selectItems value="#{usuarioController.listaPerfil}"
+														var="sex" itemValue="#{sex}" itemLabel="#{sex.label}" />
+												</p:selectOneMenu>
+											</div>
+
+
+
+										</div>
+									</p:outputPanel>
+								</p:outputPanel>
+
+								<f:facet name="footer">
+
+									<p:commandButton value="Salvar" icon="pi pi-check"
+										style="margin-left:5px;margin-right:5px;"
+										styleClass="rounded-button ui-button-raised"
+										actionListener="#{usuarioController.incluirNovo}"
+										update="@form" process="@form" />
+
+									<p:commandButton value="Cancelar" icon="pi pi-times"
+										styleClass="rounded-button ui-button-raised ui-button-danger"
+										style="margin-left:5px;margin-right:5px;"
+										actionListener="#{usuarioController.limpar}" update="@form"
+										process="@this" />
+
+
+
+
+								</f:facet>
+							</p:dialog>
+
+
+
+							<h:panelGrid id="panelDataTable">
+								<p:dataTable id="dt-usuarios" widgetVar="dtUsuarios"
+									reflow="true" styleClass="usuario-table" rowKey="#{obj.id}"
+									value="#{usuarioController.listaUsuario}" paginator="true"
+									rows="3" rowSelectMode="add" paginatorPosition="bottom"
+									var="obj">
+
+
+									<p:column headerText="Login">
+										<p:outputLabel value="#{obj.login}" />
+									</p:column>
+
+									<p:column headerText="E-mail">
+										<h:outputText value="#{obj.pessoaFisica.email}" />
+
+									</p:column>
+									<p:column headerText="Sexo">
+										<p:outputLabel value="#{obj.pessoaFisica.sexo.label}" />
+									</p:column>
+
+									<p:column headerText="Data Nascimento">
+										<p:outputLabel value="#{obj.pessoaFisica.dataNascimento}">
+											<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+
+										</p:outputLabel>
+									</p:column>
+
+									<p:column headerText="Perfil" sortBy="#{obj.perfil}">
+										<p:outputLabel value="#{obj.perfil.label}" />
+									</p:column>
+									
+									<p:column headerText="Ativo" sortBy="#{obj.ativo}">
+										<p:toggleSwitch value="#{obj.ativo}"
+											>
+											<p:ajax listener="#{usuarioController.alterar(obj)}"
+												process="@this" update="@form" />
+										</p:toggleSwitch>
+									</p:column>
+
+									<p:column exportable="false" headerText="Ação">
+										<p:commandButton value="Editar"
+											actionListener="#{usuarioController.editar(obj)}"
+											icon="pi pi-pencil" update=":form:manage-usuario-content"
+											oncomplete="PF('dlg-usuarios').show()"
+											styleClass="edit-button ui-button-raised rounded-button ui-button-success"
+											process="@this">
+
+
+										</p:commandButton>
+
+									</p:column>
+
+								</p:dataTable>
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</center>
+
+
+			</h:form>
+
+
+		</h:body>
+	</ui:define>
+</ui:composition>
+
+
+
+</html>

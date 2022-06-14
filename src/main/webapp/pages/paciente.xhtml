@@ -53,357 +53,360 @@
 </style>
 
 			<h:form id="form">
-				<p:growl id="growl" />
-
-				<p:toolbar>
-					<p:toolbarGroup>
-						<p:commandButton value="cadastrar paciente" icon="pi pi-plus"
-							styleClass="ui-button-success"
-							onclick="PF('dlg-paciente').show()" />
-
-					</p:toolbarGroup>
-				</p:toolbar>
-
-				<p:dialog header="Detalhes de paciente" showEffect="fade"
-					width="55%" height="350px" modal="true" widgetVar="dlg-paciente"
-					responsive="true" class="modal">
-
-					<p:outputPanel id="manage-paciente-content" class="ui-fluid">
-						<p:outputPanel rendered="#{not empty pacienteController.entity}">
-
-							<p:wizard flowListener="#{pacienteController.onFlowProcess}"
-								nextLabel="Avançar" backLabel="Voltar">
-								<p:tab id="personal" title="Pessoal">
-									<p:panel header="Informações pessoais">
-										<p:growl />
-										<h:panelGrid columns="2" columnClasses="label, value">
-											<p:outputLabel for="nome">Nome</p:outputLabel>
-											<p:inputText id="nome" required="true" requiredMessage="Informe o nome"
-												value="#{pacienteController.entity.pessoaFisica.nome}" />
-
-											<p:outputLabel for="sus">Cartão SUS</p:outputLabel>
-											<p:inputMask id="sus" mask="999 9999 9999 9999"
-												validateMask="true" required="true" requiredMessage="Informe cartão SUS"
-												value="#{pacienteController.entity.cartaoSus}" />
-
-											<p:outputLabel for="data-nascimento" value="Data Nascimento" />
-											<p:datePicker id="data-nascimento"
-												value="#{pacienteController.entity.pessoaFisica.dataNascimento}"
-												monthNavigator="true" pattern="dd/MM/yyyy" mask="99/99/9999"
-												showIcon="true" showButtonBar="true" showOnFocus="false" />
-
-											<p:outputLabel for="cpf">CPF</p:outputLabel>
-											<p:inputMask id="cpf" mask="999.999.999-99" required="true" requiredMessage="Informe o CPF"
-												validateMask="true"
-												value="#{pacienteController.entity.pessoaFisica.cpf}" />
-
-											<p:outputLabel>Sexo</p:outputLabel>
-											<p:selectOneMenu required="true" requiredMessage="Informe o sexo"
-												value="#{pacienteController.entity.pessoaFisica.sexo}">
-												<f:selectItem itemLabel="Selecione um sexo..." />
-												<f:selectItems value="#{pacienteController.listaSexo}"
-													var="sex" itemValue="#{sex}" itemLabel="#{sex.label}" />
-											</p:selectOneMenu>
+				<center>
+					<p:panel header="Cadastro de paciente" style="font-size:25px;">
+						<p:growl id="growl" />
 
 
-										</h:panelGrid>
-									</p:panel>
-								</p:tab>
 
-								<p:tab id="address" title="Endereço">
-									<p:panel header="Informações de endereço">
+						<p:toolbar>
+							<p:toolbarGroup>
+								<p:commandButton value="Cadastrar paciente" icon="pi pi-user"
+									styleClass="rounded-button ui-button-raised ui-button-success"
+									onclick="PF('dlg-paciente').show()" />
 
-										<p:growl />
-										<h:panelGrid columns="2" columnClasses="label, value">
-											<h:outputText value="Rua: " />
-											<p:inputText
-												value="#{pacienteController.entity.pessoaFisica.endereco.rua}" />
+							</p:toolbarGroup>
+						</p:toolbar>
 
-											<h:outputText value="Número: " />
-											<p:inputText
-												value="#{pacienteController.entity.pessoaFisica.endereco.numero}" />
+						<p:dialog header="Detalhes de paciente" showEffect="fade"
+							width="55%" height="350px" modal="true" widgetVar="dlg-paciente"
+							responsive="true" class="modal">
 
-											<h:outputText value="Bairro: " />
-											<p:inputText
-												value="#{pacienteController.entity.pessoaFisica.endereco.bairro}" />
+							<p:outputPanel id="manage-paciente-content" class="ui-fluid">
+								<p:outputPanel rendered="#{not empty pacienteController.entity}">
 
-											<h:outputText value="Complemento: " />
-											<p:inputText
-												value="#{pacienteController.entity.pessoaFisica.endereco.complemento}" />
+									<p:wizard flowListener="#{pacienteController.onFlowProcess}"
+										nextLabel="Avançar" backLabel="Voltar">
+										<p:tab id="personal" title="Pessoal">
+											<p:panel header="Informações pessoais">
+												<p:growl />
+												<h:panelGrid columns="2" columnClasses="label, value">
+													<p:outputLabel for="nome">Nome</p:outputLabel>
+													<p:inputText id="nome" required="true"
+														requiredMessage="Informe o nome"
+														value="#{pacienteController.entity.pessoaFisica.nome}" />
 
-											<h:outputText value="Cep: " />
-											<p:inputMask mask="99999-999" validateMask="true"
-												value="#{pacienteController.entity.pessoaFisica.endereco.cep}" />
+													<p:outputLabel for="sus">Cartão SUS</p:outputLabel>
+													<p:inputMask id="sus" mask="999 9999 9999 9999"
+														validateMask="true" required="true"
+														requiredMessage="Informe cartão SUS"
+														value="#{pacienteController.entity.cartaoSus}" />
 
-											<p:outputLabel value="Cidade: " />
-											<h:panelGroup id="panelCidade">
-												<div class="p-col-12 p-md-4">
-													<div class="ui-inputgroup">
-														<p:inputText
-															value="#{pacienteController.entity.pessoaFisica.endereco.cidade.nome}" />
-														<p:commandButton icon="pi pi-search"
-															styleClass="ui-button-warning"
-															actionListener="#{pacienteController.abrirCidadeListingSQL}">
-															<p:ajax event="dialogReturn"
-																listener="#{pacienteController.obterCidadeListingSQL}"
-																update="@form:panelCidade" />
-														</p:commandButton>
-													</div>
+													<p:outputLabel for="data-nascimento"
+														value="Data Nascimento" />
+													<p:datePicker id="data-nascimento"
+														value="#{pacienteController.entity.pessoaFisica.dataNascimento}"
+														monthNavigator="true" pattern="dd/MM/yyyy"
+														mask="99/99/9999" showIcon="true" showButtonBar="true"
+														showOnFocus="false" />
+
+													<p:outputLabel for="cpf">CPF</p:outputLabel>
+													<p:inputMask id="cpf" mask="999.999.999-99" required="true"
+														requiredMessage="Informe o CPF" validateMask="true"
+														value="#{pacienteController.entity.pessoaFisica.cpf}" />
+
+													<p:outputLabel>Sexo</p:outputLabel>
+													<p:selectOneMenu required="true"
+														requiredMessage="Informe o sexo"
+														value="#{pacienteController.entity.pessoaFisica.sexo}">
+														<f:selectItem itemLabel="Selecione um sexo..." />
+														<f:selectItems value="#{pacienteController.listaSexo}"
+															var="sex" itemValue="#{sex}" itemLabel="#{sex.label}" />
+													</p:selectOneMenu>
+
+
+												</h:panelGrid>
+											</p:panel>
+										</p:tab>
+
+										<p:tab id="address" title="Endereço">
+											<p:panel header="Informações de endereço">
+
+												<p:growl />
+												<h:panelGrid columns="2" columnClasses="label, value">
+													<h:outputText value="Rua: " />
+													<p:inputText
+														value="#{pacienteController.entity.pessoaFisica.endereco.rua}" />
+
+													<h:outputText value="Número: " />
+													<p:inputText
+														value="#{pacienteController.entity.pessoaFisica.endereco.numero}" />
+
+													<h:outputText value="Bairro: " />
+													<p:inputText
+														value="#{pacienteController.entity.pessoaFisica.endereco.bairro}" />
+
+													<h:outputText value="Complemento: " />
+													<p:inputText
+														value="#{pacienteController.entity.pessoaFisica.endereco.complemento}" />
+
+													<h:outputText value="Cep: " />
+													<p:inputMask mask="99999-999" validateMask="true"
+														value="#{pacienteController.entity.pessoaFisica.endereco.cep}" />
+
+													<p:outputLabel value="Cidade: " />
+													<h:panelGroup id="panelCidade">
+														<div class="p-col-12 p-md-4">
+															<div class="ui-inputgroup">
+																<p:inputText disabled="true"
+																	value="#{pacienteController.entity.pessoaFisica.endereco.cidade.nome}" />
+																<p:commandButton icon="pi pi-search"
+																	styleClass="ui-button-warning"
+																	actionListener="#{pacienteController.abrirCidadeListingSQL}">
+																	<p:ajax event="dialogReturn"
+																		listener="#{pacienteController.obterCidadeListingSQL}"
+																		update="@form:panelCidade" />
+																</p:commandButton>
+															</div>
+														</div>
+													</h:panelGroup>
+
+													<p:outputLabel value="Estado:" />
+													<h:panelGroup id="panelEstado">
+														<div class="p-col-12 p-md-4">
+															<div class="ui-inputgroup">
+																<p:autoComplete
+																	value="#{pacienteController.entity.pessoaFisica.endereco.cidade.estado}"
+																	var="estado" itemLabel="#{estado.nome}"
+																	itemValue="#{estado}"
+																	completeMethod="#{cidadeController.completeEstado}"
+																	forceSelection="true" maxResults="3"
+																	moreText="... mais resultados" />
+																<p:commandButton icon="pi pi-search"
+																	styleClass="ui-button-warning ui-button-raised"
+																	actionListener="#{pacienteController.abrirEstadoListing}">
+																	<p:ajax event="dialogReturn"
+																		listener="#{pacienteController.obterEstadoListing}"
+																		update="@form:panelEstado" />
+																</p:commandButton>
+															</div>
+														</div>
+													</h:panelGroup>
+
+
+
+												</h:panelGrid>
+											</p:panel>
+										</p:tab>
+
+										<p:tab id="contact" title="Contato">
+											<p:panel header="Informações de contato">
+
+												<h:panelGrid columns="2" columnClasses="label, value">
+													<h:outputText value="Email: " />
+													<p:inputText
+														value="#{pacienteController.entity.pessoaFisica.email}"
+														required="true" label="Email" />
+
+													<h:outputText value="Telefone: " />
+													<p:inputMask id="telefone" mask="(99) 99999-9999"
+														required="true" validateMask="true"
+														value="#{pacienteController.entity.pessoaFisica.telefone}" />
+
+												</h:panelGrid>
+											</p:panel>
+										</p:tab>
+
+
+										<p:tab id="confirm" title="Confirmação">
+											<p:panel header="Confirmação">
+												<h:panelGrid id="confirmation" columns="3"
+													columnClasses="grid,grid,grid">
+													<h:panelGrid columns="2" columnClasses="label, value">
+
+
+														<h:outputText value="Nome: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.nome}"
+															styleClass="outputLabel" a:autofocus="true" />
+
+														<h:outputText value="Cartão Sus: " />
+														<h:outputText
+															value="#{pacienteController.entity.cartaoSus}"
+															styleClass="outputLabel" />
+
+														<h:outputText value="Nascimento: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.dataNascimento}"
+															styleClass="outputLabel">
+															<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+														</h:outputText>
+
+														<h:outputText value="Cpf: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.cpf}"
+															styleClass="outputLabel" />
+
+														<h:outputText value="Sexo: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.sexo.label}"
+															styleClass="outputLabel" />
+													</h:panelGrid>
+
+
+													<h:panelGrid columns="2" columnClasses="label, value">
+														<h:outputText value="Rua: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.endereco.rua}"
+															styleClass="outputLabel" />
+
+														<h:outputText value="Número: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.endereco.numero}"
+															styleClass="outputLabel" />
+
+														<h:outputText value="Bairro: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.endereco.bairro}"
+															styleClass="outputLabel" />
+
+														<h:outputText value="Complemento: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.endereco.complemento}"
+															styleClass="outputLabel" />
+
+														<h:outputText value="Cep: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.endereco.cep}"
+															styleClass="outputLabel" />
+
+														<h:outputText value="Cidade: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.endereco.cidade.nome}"
+															styleClass="outputLabel" />
+
+														<h:outputText value="Estado: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.endereco.cidade.estado.nome}"
+															styleClass="outputLabel" />
+
+
+													</h:panelGrid>
+
+
+													<h:panelGrid columns="2" columnClasses="label, value">
+														<h:outputText value="Email: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.email}"
+															styleClass="outputLabel" />
+
+														<h:outputText value="Telefone: " />
+														<h:outputText
+															value="#{pacienteController.entity.pessoaFisica.telefone}"
+															styleClass="outputLabel" />
+
+													</h:panelGrid>
+
+												</h:panelGrid>
+												<center>
+													<h:panelGrid columns="2">
+														<p:commandButton value="Salvar" icon="pi pi-check"
+															style="margin-left:5px;margin-right:5px;  width:200px !important; margin-top:5px;"
+															styleClass="rounded-button ui-button-raised"
+															actionListener="#{pacienteController.incluir}"
+															update="@form" process="@form" />
+
+														<p:commandButton value="Cancelar" icon="pi pi-times"
+															styleClass="rounded-button ui-button-raised ui-button-danger"
+															style="margin-left:5px;margin-right:5px; width:200px !important;margin-top:5px;"
+															actionListener="#{pacienteController.limpar}"
+															update="@form" process="@this" />
+
+													</h:panelGrid>
+												</center>
+											</p:panel>
+										</p:tab>
+									</p:wizard>
+
+
+								</p:outputPanel>
+							</p:outputPanel>
+
+
+						</p:dialog>
+
+						<h:panelGrid id="panelDataTable">
+							<p:dataTable id="dt-pacientes" widgetVar="dtPacientes"
+								reflow="true" styleClass="pacientes-table" rowKey="#{obj.id}"
+								value="#{pacienteController.listaPaciente}" paginator="true"
+								rows="3" rowSelectMode="add" paginatorPosition="bottom"
+								var="obj">
+
+								<f:facet name="header">
+									<div class="pacientes-table-header">
+										<span style="font-weight: bold">PACIENTES</span> <span
+											class="filter-container ui-input-icon-left">
+
+											<div class="p-col-12 p-md-4">
+												<div class="ui-inputgroup">
+													<p:inputText id="itNomePesquisa"
+														value="#{pacienteController.nomePesquisa}"
+														placeholder="Informe um nome" />
+													<p:commandButton icon="pi pi-search"
+														styleClass="ui-button-warning ui-button-raised"
+														actionListener="#{pacienteController.pesquisar}"
+														process="@this itNomePesquisa" update="dt-pacientes" />
 												</div>
-											</h:panelGroup>
+											</div>
+										</span>
 
-											<p:outputLabel value="Estado:" />
-											<h:panelGroup id="panelEstado">
-												<div class="p-col-12 p-md-4">
-													<div class="ui-inputgroup">
-														<p:autoComplete
-															value="#{pacienteController.entity.pessoaFisica.endereco.cidade.estado}"
-															var="estado" itemLabel="#{estado.nome}"
-															itemValue="#{estado}"
-															completeMethod="#{cidadeController.completeEstado}"
-															forceSelection="true" maxResults="3"
-															moreText="... mais resultados" />
-														<p:commandButton icon="pi pi-search"
-															styleClass="ui-button-warning"
-															actionListener="#{pacienteController.abrirEstadoListing}">
-															<p:ajax event="dialogReturn"
-																listener="#{pacienteController.obterEstadoListing}"
-																update="@form:panelEstado" />
-														</p:commandButton>
-													</div>
-												</div>
-											</h:panelGroup>
-
-
-
-										</h:panelGrid>
-									</p:panel>
-								</p:tab>
-
-								<p:tab id="contact" title="Contato">
-									<p:panel header="Informações de contato">
-
-										<h:panelGrid columns="2" columnClasses="label, value">
-											<h:outputText value="Email: " />
-											<p:inputText
-												value="#{pacienteController.entity.pessoaFisica.email}"
-												required="true" label="Email" />
-
-											<h:outputText value="Telefone: " />
-											<p:inputMask id="telefone" mask="(99) 99999-9999"
-												required="true" validateMask="true"
-												value="#{pacienteController.entity.pessoaFisica.telefone}" />
-
-										</h:panelGrid>
-									</p:panel>
-								</p:tab>
-
-
-								<p:tab id="confirm" title="Confirmação">
-									<p:panel header="Confirmação">
-										<h:panelGrid id="confirmation" columns="3"
-											columnClasses="grid,grid,grid">
-											<h:panelGrid columns="2" columnClasses="label, value">
-
-
-												<h:outputText value="Nome: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.nome}"
-													styleClass="outputLabel" a:autofocus="true" />
-
-												<h:outputText value="Cartão Sus: " />
-												<h:outputText value="#{pacienteController.entity.cartaoSus}"
-													styleClass="outputLabel" />
-
-												<h:outputText value="Nascimento: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.dataNascimento}"
-													styleClass="outputLabel">
-													<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-												</h:outputText>
-
-												<h:outputText value="Cpf: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.cpf}"
-													styleClass="outputLabel" />
-
-												<h:outputText value="Sexo: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.sexo}"
-													styleClass="outputLabel" />
-											</h:panelGrid>
-
-
-											<h:panelGrid columns="2" columnClasses="label, value">
-												<h:outputText value="Rua: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.endereco.rua}"
-													styleClass="outputLabel" />
-
-												<h:outputText value="Número: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.endereco.numero}"
-													styleClass="outputLabel" />
-
-												<h:outputText value="Bairro: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.endereco.bairro}"
-													styleClass="outputLabel" />
-
-												<h:outputText value="Complemento: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.endereco.complemento}"
-													styleClass="outputLabel" />
-
-												<h:outputText value="Cep: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.endereco.cep}"
-													styleClass="outputLabel" />
-
-												<h:outputText value="Cidade: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.endereco.cidade.nome}"
-													styleClass="outputLabel" />
-
-												<h:outputText value="Estado: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.endereco.cidade.estado.nome}"
-													styleClass="outputLabel" />
-
-
-											</h:panelGrid>
-
-
-											<h:panelGrid columns="2" columnClasses="label, value">
-												<h:outputText value="Email: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.email}"
-													styleClass="outputLabel" />
-
-												<h:outputText value="Telefone: " />
-												<h:outputText
-													value="#{pacienteController.entity.pessoaFisica.telefone}"
-													styleClass="outputLabel" />
-
-											</h:panelGrid>
-
-										</h:panelGrid>
-										<center>
-											<h:panelGrid columns="2">
-												<p:commandButton value="Salvar" icon="pi pi-check"
-													style="margin-left:5px;margin-right:5px;  width:200px !important; margin-top:5px;"
-													styleClass="rounded-button ui-button-raised"
-													actionListener="#{pacienteController.incluir}"
-													update="@form" process="@form" />
-
-												<p:commandButton value="Cancelar" icon="pi pi-times"
-													styleClass="rounded-button ui-button-raised ui-button-danger"
-													style="margin-left:5px;margin-right:5px; width:200px !important;margin-top:5px;"
-													actionListener="#{pacienteController.limpar}"
-													update="@form" process="@this" />
-
-											</h:panelGrid>
-										</center>
-									</p:panel>
-								</p:tab>
-							</p:wizard>
-
-
-						</p:outputPanel>
-					</p:outputPanel>
-
-
-				</p:dialog>
-
-				<h:panelGrid id="panelDataTable">
-					<p:dataTable id="dt-pacientes" widgetVar="dtPacientes"
-						reflow="true" styleClass="pacientes-table" rowKey="#{obj.id}"
-						value="#{pacienteController.listaPaciente}" paginator="true"
-						rows="3" rowSelectMode="add" paginatorPosition="bottom" var="obj">
-
-						<f:facet name="header">
-							<div class="pacientes-table-header">
-								<span style="font-weight: bold">PACIENTES</span> <span
-									class="filter-container ui-input-icon-left">
-
-									<div class="p-col-12 p-md-4">
-										<div class="ui-inputgroup">
-											<p:inputText id="itNomePesquisa"
-												value="#{pacienteController.nomePesquisa}"
-												placeholder="Informe um nome" />
-											<p:commandButton icon="pi pi-search"
-												styleClass="ui-button-warning"
-												actionListener="#{pacienteController.pesquisar}"
-												process="@this itNomePesquisa" update="dt-pacientes" />
-										</div>
 									</div>
-								</span>
-
-							</div>
-						</f:facet>
+								</f:facet>
 
 
-						<p:column headerText="Nome" sortBy="#{obj.pessoaFisica.nome}">
-							<p:outputLabel value="#{obj.pessoaFisica.nome}" />
-						</p:column>
-						<p:column headerText="E-mail" sortBy="#{obj.pessoaFisica.email}">
-							<h:outputText value="#{obj.pessoaFisica.email}" />
+								<p:column headerText="Nome" sortBy="#{obj.pessoaFisica.nome}">
+									<p:outputLabel value="#{obj.pessoaFisica.nome}" />
+								</p:column>
+								<p:column headerText="E-mail" sortBy="#{obj.pessoaFisica.email}">
+									<h:outputText value="#{obj.pessoaFisica.email}" />
 
-						</p:column>
-						<p:column headerText="Telefone"
-							sortBy="#{obj.pessoaFisica.telefone}">
-							<p:outputLabel value="#{obj.pessoaFisica.telefone}" />
-						</p:column>
-						
-					
-						<p:column headerText="CPF">
-							<p:outputLabel value="#{obj.pessoaFisica.cpf}" />
-						</p:column>
+								</p:column>
+								<p:column headerText="Telefone"
+									sortBy="#{obj.pessoaFisica.telefone}">
+									<p:outputLabel value="#{obj.pessoaFisica.telefone}" />
+								</p:column>
 
-						<p:column headerText="Cartão Sus">
-							<p:outputLabel value="#{obj.cartaoSus}" />
-						</p:column>
 
-						<p:column headerText="Sexo"
-							sortBy="#{obj.pessoaFisica.sexo.label}">
-							<p:outputLabel value="#{obj.pessoaFisica.sexo.label}" />
-						</p:column>
-						
-						<p:column headerText="Ativo" sortBy="#{obj.ativo}">
-									<p:toggleSwitch value="#{obj.ativo}" disabled="#{templateController.usuarioLogado.perfil.id == 2}">
-										<p:ajax
-											listener="#{pacienteController.alterar(obj)}"
+								<p:column headerText="CPF">
+									<p:outputLabel value="#{obj.pessoaFisica.cpf}" />
+								</p:column>
+
+								<p:column headerText="Cartão Sus">
+									<p:outputLabel value="#{obj.cartaoSus}" />
+								</p:column>
+
+								<p:column headerText="Sexo"
+									sortBy="#{obj.pessoaFisica.sexo.label}">
+									<p:outputLabel value="#{obj.pessoaFisica.sexo.label}" />
+								</p:column>
+
+								<p:column headerText="Ativo" sortBy="#{obj.ativo}">
+									<p:toggleSwitch value="#{obj.ativo}"
+										disabled="#{templateController.usuarioLogado.perfil.id == 2}">
+										<p:ajax listener="#{pacienteController.alterar(obj)}"
 											process="@this" update="@form" />
 									</p:toggleSwitch>
 								</p:column>
 
-						<p:column exportable="false">
+								<p:column headerText="Ação" exportable="false">
 
 
-							<p:commandButton
-								actionListener="#{pacienteController.editar(obj)}"
-								icon="pi pi-pencil" update=":form:manage-paciente-content"
-								oncomplete="PF('dlg-paciente').show()"
-								styleClass="edit-button rounded-button ui-button-success"
-								process="@this">
+									<p:commandButton value="Editar"
+										actionListener="#{pacienteController.editar(obj)}"
+										icon="pi pi-pencil" update=":form:manage-paciente-content"
+										oncomplete="PF('dlg-paciente').show()"
+										styleClass="edit-button rounded-button ui-button-raised ui-button-success"
+										process="@this">
 
 
-							</p:commandButton>
-							<p:commandButton class="ui-button-danger rounded-button"
-								icon="pi pi-trash" process="@this" update="@form" disabled="#{templateController.usuarioLogado.perfil.id == 2}"
-								actionListener="#{pacienteController.excluir(obj)}">
+									</p:commandButton>
 
-								<p:confirm header="Confirmação"
-									message="Deseja realmente excluir?"
-									icon="pi pi-exclamation-triangle" />
+								</p:column>
 
-							</p:commandButton>
-						</p:column>
-
-					</p:dataTable>
-				</h:panelGrid>
-
-
+							</p:dataTable>
+						</h:panelGrid>
+						</p:panel>
+				</center>
 			</h:form>
 
 			<p:confirmDialog global="true" showEffect="fade" width="300">

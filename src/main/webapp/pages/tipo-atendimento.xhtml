@@ -16,7 +16,8 @@
 			<h:form>
 				<p:growl id="growl" showDetail="true" />
 				<center>
-					<p:panel header="Cadastro Tipo de atendimento"  style="font-weight: bold; font-size:20px;">
+					<p:panel header="Cadastro Tipo de atendimento"
+						style="font-weight: bold; font-size:20px;">
 
 						<div class="p-grid ui-fluid ">
 							<div class="p-col-12 p-md-4">
@@ -28,7 +29,7 @@
 										value="#{tipoAtendimentoController.entity.nome}" />
 
 									<p:commandButton icon="pi pi-search"
-										styleClass="ui-button-warning"
+										styleClass="ui-button-warning ui-button-raised"
 										actionListener="#{tipoAtendimentoController.abrirTipoListing}">
 										<p:ajax event="dialogReturn"
 											listener="#{tipoAtendimentoController.obterTipoListing}"
@@ -40,7 +41,7 @@
 							</div>
 							<br></br>
 
-							
+
 							<div class="p-col-12 p-md-4">
 								<div class="ui-inputgroup">
 									<div class="ui-inputgroup-addon">
@@ -56,7 +57,7 @@
 							</div>
 
 							<br></br>
-							
+
 							<p:outputLabel value="Descrição: " style="font-weight: bold;" />
 							<p:inputTextarea rows="5" cols="30" counter="display"
 								value="#{tipoAtendimentoController.entity.descricao}"
@@ -83,16 +84,6 @@
 									update="@form" process="@form"
 									disabled="#{tipoAtendimentoController.entity.id == null}" />
 
-								<p:commandButton value="Excluir" icon="pi pi-trash"
-									styleClass="rounded-button ui-button-raised ui-button-danger"
-									style="margin-left:5px;margin-right:5px;"
-									actionListener="#{tipoAtendimentoController.excluir}"
-									process="@this" update="@form"
-									disabled="#{tipoAtendimentoController.entity.id == null}">
-									<p:confirm header="Confirmação"
-										message="Deseja realmente excluir?"
-										icon="pi pi-exclamation-triangle" />
-								</p:commandButton>
 
 								<p:commandButton value="Limpar" icon="pi pi-times"
 									styleClass="rounded-button ui-button-danger ui-button-raised"

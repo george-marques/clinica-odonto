@@ -4,7 +4,6 @@
 	<persistence-unit name="Clinica">
 		<class>br.unitins.clinica.converter.PerfilConverter</class>
 		<class>br.unitins.clinica.converter.SexoConverter</class>
-		<class>br.unitins.clinica.converter.StatusConverter</class>
 		<class>br.unitins.clinica.model.Cidade</class>
 		<class>br.unitins.clinica.model.Clinica</class>
 		<class>br.unitins.clinica.model.Consulta</class>

@@ -32,13 +32,13 @@
 									value="#{tipoAtendimentoListing.filtro}"
 									placeholder="Informe a descrição" />
 								<p:commandButton value="Buscar" icon="pi pi-search"
-									styleClass="ui-button-success"
+									styleClass="ui-button-success ui-button-raised"
 									actionListener="#{tipoAtendimentoListing.pesquisarAtivos}"
 									process="@this idFiltro" update="dt-tipo" />
 
 								<p:commandButton icon="pi pi-th-large"
 									disabled="#{templateController.usuarioLogado.perfil.id == 2}"
-									styleClass="ui-button-warning"
+									styleClass="ui-button-warning ui-button-raised"
 									actionListener="#{tipoAtendimentoListing.pesquisar}"
 									process="@this idFiltro" update="dt-tipo" />
 							</div>
@@ -77,8 +77,8 @@
 
 
 
-				<p:column exportable="false">
-					<p:commandButton
+				<p:column exportable="false" headerText="Ação">
+					<p:commandButton value="Selecionar"
 						actionListener="#{tipoAtendimentoListing.select(obj.id)}"
 						icon="pi pi-pencil" process="@this" update="@form"
 						styleClass="edit-button rounded-button ui-button-success">

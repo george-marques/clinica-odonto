@@ -7,7 +7,7 @@
 
 <h:head>
 
-	<title>Cadastro de paciente</title>
+	<title>Cadastro de clinica</title>
 
 </h:head>
 
@@ -29,9 +29,8 @@
 							<p:toolbar>
 								<p:toolbarGroup>
 
-									<p:commandButton value="cadastrar clinica" icon="pi pi-plus"
-										styleClass="ui-button-success"
-										rendered="#{clinicaController.entity.id != null}"
+									<p:commandButton value="cadastrar clinica" icon="pi pi-home"
+										styleClass="ui-button-success ui-button-raised rounded-button"
 										onclick="PF('dlg-clinica').show()" />
 
 
@@ -44,7 +43,8 @@
 								modal="true" widgetVar="dlg-clinica" responsive="true">
 
 								<p:outputPanel id="manage-clinica-content" class="ui-fluid">
-									<p:outputPanel rendered="#{not empty clinicaController.entity}">
+									<p:outputPanel rendered="#{not empty clinicaController.entity}"
+										style="font-weight: bold;">
 
 										<div class="p-field">
 											<p:outputLabel for="name">Nome</p:outputLabel>
@@ -58,18 +58,23 @@
 										<div class="p-formgrid p-grid">
 											<div class="p-field p-col">
 												<p:outputLabel for="cnpj">CNPJ</p:outputLabel>
-												<p:inputText id="cnpj"
+												<p:inputMask id="cnpj" mask="99.999.999/0001-99"
+													required="true" requiredMessage="Informe o CNPJ"
+													validateMask="true"
 													value="#{clinicaController.entity.pessoaJuridica.cnpj}" />
 											</div>
 											<div class="p-field p-col">
 												<p:outputLabel for="inscricao">Inscrição estadual</p:outputLabel>
-												<p:inputText id="inscricao"
+												<p:inputMask id="inscricao" mask="999999999.99-99"
+													required="true" requiredMessage="Informe o CNPJ"
+													validateMask="true"
 													value="#{clinicaController.entity.pessoaJuridica.inscricaoEstadual}" />
 											</div>
 
 											<div class="p-field p-col">
 												<p:outputLabel for="telefone">Telefone</p:outputLabel>
-												<p:inputText id="telefone"
+												<p:inputMask id="telefone" mask="(99) 99999-9999"
+													required="true" validateMask="true"
 													value="#{clinicaController.entity.pessoaJuridica.telefone}" />
 											</div>
 
@@ -89,8 +94,7 @@
 										style="margin-left:5px;margin-right:5px;"
 										styleClass="rounded-button ui-button-raised"
 										actionListener="#{clinicaController.incluir}" update="@form"
-										process="@form"
-										disabled="#{clinicaController.entity.id != null}" />
+										process="@form" />
 
 									<p:commandButton value="Cancelar" icon="pi pi-times"
 										styleClass="rounded-button ui-button-raised ui-button-danger"
@@ -150,7 +154,7 @@
 
 			</h:form>
 
-			
+
 		</h:body>
 	</ui:define>
 </ui:composition>

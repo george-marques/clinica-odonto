@@ -30,7 +30,7 @@
 							<div class="ui-inputgroup">
 
 								<p:commandButton icon="pi pi-search" value="Buscar"
-									styleClass="ui-button-warning"
+									styleClass="ui-button-warning ui-button-raised"
 									actionListener="#{vendaListing.pesquisar}" process="@this"
 									update="dt-vendas" />
 							</div>
@@ -60,10 +60,10 @@
 				</p:column>
 
 
-				<p:column exportable="false">
-					<p:commandButton actionListener="#{vendaListing.select(obj.id)}"
+				<p:column exportable="false" headerText="Ação">
+					<p:commandButton value="Selecionar" actionListener="#{vendaListing.select(obj.id)}"
 						icon="pi pi-pencil" process="@this" update="@form"
-						styleClass="edit-button rounded-button ui-button-success">
+						styleClass="edit-button rounded-button ui-button-raised ui-button-success">
 
 
 					</p:commandButton>
