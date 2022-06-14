@@ -31,7 +31,12 @@
 							<div class="ui-inputgroup">
 								<p:inputText id="idFiltro" value="#{dentistaListing.filtro}"
 									placeholder="Informe o nome" />
-								<p:commandButton icon="pi pi-search"
+								<p:commandButton value="Ativos" icon="pi pi-users" 
+									styleClass="ui-button-success"
+									actionListener="#{dentistaListing.pesquisarAtivos}"
+									process="@this idFiltro" update="dt-dentistas" />
+									
+									<p:commandButton value="Todos" icon="pi pi-search" disabled="#{templateController.usuarioLogado.perfil.id == 2}"
 									styleClass="ui-button-warning"
 									actionListener="#{dentistaListing.pesquisar}"
 									process="@this idFiltro" update="dt-dentistas" />
@@ -65,6 +70,14 @@
 
 					</p:outputLabel>
 				</p:column>
+				
+				<p:column headerText="Ativo" sortBy="#{dent.ativo}">
+									<p:toggleSwitch value="#{dent.ativo}">
+										<p:ajax
+											listener="#{dentistaController.alterar(dent)}"
+											process="@this" update="@form" />
+									</p:toggleSwitch>
+								</p:column>
 
 
 				<p:column exportable="false">

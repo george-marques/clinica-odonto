@@ -35,6 +35,11 @@ public abstract class Controller<T extends DefaultEntity> {
 		}
 	}
 	
+	public void alterar(T obj) {
+		this.entity = obj;
+		incluir();
+	}
+	
 	public void salvarSemLimpar() {
 		try {
 			limparRelacionamentosNaoObrigatorios();

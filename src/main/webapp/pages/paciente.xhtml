@@ -354,7 +354,8 @@
 							sortBy="#{obj.pessoaFisica.telefone}">
 							<p:outputLabel value="#{obj.pessoaFisica.telefone}" />
 						</p:column>
-
+						
+					
 						<p:column headerText="CPF">
 							<p:outputLabel value="#{obj.pessoaFisica.cpf}" />
 						</p:column>
@@ -367,6 +368,14 @@
 							sortBy="#{obj.pessoaFisica.sexo.label}">
 							<p:outputLabel value="#{obj.pessoaFisica.sexo.label}" />
 						</p:column>
+						
+						<p:column headerText="Ativo" sortBy="#{obj.ativo}">
+									<p:toggleSwitch value="#{obj.ativo}" disabled="#{templateController.usuarioLogado.perfil.id == 2}">
+										<p:ajax
+											listener="#{pacienteController.alterar(obj)}"
+											process="@this" update="@form" />
+									</p:toggleSwitch>
+								</p:column>
 
 						<p:column exportable="false">
 
@@ -381,7 +390,7 @@
 
 							</p:commandButton>
 							<p:commandButton class="ui-button-danger rounded-button"
-								icon="pi pi-trash" process="@this" update="@form"
+								icon="pi pi-trash" process="@this" update="@form" disabled="#{templateController.usuarioLogado.perfil.id == 2}"
 								actionListener="#{pacienteController.excluir(obj)}">
 
 								<p:confirm header="Confirmação"

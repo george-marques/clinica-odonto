@@ -141,13 +141,12 @@ footer {
 	padding: 0px;
 	color: white;
 	height: 3rem;
-	position: absolute;
+	position: fixed;
 	bottom: 0px;
-	left: 7%;
-	right: 0;
-	width: 100%;
-	
+	left: 14.5%;
+	right: 0px;
+
 	display: flex;
 	align-items: center;
 	justify-content: center;
-}
+} 

@@ -120,14 +120,24 @@
 							<p:column headerText="Descricao" sortBy="#{obj.descricao}">
 								<p:outputLabel value="#{obj.descricao}" />
 							</p:column>
+							
 							<p:column headerText="Valor" sortBy="#{obj.valor}">
 								<h:outputText value="#{obj.valor}">
 									<f:convertNumber currencySymbol="R$" type="currency" />
 								</h:outputText>
 							</p:column>
+							
 							<p:column headerText="Estoque" sortBy="#{obj.estoque}">
 								<p:outputLabel value="#{obj.estoque}" />
 							</p:column>
+							
+							<p:column headerText="Ativo" sortBy="#{obj.ativo}">
+									<p:toggleSwitch value="#{obj.ativo}" disabled="#{templateController.usuarioLogado.perfil.id == 2}">
+										<p:ajax
+											listener="#{produtoController.alterar(obj)}"
+											process="@this" update="@form" />
+									</p:toggleSwitch>
+								</p:column>
 
 							<p:column exportable="false">
 								<p:commandButton
@@ -139,7 +149,7 @@
 
 
 								</p:commandButton>
-								<p:commandButton class="ui-button-danger rounded-button"
+								<p:commandButton class="ui-button-danger ui-button-raised rounded-button" disabled="#{templateController.usuarioLogado.perfil.id == 2}"
 									icon="pi pi-trash" process="@this" update="@form"
 									actionListener="#{produtoController.excluir(obj)}">
 

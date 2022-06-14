@@ -39,7 +39,7 @@ public class RegistroAtendimentoController extends Controller<RegistroAtendiment
 	@Override
 	public void incluir() {
 
-		entity.getConsulta().setStatus(Status.valueOf(1));
+		getEntity().getConsulta().setStatus(Status.valueOf(1));
 		Util.addInfoMessage("Atendimento realizado!");
 		super.incluir();
 
@@ -76,7 +76,7 @@ public class RegistroAtendimentoController extends Controller<RegistroAtendiment
 	public RegistroAtendimento getEntity() {
 		if (entity == null) {
 			entity = new RegistroAtendimento();
-			entity.setConsulta(new Consulta());
+		
 
 		}
 		return entity;

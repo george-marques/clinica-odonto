@@ -78,7 +78,8 @@ public class PacienteController extends Controller<Paciente> implements Serializ
 	public void editar(Paciente paciente) {
 		setEntity(paciente);
 	}
-
+	
+	
 	public void excluir(Paciente paciente) {
 		entity = paciente;
 

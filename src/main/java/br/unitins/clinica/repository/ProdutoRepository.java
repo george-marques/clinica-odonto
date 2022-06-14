@@ -18,7 +18,7 @@ public class ProdutoRepository extends Repository<Produto>{
 			jpql.append(" FROM ");
 			jpql.append(" Produto p  ");
 			jpql.append(" WHERE ");
-			jpql.append(" p.descricao LIKE :descricao");
+			jpql.append(" p.descricao LIKE :descricao AND p.ativo = true");
 
 			Query query = getEntityManager().createQuery(jpql.toString());
 			query.setParameter("descricao", "%" + descricao + "%");

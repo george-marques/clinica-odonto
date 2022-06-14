@@ -21,8 +21,7 @@ public class VendaController extends Controller<Produto> implements Serializable
 	private static final long serialVersionUID = -6997159798138968730L;
 	private List<Produto> listaProduto;
 	private String filtro;
-	
-	
+
 	public VendaController() {
 		super(new ProdutoRepository());
 	}
@@ -70,15 +69,11 @@ public class VendaController extends Controller<Produto> implements Serializable
 		Util.addInfoMessage("Produto adicionado no carrinho.");
 
 	}
-	
-	
 
 	public List<Produto> getListaProduto() {
-		if (listaProduto == null) {
-			ProdutoRepository pr = new ProdutoRepository();
-			listaProduto = pr.listarTodos(entity);
-		}
-
+		if (listaProduto == null) 
+			listaProduto = new ArrayList<Produto>();
+		
 		return listaProduto;
 	}
 
@@ -93,11 +88,10 @@ public class VendaController extends Controller<Produto> implements Serializable
 	public void setFiltro(String filtro) {
 		this.filtro = filtro;
 	}
-	
-	
+
 	@Override
 	public Produto getEntity() {
-		if(entity == null) {
+		if (entity == null) {
 			entity = new Produto();
 		}
 		return entity;

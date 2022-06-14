@@ -197,6 +197,18 @@ body .ui-menu.ui-menubar {
 			<div class="box footer" style="text-align: center;">© 2022
 				Copyright: Todos os direitos reservados.</div>
 		</footer>
+		
+		
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false" width="150px"
+			closable="false" resizable="false" showHeader="false">
+			<div class="p-d-flex p-jc-center p-ai-center">
+				<p:graphicImage height="100%" width="100%"
+					value="../resources/images/loading.gif" />
+			</div>
+		</p:dialog>
 
 	</h:form>
 </h:body>

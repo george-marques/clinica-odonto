@@ -13,6 +13,9 @@
 	<ui:define name="conteudo">
 
 		<h:body>
+
+
+
 			<h:form>
 				<p:growl id="growl" />
 
@@ -100,7 +103,7 @@
 				</p:dialog>
 				<center>
 					<p:panel header="Consultas Agendadas" style="font-size:20px;">
-						<h:panelGrid id="panelDataTable">
+						<h:panelGrid id="panelDataTable" style="padding:80px;">
 							<p:dataTable id="dt-consultas" widgetVar="dtPacientes"
 								reflow="true" styleClass="consultas-table" rowKey="#{obj.id}"
 								value="#{registroAtendimentoController.listaConsulta}"
@@ -108,7 +111,7 @@
 								paginatorPosition="bottom" var="obj">
 
 
-								<p:column headerText="Nome" sortBy="#{obj.id}">
+								<p:column headerText="Código" sortBy="#{obj.id}">
 									<p:outputLabel value="#{obj.id}" />
 								</p:column>
 
@@ -134,8 +137,8 @@
 									<p:outputLabel value="#{obj.paciente.pessoaFisica.cpf}" />
 
 								</p:column>
-								
-							
+
+
 								<p:column headerText="Dentista">
 									<p:outputLabel value="#{obj.dentista.nome}" />
 
@@ -165,8 +168,7 @@
 
 		</h:body>
 
-	</ui:define>
-	<ui:define name="rabo">
+
 
 	</ui:define>
 </ui:composition>

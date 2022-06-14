@@ -1,6 +1,7 @@
 package br.unitins.clinica.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +24,8 @@ public class DefaultEntity {
 	private LocalDateTime dataCadastro;
 
 	private LocalDateTime dataAlteracao;
+
+	private boolean ativo = true;
 
 	@PrePersist
 	private void gerarDataCadastro() {
@@ -56,6 +59,31 @@ public class DefaultEntity {
 
 	public void setDataAlteracao(LocalDateTime dataAlteracao) {
 		this.dataAlteracao = dataAlteracao;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DefaultEntity other = (DefaultEntity) obj;
+		return Objects.equals(id, other.id);
 	}
 
 }

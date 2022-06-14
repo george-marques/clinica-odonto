@@ -99,7 +99,7 @@ public class ConsultaController extends Controller<Consulta> implements Serializ
 
 	@Override
 	public void incluir() {
-		entity.setStatus(Status.AGUARDANDO);
+		getEntity().setStatus(Status.AGUARDANDO);
 		if (entity.getVenda().getId() == null) {
 			entity.setVenda(null);
 		}

@@ -17,10 +17,9 @@
 <h:body>
 	<h:form>
 		<h:panelGrid id="panelDataTable">
-			<p:dataTable id="dt-tipo" reflow="true"
-				rowKey="#{obj.id}" value="#{tipoAtendimentoListing.list}"
-				paginator="true" rows="3" rowSelectMode="add"
-				paginatorPosition="bottom" var="obj">
+			<p:dataTable id="dt-tipo" reflow="true" rowKey="#{obj.id}"
+				value="#{tipoAtendimentoListing.list}" paginator="true" rows="3"
+				rowSelectMode="add" paginatorPosition="bottom" var="obj">
 
 				<f:facet name="header">
 					<div class="tipos-table-header">
@@ -32,7 +31,13 @@
 								<p:inputText id="idFiltro"
 									value="#{tipoAtendimentoListing.filtro}"
 									placeholder="Informe a descrição" />
-								<p:commandButton icon="pi pi-search"
+								<p:commandButton value="Buscar" icon="pi pi-search"
+									styleClass="ui-button-success"
+									actionListener="#{tipoAtendimentoListing.pesquisarAtivos}"
+									process="@this idFiltro" update="dt-tipo" />
+
+								<p:commandButton icon="pi pi-th-large"
+									disabled="#{templateController.usuarioLogado.perfil.id == 2}"
 									styleClass="ui-button-warning"
 									actionListener="#{tipoAtendimentoListing.pesquisar}"
 									process="@this idFiltro" update="dt-tipo" />
@@ -62,6 +67,14 @@
 
 					</p:outputLabel>
 				</p:column>
+
+				<p:column headerText="Ativo" sortBy="#{obj.ativo}">
+					<p:toggleSwitch value="#{obj.ativo}" disabled="#{templateController.usuarioLogado.perfil.id == 2}">
+						<p:ajax listener="#{tipoAtendimentoController.alterar(obj)}"
+							process="@this" update="@form" />
+					</p:toggleSwitch>
+				</p:column>
+
 
 
 				<p:column exportable="false">

@@ -24,12 +24,29 @@
 				</div>
 			</div>
 			<p:dataTable id="dataTable" value="#{pacienteListing.list}" var="obj">
-				<p:column headerText="Nome">
+				<p:column headerText="Nome" sortBy="#{obj.pessoaFisica.nome}">
 					<p:outputLabel value="#{obj.pessoaFisica.nome}" />
+				</p:column>
+
+				<p:column headerText="Cartão Sus">
+					<p:outputLabel value="#{obj.cartaoSus}" />
+				</p:column>
+
+				<p:column headerText="Data Nascimento"
+					sortBy="#{obj.pessoaFisica.dataNascimento}">
+					<p:outputLabel value="#{obj.pessoaFisica.dataNascimento}">
+						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+
+					</p:outputLabel>
 				</p:column>
 
 				<p:column headerText="E-mail">
 					<p:outputLabel value="#{obj.pessoaFisica.email}" />
+				</p:column>
+
+
+				<p:column headerText="Cpf">
+					<p:outputLabel value="#{obj.pessoaFisica.cpf}" />
 				</p:column>
 
 				<p:column headerText="Ação">

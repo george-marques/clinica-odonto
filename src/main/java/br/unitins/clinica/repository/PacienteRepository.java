@@ -18,7 +18,7 @@ public class PacienteRepository extends Repository<Paciente> {
 			jpql.append(" FROM ");
 			jpql.append(" Paciente p ");
 			jpql.append(" WHERE ");
-			jpql.append(" p.pessoaFisica.nome LIKE :nome");
+			jpql.append(" p.pessoaFisica.nome LIKE :nome AND p.ativo = true");
 
 			Query query = getEntityManager().createQuery(jpql.toString());
 			query.setParameter("nome", "%" + nome + "%");

@@ -32,6 +32,16 @@ public class DentistaListing extends Listing<Dentista> implements Serializable{
 			Util.addErrorMessage("Problema ao realizar a consulta.");
 		}
 	}
+	
+	public void pesquisarAtivos() {
+		DentistaRepository repo = new DentistaRepository();
+		try {
+			setList(repo.findByAtivos(filtro));
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			Util.addErrorMessage("Problema ao realizar a consulta.");
+		}
+	}
 
 	public String getFiltro() {
 		return filtro;
