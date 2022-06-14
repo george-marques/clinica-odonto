@@ -76,6 +76,14 @@
 											autoResize="false" />
 										<h:outputText value="descrição" id="display" class="p-d-block" />
 
+										<div>
+											<p:outputLabel value="Valor da consulta: " />
+											<p:inputNumber disabled="true"
+												value="#{registroAtendimentoController.entity.consulta.valorPagar}"
+												symbol=" BRL" symbolPosition="s" decimalSeparator="."
+												thousandSeparator="," />
+
+										</div>
 
 									</h:panelGrid>
 								</div>
@@ -133,11 +141,6 @@
 
 								</p:column>
 
-								<p:column headerText="CPF">
-									<p:outputLabel value="#{obj.paciente.pessoaFisica.cpf}" />
-
-								</p:column>
-
 
 								<p:column headerText="Dentista">
 									<p:outputLabel value="#{obj.dentista.nome}" />
@@ -145,8 +148,16 @@
 
 								</p:column>
 
+								<p:column headerText="Atender" sortBy="#{obj.atendido}">
+									<p:toggleSwitch value="#{obj.atendido}">
+										<p:ajax listener="#{consultaController.alterar(obj)}"
+											process="@this" update="@form" />
+									</p:toggleSwitch>
+								</p:column>
+
 								<p:column headerText="Ação" exportable="false">
-									<p:commandButton value="Atender"
+									<p:commandButton value="Confirmar"
+										disabled="#{obj.atendido == false}"
 										actionListener="#{registroAtendimentoController.select(obj.id)}"
 										oncomplete="PF('dlg-atendimento').show()" icon="pi pi-clock"
 										process="@this" update="@form"

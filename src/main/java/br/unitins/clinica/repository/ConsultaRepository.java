@@ -18,7 +18,7 @@ public class ConsultaRepository extends Repository<Consulta> {
 			jpql.append(" FROM ");
 			jpql.append(" Consulta c  ");
 			jpql.append(" WHERE ");
-			jpql.append(" c.status = 2");
+			jpql.append(" c.atendido = false");
 
 			Query query = getEntityManager().createQuery(jpql.toString());
 			

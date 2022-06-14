@@ -30,8 +30,6 @@ public class PacienteRepository extends Repository<Paciente> {
 			throw new RepositoryException("Erro ao consultar");
 		}
 	}
-	
-	
-	
+
 
 }

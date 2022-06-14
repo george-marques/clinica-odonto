@@ -42,7 +42,17 @@ public class Consulta extends DefaultEntity implements Serializable {
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 
-	private Status status;
+	private boolean atendido = false;
+
+	private Double valorPagar;
+
+	public Double getValorPagar() {
+		return valorPagar;
+	}
+
+	public void setValorPagar(Double valorPagar) {
+		this.valorPagar = valorPagar;
+	}
 
 	public LocalDate getDataLancamento() {
 		this.dataLancamento = LocalDate.now();
@@ -93,20 +103,20 @@ public class Consulta extends DefaultEntity implements Serializable {
 		this.venda = venda;
 	}
 
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public boolean isAtendido() {
+		return atendido;
+	}
+
+	public void setAtendido(boolean atendido) {
+		this.atendido = atendido;
 	}
 
 }

@@ -21,7 +21,6 @@ import br.unitins.clinica.model.Consulta;
 import br.unitins.clinica.model.Dentista;
 import br.unitins.clinica.model.Paciente;
 import br.unitins.clinica.model.PessoaFisica;
-import br.unitins.clinica.model.Status;
 import br.unitins.clinica.model.TipoAtendimento;
 import br.unitins.clinica.model.Usuario;
 import br.unitins.clinica.model.Venda;
@@ -97,14 +96,48 @@ public class ConsultaController extends Controller<Consulta> implements Serializ
 		}
 	}
 
+	public Double valorConsulta() {
+		Double valordConsulta = 0.0;
+
+		if (getEntity().getVenda().getTotalVenda() == null) {
+			getEntity().getVenda().setTotalVenda(0.0);
+		}
+		valordConsulta = getEntity().getVenda().getTotalVenda() + valorServico();
+
+		return valordConsulta;
+	}
+
+	public Double valorServico() {
+		Double valordServico = 0.0;
+		Double total = 0.0;
+		for (int i = 0; i < entity.getListaTipoAtendimento().size(); i++) {
+
+			valordServico = getEntity().getListaTipoAtendimento().get(i).getValor();
+			entity.setValorPagar(valordServico);
+
+			total = total + valordServico;
+		}
+		return total;
+	}
+
 	@Override
 	public void incluir() {
-		getEntity().setStatus(Status.AGUARDANDO);
+		entity.setValorPagar(valorConsulta());
 		if (entity.getVenda().getId() == null) {
 			entity.setVenda(null);
 		}
 		super.incluir();
 
+	}
+
+	public void incluir2() {
+		super.incluir();
+	}
+
+	public void alterar(Consulta consulta) {
+		this.entity = consulta;
+
+		incluir2();
 	}
 
 	public Usuario getUsuarioLogado() {
