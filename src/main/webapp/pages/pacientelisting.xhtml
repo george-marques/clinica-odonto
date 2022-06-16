@@ -23,7 +23,8 @@
 					</div>
 				</div>
 			</div>
-			<p:dataTable id="dataTable" value="#{pacienteListing.list}" var="obj">
+			<p:dataTable id="dataTable" value="#{pacienteListing.list}" paginator="true" rows="3"
+				rowSelectMode="add" paginatorPosition="bottom" rowKey="#{obj.id}" var="obj">
 				<p:column headerText="Nome" sortBy="#{obj.pessoaFisica.nome}">
 					<p:outputLabel value="#{obj.pessoaFisica.nome}" />
 				</p:column>

@@ -91,6 +91,12 @@
 					<p:column headerText="Dentista">
 						<p:outputLabel value="#{entity.consulta.dentista.nome}" />
 					</p:column>
+					
+					<p:column headerText="Valor pago">
+						<p:outputLabel value="#{entity.consulta.valorPagar}" >
+						<f:convertNumber currencySymbol="R$" type="currency" />
+						</p:outputLabel>
+					</p:column>
 
 				</p:dataTable>
 

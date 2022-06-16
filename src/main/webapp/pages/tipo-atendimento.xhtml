@@ -14,9 +14,9 @@
 
 		<h:body>
 			<h:form>
-				<p:growl id="growl" showDetail="true" />
+				<p:growl id="growl" />
 				<center>
-					<p:panel header="Cadastro Tipo de atendimento"
+					<p:panel header="Cadastro | Tipo de atendimento"
 						style="font-weight: bold; font-size:20px;">
 
 						<div class="p-grid ui-fluid ">
@@ -61,7 +61,7 @@
 							<p:outputLabel value="Descrição: " style="font-weight: bold;" />
 							<p:inputTextarea rows="5" cols="30" counter="display"
 								value="#{tipoAtendimentoController.entity.descricao}"
-								maxlength="100"
+								maxlength="60"
 								placeholder="Informe aqui a descrição do tipo de atendimento"
 								counterTemplate="{0} caracteres restantes." autoResize="false" />
 							<h:outputText value="descrição" id="display" class="p-d-block" />
