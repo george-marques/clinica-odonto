@@ -1,8 +1,8 @@
 # clinica-odonto
 
-Universidade Estadual do Tocantins
-Aluno: George Daniel Marques Borges
-Disciplina: Tópicos em progrmação II 
+- Universidade Estadual do Tocantins
+- Aluno: George Daniel Marques Borges
+- Disciplina: Tópicos em progrmação II 
 
 Sistema de gerenciamento para Clinica odontológica
 
